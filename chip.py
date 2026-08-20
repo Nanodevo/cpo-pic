@@ -20,8 +20,10 @@ Channel plan (west edge, numbered south to north):
   ch1-ch2    reference loopback (shortest on-chip path)
   ch3-ch4    loopback + 0.5 cm spiral  } cutback pair:
   ch5-ch6    loopback + 2.0 cm spiral  } propagation loss per cm
-  ch7-ch8    add-drop ring resonator (R=10 um): group index, Q
-  ch9-ch10   unbalanced MZI (dL=100 um): FSR sanity check
+  ch7-ch8    4-ring WDM bank (staggered radii): the demux skeleton
+             of a transceiver engine; per-ring group index and Q
+  ch9-ch10   2x2 thermo-optic MZI switch cell (heater metal drawn):
+             the switch element of an optical engine, bar/cross path
   ch11-ch12  taper split: 120 nm tip   } coupler DOE vs the
   ch13-ch14  taper split: 180 nm tip   } 150 nm reference pairs
   ch15-ch16  duplicate reference loopback: uniformity statistic
@@ -180,26 +182,34 @@ def cpo_pic() -> gf.Component:
         loop_back(c, sp.ports["o2"], t_out.ports["o2"])
         label(c, name, X_DUT + 150, ch_y(ch_in) + 130)
 
-    # --- ch7-8: add-drop ring, loopback via the west-facing drop port
+    # --- ch7-8: WDM bank, the demux skeleton of a transceiver engine.
+    # Four all-pass rings in series on one bus, radii staggered so each
+    # ring notches a different wavelength comb: one transmission scan
+    # shows four resonance families (per-ring group index and Q).
     t_in = place_coupler(c, 7)
     t_out = place_coupler(c, 8)
-    ring = c << gf.components.ring_double(radius=RING_RADIUS, gap=RING_GAP)
-    ring.move((X_DUT + 120, ch_y(7) + 60))
-    gf.routing.route_single(c, t_in.ports["o2"], ring.ports["o1"],
-                            cross_section="strip")
-    gf.routing.route_single(c, ring.ports["o3"], t_out.ports["o2"],
-                            cross_section="strip")
-    label(c, "RING R10", X_DUT + 150, ch_y(7) + 160)
+    prev = t_in.ports["o2"]
+    for k in range(4):
+        ring = c << gf.components.ring_single(radius=RING_RADIUS + 0.05 * k,
+                                              gap=RING_GAP)
+        ring.move((X_DUT + 120 + 140 * k, ch_y(7)))
+        gf.routing.route_single(c, prev, ring.ports["o1"],
+                                cross_section="strip")
+        prev = ring.ports["o2"]
+    loop_back(c, prev, t_out.ports["o2"])
+    label(c, "WDM 4-RING", X_DUT + 150, ch_y(7) + 160)
 
-    # --- ch9-10: unbalanced MZI
+    # --- ch9-10: 2x2 thermo-optic MZI switch cell, the routing element
+    # of an optical engine. Heater metal is drawn; bar path is looped
+    # back so the cell is graded passively, cross port left open.
     t_in = place_coupler(c, 9)
     t_out = place_coupler(c, 10)
-    mzi = c << gf.components.mzi(delta_length=MZI_DL)
-    mzi.move((X_DUT + 120, ch_y(9)))
-    gf.routing.route_single(c, t_in.ports["o2"], mzi.ports["o1"],
+    sw = c << gf.components.mzi2x2_2x2_phase_shifter()
+    sw.move((X_DUT + 200, ch_y(9) + 40))
+    gf.routing.route_single(c, t_in.ports["o2"], sw.ports["o1"],
                             cross_section="strip")
-    loop_back(c, mzi.ports["o2"], t_out.ports["o2"])
-    label(c, "MZI dL100", X_DUT + 150, ch_y(9) + 160)
+    loop_back(c, sw.ports["o4"], t_out.ports["o2"])
+    label(c, "TO-SWITCH 2x2", X_DUT + 150, ch_y(9) + 160)
 
     # corner fiducials
     for (x, y) in [(200, DIE - 200), (DIE - 300, DIE - 200), (DIE - 300, 350)]:
@@ -207,7 +217,7 @@ def cpo_pic() -> gf.Component:
         f.move((x, y))
 
     # die label
-    label(c, "NANODEVO CPO-PIC v0.2  16ch 250um", DIE / 2 - 700, 100)
+    label(c, "NANODEVO CPO-PIC v0.3  16ch 250um", DIE / 2 - 700, 100)
     return c
 
 

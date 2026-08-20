@@ -30,11 +30,21 @@ coupling evanescently through a ~1 um adhesive bondline.
 | 1-2 | reference loopback | baseline insertion loss |
 | 3-4 | + 0.5 cm spiral | cutback pair: |
 | 5-6 | + 2.0 cm spiral | propagation loss per cm |
-| 7-8 | add-drop ring (R = 10 um) | group index, Q |
-| 9-10 | unbalanced MZI (dL = 100 um) | FSR sanity check |
+| 7-8 | 4-ring WDM bank, staggered radii | transceiver demux skeleton; per-ring group index, Q |
+| 9-10 | 2x2 thermo-optic MZI switch cell | the engine's routing element; heater metal drawn, graded passively |
 | 11-12 | taper split, 120 nm tip | coupler DOE: |
 | 13-14 | taper split, 180 nm tip | tip-width sensitivity |
 | 15-16 | duplicate reference | channel uniformity |
+
+The die is deliberately half interface-qualification vehicle, half
+optical-engine skeleton: the loopbacks, cutbacks and taper splits grade
+the glass-to-PIC interface (what must be proven first), while the WDM
+ring bank and the 2x2 thermo-optic switch cell are the passive optical
+circuit of the transceiver engine that would sit beside a switch ASIC
+in a co-packaged optics assembly. The active layers (Ge photodiodes,
+junction modulators, drivers) belong to the EIC/foundry side; the
+PIC-to-ASIC connection is electrical, through the bumps and RDL of the
+glass substrate.
 
 ## Run
 
