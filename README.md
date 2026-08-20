@@ -11,6 +11,9 @@ butt-coupled at the polished edge of an ion-exchanged (IOX) glass
 waveguide substrate, and the photonic die sits face-down on that glass,
 coupling evanescently through a ~1 um adhesive bondline.
 
+**[Rotate the full assembly in interactive 3D](https://nanodevo.github.io/reports/cpo-3d.html)** -
+fibers, MPO-16 connector, IOX glass substrate, this PIC, and the switch ASIC.
+
 ![layout](build/cpo_pic.png)
 
 ## Interface contract
