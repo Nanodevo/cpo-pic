@@ -46,6 +46,17 @@ junction modulators, drivers) belong to the EIC/foundry side; the
 PIC-to-ASIC connection is electrical, through the bumps and RDL of the
 glass substrate.
 
+## Cell gallery
+
+The die overview above is at 5 mm scale; the devices are micrometers.
+What each cell actually looks like (`python figures.py` regenerates):
+
+| | |
+|---|---|
+| ![ring](docs/cell_ring.png) | ![bank](docs/cell_wdm_bank.png) |
+| ![switch](docs/cell_switch.png) | ![tip](docs/cell_taper_tip.png) |
+| ![fiducial](docs/cell_fiducial.png) | ![spiral](docs/cell_spiral.png) |
+
 ## Run
 
 ```bash
