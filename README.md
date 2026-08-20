@@ -17,7 +17,7 @@ coupling evanescently through a ~1 um adhesive bondline.
 
 | Parameter | Value | Why |
 |---|---|---|
-| Coupler channels | 12 @ 250 um pitch, west edge | matches the published IOX array pitch |
+| Coupler channels | 16 @ 250 um pitch, west edge | one per fiber of the MPO-16 connector |
 | Coupler type | linear adiabatic taper, 2 mm, 500 nm -> 150 nm tip | the evanescent-transfer half of the glass-to-PIC joint |
 | Topology | odd-in / even-out loopbacks | a fiber array on the glass grades every interface in transmission |
 | Die | 5 x 5 mm | same class as the SiN test chips in the IMAPS paper |
@@ -32,7 +32,9 @@ coupling evanescently through a ~1 um adhesive bondline.
 | 5-6 | + 2.0 cm spiral | propagation loss per cm |
 | 7-8 | add-drop ring (R = 10 um) | group index, Q |
 | 9-10 | unbalanced MZI (dL = 100 um) | FSR sanity check |
-| 11-12 | duplicate reference | channel uniformity |
+| 11-12 | taper split, 120 nm tip | coupler DOE: |
+| 13-14 | taper split, 180 nm tip | tip-width sensitivity |
+| 15-16 | duplicate reference | channel uniformity |
 
 ## Run
 

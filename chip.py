@@ -5,8 +5,8 @@ bridge of the kind Corning publishes (Brusberg et al., IMAPS 2022;
 OFC 2020-2026).
 
 Interface contract (from the published architecture):
-- 12 coupler channels at 250 um pitch on the west edge, matching the
-  IOX waveguide arrays on the MPO-16-fed glass substrate.
+- 16 coupler channels at 250 um pitch on the west edge: one channel
+  per fiber of the MPO-16 connector feeding the glass substrate.
 - Each coupler is a long linear adiabatic taper (2 mm, routing width
   down to a narrow tip): the evanescent-transfer half of the joint.
   In assembly the die sits face-down on the glass; the taper region
@@ -22,7 +22,9 @@ Channel plan (west edge, numbered south to north):
   ch5-ch6    loopback + 2.0 cm spiral  } propagation loss per cm
   ch7-ch8    add-drop ring resonator (R=10 um): group index, Q
   ch9-ch10   unbalanced MZI (dL=100 um): FSR sanity check
-  ch11-ch12  duplicate reference loopback: uniformity statistic
+  ch11-ch12  taper split: 120 nm tip   } coupler DOE vs the
+  ch13-ch14  taper split: 180 nm tip   } 150 nm reference pairs
+  ch15-ch16  duplicate reference loopback: uniformity statistic
 
 Plus cross + Vernier fiducials in the corners (the marks a vision-based
 die bonder reads through a split optic) and human-readable labels.
@@ -42,7 +44,7 @@ gf.gpdk.PDK.activate()
 # ---------------------------------------------------------------- geometry
 DIE = 5000.0                 # die side, um (5 x 5 mm, like the SiN chips in [8])
 PITCH = 250.0                # coupler pitch, um (IMAPS array pitch)
-N_CH = 12                    # channels, odd in / even out
+N_CH = 16                    # channels, odd in / even out (MPO-16)
 TAPER_LEN = 2000.0           # adiabatic taper length, um (~2 mm per [8])
 TIP_W = 0.15                 # taper tip width, um
 WG_W = 0.5                   # routing waveguide width, um
@@ -64,13 +66,14 @@ def ch_y(ch: int) -> float:
 
 
 @gf.cell
-def edge_coupler() -> gf.Component:
+def edge_coupler(tip_w: float = TIP_W) -> gf.Component:
     """Linear adiabatic taper: narrow tip at the west edge -> routing width.
 
     The evanescent-transfer half of the glass-to-PIC joint: in assembly
-    the tip-side length lies over the IOX guide.
+    the tip-side length lies over the IOX guide. `tip_w` is the DOE
+    factor of the taper-split pairs.
     """
-    return gf.components.taper(length=TAPER_LEN, width1=TIP_W, width2=WG_W)
+    return gf.components.taper(length=TAPER_LEN, width1=tip_w, width2=WG_W)
 
 
 def spiral_of_length(target: float, n_loops: int) -> gf.Component:
@@ -115,8 +118,8 @@ def fiducial() -> gf.Component:
     return c
 
 
-def place_coupler(c: gf.Component, ch: int):
-    t = c << edge_coupler()
+def place_coupler(c: gf.Component, ch: int, tip_w: float = TIP_W):
+    t = c << edge_coupler(tip_w=tip_w)
     t.move((EDGE_MARGIN, ch_y(ch)))
     return t
 
@@ -149,10 +152,18 @@ def cpo_pic() -> gf.Component:
         r = c << gf.components.rectangle(size=size, layer=(99, 0))
         r.move(xy)
 
-    # --- ch1-2 and ch11-12: reference loopbacks
-    for ch_in, ch_out, name in [(1, 2, "REF-A"), (11, 12, "REF-B")]:
+    # --- ch1-2 and ch15-16: reference loopbacks
+    for ch_in, ch_out, name in [(1, 2, "REF-A"), (15, 16, "REF-B")]:
         t_in = place_coupler(c, ch_in)
         t_out = place_coupler(c, ch_out)
+        loop_back(c, t_in.ports["o2"], t_out.ports["o2"])
+        label(c, name, X_DUT + 150, ch_y(ch_in) + 60)
+
+    # --- ch11-12 / ch13-14: coupler DOE, taper tip-width split
+    for ch_in, ch_out, tip, name in [(11, 12, 0.12, "TIP 120nm"),
+                                     (13, 14, 0.18, "TIP 180nm")]:
+        t_in = place_coupler(c, ch_in, tip_w=tip)
+        t_out = place_coupler(c, ch_out, tip_w=tip)
         loop_back(c, t_in.ports["o2"], t_out.ports["o2"])
         label(c, name, X_DUT + 150, ch_y(ch_in) + 60)
 
@@ -196,7 +207,7 @@ def cpo_pic() -> gf.Component:
         f.move((x, y))
 
     # die label
-    label(c, "NANODEVO CPO-PIC v0.1  12ch 250um", DIE / 2 - 700, 100)
+    label(c, "NANODEVO CPO-PIC v0.2  16ch 250um", DIE / 2 - 700, 100)
     return c
 
 
