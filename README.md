@@ -51,11 +51,43 @@ glass substrate.
 The die overview above is at 5 mm scale; the devices are micrometers.
 What each cell actually looks like (`python figures.py` regenerates):
 
-| | |
-|---|---|
-| ![ring](docs/cell_ring.png) | ![bank](docs/cell_wdm_bank.png) |
-| ![switch](docs/cell_switch.png) | ![tip](docs/cell_taper_tip.png) |
-| ![fiducial](docs/cell_fiducial.png) | ![spiral](docs/cell_spiral.png) |
+**One WDM ring** - a 10 um racetrack next to a bus waveguide, 200 nm
+apart. Light at the ring's resonant wavelengths couples across the gap,
+circulates, and is removed from the bus: a wavelength filter with no
+moving parts.
+
+![ring](docs/cell_ring.png)
+
+**The 4-ring WDM bank** (channels 7-8) - four such rings in series with
+radii staggered by 50 nm, so each one filters a different wavelength
+comb: the demultiplexer skeleton of a transceiver.
+
+![bank](docs/cell_wdm_bank.png)
+
+**The 2x2 thermo-optic switch** (channels 9-10) - light splits into two
+arms and recombines; the orange metal on the upper arm is a resistive
+heater. Heating one arm shifts its phase and steers the light between
+the two outputs: the routing element of an optical engine.
+
+![switch](docs/cell_switch.png)
+
+**The coupler tip** (first 30 um of the 2 mm taper) - the waveguide
+narrows to 150 nm, forcing the mode to expand out of the silicon so it
+can transfer evanescently to the IOX guide in the glass below.
+
+![tip](docs/cell_taper_tip.png)
+
+**Corner fiducial** - the cross and Vernier combs a vision-based die
+bonder reads through a split optic at placement; the Vernier resolves
+residual misalignment to 0.5 um.
+
+![fiducial](docs/cell_fiducial.png)
+
+**Cutback spiral** - 0.5 cm of waveguide coiled into 1 mm; together
+with the 2 cm version and the references, propagation loss per cm
+falls out of a linear fit.
+
+![spiral](docs/cell_spiral.png)
 
 ## Run
 

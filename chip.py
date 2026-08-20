@@ -138,8 +138,9 @@ def loop_back(c: gf.Component, from_port, to_taper_port) -> None:
                             cross_section="strip")
 
 
-def label(c: gf.Component, text: str, x: float, y: float) -> None:
-    t = c << gf.components.text(text=text, size=25.0, layer=(1, 0))
+def label(c: gf.Component, text: str, x: float, y: float,
+          size: float = 90.0) -> None:
+    t = c << gf.components.text(text=text, size=size, layer=(1, 0))
     t.move((x, y))
 
 
@@ -159,7 +160,7 @@ def cpo_pic() -> gf.Component:
         t_in = place_coupler(c, ch_in)
         t_out = place_coupler(c, ch_out)
         loop_back(c, t_in.ports["o2"], t_out.ports["o2"])
-        label(c, name, X_DUT + 150, ch_y(ch_in) + 60)
+        label(c, name, 3600, ch_y(ch_in) + 70)
 
     # --- ch11-12 / ch13-14: coupler DOE, taper tip-width split
     for ch_in, ch_out, tip, name in [(11, 12, 0.12, "TIP 120nm"),
@@ -167,7 +168,7 @@ def cpo_pic() -> gf.Component:
         t_in = place_coupler(c, ch_in, tip_w=tip)
         t_out = place_coupler(c, ch_out, tip_w=tip)
         loop_back(c, t_in.ports["o2"], t_out.ports["o2"])
-        label(c, name, X_DUT + 150, ch_y(ch_in) + 60)
+        label(c, name, 3600, ch_y(ch_in) + 70)
 
     # --- ch3-4 / ch5-6: cutback spirals
     for ch_in, ch_out, target, n_loops, name in [
@@ -180,7 +181,7 @@ def cpo_pic() -> gf.Component:
         gf.routing.route_single(c, t_in.ports["o2"], sp.ports["o1"],
                                 cross_section="strip")
         loop_back(c, sp.ports["o2"], t_out.ports["o2"])
-        label(c, name, X_DUT + 150, ch_y(ch_in) + 130)
+        label(c, name, 3600, ch_y(ch_in) + 70)
 
     # --- ch7-8: WDM bank, the demux skeleton of a transceiver engine.
     # Four all-pass rings in series on one bus, radii staggered so each
@@ -197,7 +198,7 @@ def cpo_pic() -> gf.Component:
                                 cross_section="strip")
         prev = ring.ports["o2"]
     loop_back(c, prev, t_out.ports["o2"])
-    label(c, "WDM 4-RING", X_DUT + 150, ch_y(7) + 160)
+    label(c, "WDM 4-RING", 3600, ch_y(7) + 70)
 
     # --- ch9-10: 2x2 thermo-optic MZI switch cell, the routing element
     # of an optical engine. Heater metal is drawn; bar path is looped
@@ -209,15 +210,17 @@ def cpo_pic() -> gf.Component:
     gf.routing.route_single(c, t_in.ports["o2"], sw.ports["o1"],
                             cross_section="strip")
     loop_back(c, sw.ports["o4"], t_out.ports["o2"])
-    label(c, "TO-SWITCH 2x2", X_DUT + 150, ch_y(9) + 160)
+    label(c, "TO-SWITCH 2x2", 3600, ch_y(9) + 70)
 
     # corner fiducials
     for (x, y) in [(200, DIE - 200), (DIE - 300, DIE - 200), (DIE - 300, 350)]:
         f = c << fiducial()
         f.move((x, y))
 
-    # die label
-    label(c, "NANODEVO CPO-PIC v0.3  16ch 250um", DIE / 2 - 700, 100)
+    # die labels
+    label(c, "NANODEVO CPO-PIC v0.3", 300, 260, size=110)
+    label(c, "WEST EDGE: 16 TAPERS, 250UM PITCH, TO IOX GLASS (MPO-16)",
+          300, 120, size=60)
     return c
 
 
