@@ -104,23 +104,6 @@ on the generic 220 nm SOI strip-waveguide PDK. The design intent lives in
 the cell parameters, not the process: retargeting to a foundry PDK is a
 cross-section swap.
 
-## The optical chain
-
-`chain/` is an explainer that follows the light through the whole assembly,
-one stage at a time: the fiber that delivers it, the ion-exchanged waveguides
-in the glass, the transfer onto this die, the circuit on it, and the point
-where photons become electrons. Each stage carries the physics, the equations
-and where they come from, and experiments that can be re-run.
-
-| Page | Covers |
-|---|---|
-| [Overview](chain/index.html) | the five stages, and which simulation tool belongs to each |
-| [Foundations: rays](chain/rays.html) | focal length, thick lenses, spherical aberration measured with a ruler |
-| [Stage 1: the fiber](chain/fiber.html) | why one mode survives, how wide it is, why the datasheet disagrees with the textbook |
-| [Mode explorer](chain/fiber-mode.html) | interactive: solves the exact Bessel mode in the browser |
-
-Stages 2 to 5 are in progress.
-
 ## Roadmap
 
 - Mode solver (femwell) on the taper cross-sections: effective-index
