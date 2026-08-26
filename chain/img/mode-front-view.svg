@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 452" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>Front view of a guided mode, looking along the direction of propagation, with core radius a and mode field radius w</title>
+<desc>Top: the transverse cross-section of a single-mode fiber seen end-on. The guided light appears as a soft disc of intensity, brightest at the centre and fading outward with no edge. A solid circle marks the core boundary at radius a equals 4.1 micrometres. A dashed circle at radius w equals 5.2 micrometres marks where the field amplitude has fallen to 1 over e. The dashed circle lies outside the solid one. Bottom: the same mode as a radial profile, sharing the same horizontal scale, with the core region shaded and a horizontal line at 1 over e crossing the curve exactly at the dashed circle's radius.</desc>
+<rect x="0" y="0" width="680" height="452" fill="#fbfcfd"/>
+<defs><marker id="mv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1c2733"/></marker></defs>
+<text x="40" y="34" fill="#1c2733" font-size="14">front view, looking along the direction of propagation</text>
+<circle cx="300" cy="175" r="117" fill="#1D9E75" fill-opacity="0.05"/>
+<circle cx="300" cy="175" r="92" fill="#1D9E75" fill-opacity="0.09"/>
+<circle cx="300" cy="175" r="70" fill="#1D9E75" fill-opacity="0.16"/>
+<circle cx="300" cy="175" r="52" fill="#1D9E75" fill-opacity="0.26"/>
+<circle cx="300" cy="175" r="36" fill="#1D9E75" fill-opacity="0.38"/>
+<circle cx="300" cy="175" r="22" fill="#1D9E75" fill-opacity="0.52"/>
+<circle cx="300" cy="175" r="10" fill="#1D9E75" fill-opacity="0.72"/>
+<circle cx="300" cy="175" r="37" fill="none" stroke="#5F5E5A" stroke-width="1.6"/>
+<circle cx="300" cy="175" r="47" fill="none" stroke="#0F6E56" stroke-width="1.6" stroke-dasharray="5,4"/>
+<line x1="300" y1="175" x2="337" y2="175" stroke="#1c2733" stroke-width="1.2" marker-end="url(#mv)"/>
+<line x1="300" y1="175" x2="300" y2="128" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#mv)"/>
+<text x="313" y="169" fill="#1c2733" font-size="13">a</text>
+<text x="307" y="146" fill="#0F6E56" font-size="13">w</text>
+<line x1="430" y1="130" x2="466" y2="130" stroke="#5F5E5A" stroke-width="1.6"/>
+<text x="474" y="128" fill="#1c2733" font-size="13">a = 4.1 µm, core radius</text>
+<text x="474" y="146" fill="#5c6b7a" font-size="12">a material boundary: the edge of</text>
+<text x="474" y="163" fill="#5c6b7a" font-size="12">the doped glass. You could see it</text>
+<text x="474" y="180" fill="#5c6b7a" font-size="12">in a cross-section, light or not.</text>
+<line x1="430" y1="214" x2="466" y2="214" stroke="#0F6E56" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="474" y="212" fill="#0F6E56" font-size="13">w = 5.2 µm, mode field radius</text>
+<text x="474" y="230" fill="#5c6b7a" font-size="12">where the field has fallen to 1/e.</text>
+<text x="474" y="247" fill="#5c6b7a" font-size="12">Nothing physical is there. It is a</text>
+<text x="474" y="264" fill="#5c6b7a" font-size="12">property of the light, not the glass.</text>
+<text x="40" y="330" fill="#1c2733" font-size="14">the same mode, in profile</text>
+<rect x="263" y="352" width="74" height="80" fill="#e9ecef"/>
+<line x1="183" y1="432" x2="417" y2="432" stroke="#5c6b7a" stroke-width="1"/>
+<line x1="253" y1="292" x2="253" y2="432" stroke="#0F6E56" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="347" y1="292" x2="347" y2="432" stroke="#0F6E56" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="183" y1="403" x2="417" y2="403" stroke="#0F6E56" stroke-width="1" stroke-dasharray="4,4"/>
+<path d="M183,431 C228,430 250,423 274,371 C284,352 316,352 326,371 C350,423 372,430 417,431" fill="none" stroke="#1D9E75" stroke-width="2"/>
+<text x="150" y="399" fill="#0F6E56" font-size="12">1/e</text>
+<text x="300" y="448" text-anchor="middle" fill="#5c6b7a" font-size="12">shaded band = the core, width 2a</text>
+<text x="474" y="380" fill="#1c2733" font-size="13">Read the two together:</text>
+<text x="474" y="400" fill="#5c6b7a" font-size="12">the dashed circle above is exactly</text>
+<text x="474" y="417" fill="#5c6b7a" font-size="12">where the curve below crosses 1/e,</text>
+<text x="474" y="434" fill="#5c6b7a" font-size="12">and it sits outside the core.</text>
+</svg>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 2: waveguides in the glass</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a class="here" href="stage2-glass.html">2. The glass</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Stage 2: waveguides in the glass</h1>
+<div class="meta">
+A waveguide made by changing glass that was already there, not by depositing
+anything. Why its index contrast has to be small, how diffusion decides its
+shape, and what the joint with the fiber actually costs.
+</div>
+
+<h2>The process, and what is missing from it</h2>
+
+<figure>
+<img src="img/iox-process.svg" alt="Three panels showing masked ion exchange in a molten salt bath, the graded index profile it leaves at the surface, and the buried near-circular profile after field-assisted burial" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Ion exchange, masked, then buried. No material is added or removed at
+any point.</figcaption>
+</figure>
+
+<p>
+Look at what is not in that picture: no deposition, no etching, no second
+material. An alkali ion sitting in the glass network, usually sodium, is
+swapped for a larger one from a molten salt bath, and the region where that
+happened has a slightly higher refractive index. That is the entire process.
+</p>
+
+<p>
+The index rises for two reasons: the larger ion is more polarizable, and
+forcing it into a site sized for a smaller one puts the network under stress.
+A potassium-for-sodium exchange gives a &Delta;n of roughly 0.01. Silver for
+sodium gives ten times more, at the cost of optical loss and silver chemistry
+that has to be controlled.
+</p>
+
+<h2>The small &Delta;n is the entire point</h2>
+
+<table>
+<tr><th></th><th>index contrast</th><th>mode size</th></tr>
+<tr><td>SMF-28 fiber</td><td>&Delta;n &asymp; 0.0067</td><td>10.4 &micro;m at 1550 nm</td></tr>
+<tr><td>IOX glass waveguide</td><td>&Delta;n &asymp; 0.005 to 0.01</td><td>6 to 10 &micro;m</td></tr>
+<tr><td>silicon waveguide</td><td>&Delta;n &asymp; 2</td><td>0.5 &micro;m</td></tr>
+</table>
+
+<div class="num">
+A twenty-fold jump in mode size sits between the fiber and the chip, and it
+cannot be crossed in one step without enormous coupling loss. Glass is the
+intermediate rung. <strong>The bridge is a mode-size transformer</strong>, and
+the reason it can be one is that ion exchange produces exactly the weak guiding
+a fiber-sized mode needs.
+</div>
+
+<h2>It is a diffusion process</h2>
+
+<p>
+The concentration of the incoming ion obeys Fick's second law, with the added
+complication that the diffusivity depends on local concentration, since the two
+species move at different rates and drag one another. The scaling that matters
+is the familiar one:
+</p>
+
+<div class="eq">depth &prop; &radic;(D &middot; t)&nbsp;&nbsp;&nbsp;&nbsp;D = D&#8320; &middot; exp(&minus;Ea / kT)</div>
+
+<p>
+Depth is set by time and temperature, and quadrupling the time only doubles the
+depth. Typical exchanges run for hours at a few hundred degrees. Same arithmetic
+as a dopant drive-in, and the same Arrhenius sensitivity: a few degrees of
+furnace error moves the waveguide.
+</p>
+
+<h3>The waveguide is wider than the mask opening</h3>
+
+<p>
+Diffusion has no sense of direction. Ions entering through an opening of width
+W spread sideways under the mask at very nearly the rate they travel downward,
+so by the time the front reaches depth d it has also crept about 0.8d under
+each mask edge:
+</p>
+
+<div class="eq">final width &asymp; W + 1.6 &middot; d</div>
+
+<p>
+This is the same lateral diffusion that makes a doped region in silicon wider
+than the window opened for it. Three consequences follow.
+</p>
+
+<ol class="steps">
+<li><strong>The mask opening is much narrower than the waveguide.</strong> For a
+guide 8 &micro;m across diffused 5 &micro;m deep, the opening is a couple of
+micrometres, not eight.</li>
+<li><strong>Depth and width are not independent.</strong> One exchange has one
+knob, the product of time and temperature, and it moves both at once. The
+aspect ratio is set by the physics; only the overall scale is yours.</li>
+<li><strong>Which is why burial is a separate step.</strong> Field-assisted
+burial is not a nicety, it is the second degree of freedom. It moves the guide
+down and reshapes it toward circular, giving back some of the control that
+isotropic diffusion took away.</li>
+</ol>
+
+<div class="warn">
+A one-step surface exchange leaves a half-disc profile with its peak at the
+surface. Half a mode, cut off flat, couples badly to a round fiber mode, and it
+sits where surface scattering can reach it.
+</div>
+
+<h2>Three knobs, nearly orthogonal</h2>
+
+<table>
+<tr><th>Knob</th><th>Sets</th></tr>
+<tr><td>melt composition</td><td><strong>&Delta;n</strong></td></tr>
+<tr><td>time &times; temperature</td><td><strong>depth and width</strong></td></tr>
+<tr><td>burial field &times; time</td><td><strong>how deep, and how round</strong></td></tr>
+</table>
+
+<p>
+Temperature controls how far the ions get, not how many of them swap. Surface
+concentration, and therefore &Delta;n, is fixed by the melt composition however
+hot the furnace is. To halve &Delta;n you do not change the furnace program, you
+dilute the bath with sodium nitrate so the two species compete and fewer sites
+end up exchanged. The partition between melt and glass follows an equilibrium
+with its own selectivity coefficient rather than a straight line, so the exact
+ratio comes from calibration rather than from a formula.
+</p>
+
+<div class="warn">
+Temperature does move &Delta;n, second order, through the stress component:
+annealing near the strain point relaxes some of the stress-induced index rise
+away. That is a source of drift, not a control knob.
+</div>
+
+<p>
+This near-independence is the whole reason glass ion exchange is used for
+fiber-matched waveguides. The index contrast can be dialled to fit a fiber mode
+without giving up control of the geometry. In silicon, &Delta;n is whatever
+silicon and oxide happen to be.
+</p>
+
+<h2>The joint: only the mode matters</h2>
+
+<figure>
+<img src="img/fiber-glass-joint.svg" alt="Side view of a fiber butt-coupled to the polished edge of a glass substrate through index-matching adhesive, with end-on views of both modes drawn to the same scale" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The joint in side view, and both modes end-on at the same scale.
+The two circles in the right-hand panel are perfectly concentric; the loss is
+size mismatch alone.</figcaption>
+</figure>
+
+<p>
+Coupling is an overlap of fields. The integral has no term for core radius. Two
+guides with completely different cores couple perfectly if their modes match,
+and two with identical cores couple badly if their modes differ.
+</p>
+
+<div class="eq">&eta; = 4&middot;w&#8321;&sup2;&middot;w&#8322;&sup2; / (w&#8321;&sup2; + w&#8322;&sup2;)&sup2;&nbsp;&nbsp;&nbsp;&nbsp;IL = &minus;10&middot;log&#8321;&#8320;(&eta;)</div>
+
+<p>
+Worked at 1550 nm for a guide made with a straight potassium exchange at
+&Delta;n = 0.01, taken to the largest size that is still single mode:
+</p>
+
+<div class="num">
+NA = &radic;(2&middot;n&#8321;&middot;&Delta;n) = 0.173<br>
+a_max = 2.405&middot;&lambda; / (2&pi;&middot;NA) = 3.43 &micro;m<br>
+w = 3.77 &micro;m, so MFD = 7.54 &micro;m<br>
+against the fiber's 10.4 &micro;m: <strong>IL = 0.44 dB</strong>, with zero
+misalignment
+</div>
+
+<p>
+Against a 0.5 dB budget for the entire connection, that design is dead before a
+single micrometre of tolerance has been spent. And the obvious fix does not
+work: forcing the core to match the fiber's 4.1 &micro;m at &Delta;n = 0.01
+gives V = 2.88, so the guide is no longer single mode.
+</p>
+
+<h3>a and w are not independent</h3>
+
+<p>
+Once V is fixed, w/a is fixed, because that is what Marcuse's formula says.
+Substituting the cutoff condition into it eliminates the core radius entirely:
+</p>
+
+<div class="eq">w_max = 1.099 &times; 2.405 &times; &lambda; / (2&pi;&middot;NA) = 0.652 / NA&nbsp;&nbsp;(&micro;m, at &lambda; = 1.55 &micro;m)</div>
+
+<div class="num">
+The largest single-mode spot you can make depends only on NA. Widen the guide
+and you must weaken it by the same factor or it stops being single mode. So the
+knob is not size, it is &Delta;n, and it goes <strong>down</strong>.
+</div>
+
+<p>
+Match w and match V, and a matches automatically. The real design freedom is
+which V to operate at. Not the cutoff, where a few degrees of furnace drift tips
+the bridge into carrying a second mode, and not far below it, where the guide
+becomes too weakly confining to route. Around V = 2.0, which is where SMF-28
+itself sits.
+</p>
+
+<h2>The design loop</h2>
+
+<div class="eq">1. the fiber gives you w        from &lambda; and the fiber spec
+2. you choose V                 for process margin, 2.0 to 2.3
+3. w and V give you a and NA    because V fixes w/a
+4. NA gives you &Delta;n             which is melt composition
+5. a and depth give the mask    and the time-temperature program
+6. check the bend radius &Delta;n allows
+7. if the routing will not fit, go back to 2</div>
+
+<p>
+Step 7 is what makes this engineering rather than arithmetic. Coupling pushes
+&Delta;n down, routing pushes it up, and the design sits where they meet.
+</p>
+
+<h2>What Corning actually reports</h2>
+
+<p>
+Their published figures, which are worth holding against the derivation above.
+The ion-exchanged waveguides were "designed to match the mode field of a Corning
+SMF-28 Ultra Optical Fiber at 1310 nm", with propagation loss below
+<strong>0.1 dB/cm</strong>. Fiber-to-waveguide coupling loss is quoted at
+<strong>0.3 dB with air above the guide and 0.1 dB with an index-matched
+adhesive top cladding</strong> at 1310 nm, rising to 0.6 and 0.2 dB at 1550 nm.
+</p>
+
+<div class="num">
+Three times the loss, from nothing but what sits above the waveguide. Air makes
+the mode asymmetric and pulls it out of shape; matching the index restores
+something the fiber recognises. The adhesive in the drawing is optics, not glue.
+</div>
+
+<div class="warn">
+Their work is at <strong>1310 nm</strong>; the numbers derived above are at
+1550 nm. The method is identical but the values are not: SMF-28 has MFD
+9.2 &micro;m at 1310 rather than 10.4, and V near 2.3 rather than 2.0. Do not
+quote the 1550 nm figures as theirs. Datacenter optics live in the O band
+because standard fiber has near-zero chromatic dispersion at 1310 nm, and over
+short reaches dispersion at high baud rate constrains the link more than loss
+does.
+</div>
+
+<h3>And 0.1 dB is not zero</h3>
+
+<p>With &Delta;n chosen perfectly there is still residual loss from:</p>
+
+<ol class="steps">
+<li><strong>ellipticity</strong>, since diffusion makes the guide wider than
+deep while the fiber mode is round</li>
+<li><strong>profile shape</strong>, a graded index meeting a step index, so
+matched mode sizes still leave slightly different mode shapes</li>
+<li><strong>Fresnel reflection</strong> at the two interfaces, which is what
+the index-matching adhesive suppresses</li>
+<li><strong>alignment</strong>, which is a tolerancing problem rather than a
+waveguide one</li>
+</ol>
+
+<h2>Check yourself</h2>
+
+<details><summary>Why can you not simply make the glass waveguide's core the same size as the fiber's?</summary>
+<p>Because at a given &Delta;n the core size is capped by the single-mode
+condition. Matching the fiber's 4.1 &micro;m core at &Delta;n = 0.01 gives
+V = 2.88, above cutoff, so the guide carries a second mode. Coupling is decided
+by the modes, not the cores, and the core is not free to move independently.</p></details>
+
+<details><summary>You need to halve &Delta;n. Do you change the furnace or the bath?</summary>
+<p>The bath. Temperature sets how far the ions diffuse, not how many sites
+exchange. Dilute the melt with sodium nitrate so the two species compete.</p></details>
+
+<details><summary>Why is a multimode bridge worse than a lossy one?</summary>
+<p>Because the loss is unstable. Power divides between LP01 and LP11 depending
+on bend, temperature and how the fiber was placed, and only the LP01 share
+enters the chip. A link whose insertion loss wanders cannot be specified.</p></details>
+
+<details><summary>The mask opening is 2 &micro;m and the exchange runs to 5 &micro;m depth. How wide is the guide?</summary>
+<p>About 2 + 1.6&times;5 = 10 &micro;m. Lateral diffusion under the mask edges
+dominates the final width once the depth exceeds the opening.</p></details>
+
+<div class="note">
+Still to be written into this stage: bend loss quantitatively, what limits
+propagation loss, stress birefringence in exchanged guides, and how sixteen
+channels are routed at 250 &micro;m pitch without coupling to one another.
+Sources:
+<a href="https://imapsource.org/article/74749-glass-substrate-for-co-packaged-optics.pdf">Brusberg
+et al., Glass Substrate for Co-Packaged Optics, IMAPS 2022</a> and
+<a href="https://kocabas.gitlab.io/publications/Brusberg2021.pdf">Glass Substrate
+With Integrated Waveguides for Surface Mount Photonic Packaging</a>.
+</div>
+
+</div>
+</body>
+</html>

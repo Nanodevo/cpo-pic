@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 306" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>How an ion-exchanged waveguide is made in glass</title>
+<rect x="0" y="0" width="680" height="306" fill="#fbfcfd"/>
+<defs><marker id="d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5c6b7a"/></marker></defs>
+<text x="130" y="54" text-anchor="middle" fill="#1c2733" font-size="14">1 · the exchange</text>
+<text x="340" y="54" text-anchor="middle" fill="#1c2733" font-size="14">2 · the profile it leaves</text>
+<text x="550" y="54" text-anchor="middle" fill="#1c2733" font-size="14">3 · field-assisted burial</text>
+<rect x="45" y="74" width="170" height="26" fill="#FAEEDA" stroke="#BA7517" stroke-width="0.8"/>
+<text x="130" y="91" text-anchor="middle" fill="#854F0B" font-size="12">molten salt, large ions</text>
+<rect x="45" y="128" width="170" height="72" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="45" y="120" width="58" height="8" fill="#5F5E5A"/>
+<rect x="157" y="120" width="58" height="8" fill="#5F5E5A"/>
+<line x1="116" y1="102" x2="116" y2="126" stroke="#BA7517" stroke-width="1.4" marker-end="url(#d1)"/>
+<line x1="130" y1="102" x2="130" y2="126" stroke="#BA7517" stroke-width="1.4" marker-end="url(#d1)"/>
+<line x1="144" y1="102" x2="144" y2="126" stroke="#BA7517" stroke-width="1.4" marker-end="url(#d1)"/>
+<text x="222" y="126" fill="#5c6b7a" font-size="12">mask</text>
+<text x="130" y="222" text-anchor="middle" fill="#5c6b7a" font-size="12">big ions in, small ions out</text>
+<text x="130" y="240" text-anchor="middle" fill="#5c6b7a" font-size="12">only where the mask is open</text>
+<text x="130" y="258" text-anchor="middle" fill="#8a5a1b" font-size="12">no deposition, no etching</text>
+<rect x="255" y="128" width="170" height="72" fill="#F1EFE8" stroke="#B4B2A9"/>
+<path d="M305,128 A35,35 0 0 0 375,128 Z" fill="#9FE1CB"/>
+<path d="M315,128 A25,25 0 0 0 365,128 Z" fill="#5DCAA5"/>
+<path d="M325,128 A15,15 0 0 0 355,128 Z" fill="#1D9E75"/>
+<line x1="255" y1="128" x2="425" y2="128" stroke="#5F5E5A" stroke-width="1.2"/>
+<text x="340" y="222" text-anchor="middle" fill="#5c6b7a" font-size="12">index graded, not a step</text>
+<text x="340" y="240" text-anchor="middle" fill="#5c6b7a" font-size="12">peak sits at the surface</text>
+<text x="340" y="258" text-anchor="middle" fill="#8a5a1b" font-size="12">half a mode, cut off flat</text>
+<rect x="465" y="128" width="170" height="72" fill="#F1EFE8" stroke="#B4B2A9"/>
+<ellipse cx="550" cy="170" rx="34" ry="22" fill="#9FE1CB"/>
+<ellipse cx="550" cy="170" rx="24" ry="15" fill="#5DCAA5"/>
+<ellipse cx="550" cy="170" rx="13" ry="8" fill="#1D9E75"/>
+<line x1="465" y1="128" x2="635" y2="128" stroke="#5F5E5A" stroke-width="1.2"/>
+<line x1="510" y1="104" x2="510" y2="124" stroke="#6b4fa0" stroke-width="1.4" marker-end="url(#d1)"/>
+<line x1="550" y1="104" x2="550" y2="124" stroke="#6b4fa0" stroke-width="1.4" marker-end="url(#d1)"/>
+<line x1="590" y1="104" x2="590" y2="124" stroke="#6b4fa0" stroke-width="1.4" marker-end="url(#d1)"/>
+<text x="550" y="98" text-anchor="middle" fill="#6b4fa0" font-size="12">applied electric field</text>
+<text x="550" y="222" text-anchor="middle" fill="#5c6b7a" font-size="12">guide dragged below the surface</text>
+<text x="550" y="240" text-anchor="middle" fill="#5c6b7a" font-size="12">near-circular, so it matches a fiber</text>
+<text x="550" y="258" text-anchor="middle" fill="#5c6b7a" font-size="12">away from surface scattering</text>
+<line x1="228" y1="164" x2="244" y2="164" stroke="#5c6b7a" stroke-width="1.5" marker-end="url(#d1)"/>
+<line x1="438" y1="164" x2="454" y2="164" stroke="#5c6b7a" stroke-width="1.5" marker-end="url(#d1)"/>
+<text x="340" y="290" text-anchor="middle" fill="#1c2733" font-size="12">time and temperature set the depth · the mask opening sets the width · the field sets how deep it ends up</text>
+</svg>

@@ -13,6 +13,7 @@
   <a href="index.html">Overview</a>
   <a href="rays.html">Foundations: rays</a>
   <a class="here" href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
   <a href="fiber-mode.html">Mode explorer</a>
 </nav>
 
@@ -154,6 +155,63 @@ the first zero of the Bessel function J&#8320;, which is precisely where the
 second pattern first becomes able to fit.
 </p>
 
+
+<h2>The modes it is excluding</h2>
+
+<p>
+"Single mode" only means something once you have seen what it rules out. Each
+LP mode switches on at its own V, and ranking those cutoffs is the whole content
+of the claim.
+</p>
+
+<figure>
+<img src="img/lp-modes.png" alt="Six panels showing the intensity patterns of the LP01, LP11, LP21, LP02, LP31 and LP12 modes, with a V-number axis below marking where each one switches on" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The first six LP modes, solved from the eigenvalue equation. Dashed
+circle is the core boundary. Below, the V at which each becomes guided, with
+SMF-28 at 1550 nm marked. Regenerate with <code>chain/lp_modes.py</code>.</figcaption>
+</figure>
+
+<p>
+<strong>LP means Linearly Polarized</strong>, and it is an approximation that
+exists only because &Delta;n is tiny. The exact solutions are messier vector
+modes called TE, TM, HE and EH. When the index step is under half a percent,
+groups of them become almost identical in propagation constant and can be added
+into these simple linearly polarized patterns. The same 0.45% that makes fiber
+fragile in a bend is what makes its mathematics tractable.
+</p>
+
+<p>
+The naming is a coordinate count. In <code>LP_lm</code>, <code>l</code> counts
+azimuthal periods so the pattern has <strong>2l lobes</strong> around, and
+<code>m</code> counts radial maxima so it has <strong>m rings</strong>. LP21 has
+four lobes; LP02 is a spot with one ring around it.
+</p>
+
+<div class="num">
+2.405 is the cutoff of LP11, the two-lobed pattern. Below that V there is
+physically nowhere else for the light to go. That is what single mode asserts:
+not that light is well behaved, but that the fiber offers one shape and no
+alternative.
+</div>
+
+<p>
+LP21 and LP02 switch on at the same V because both cutoffs are the first zero of
+the same Bessel function. Degenerate cutoffs matter, because degenerate modes
+exchange power easily.
+</p>
+
+<div class="warn">
+<strong>Single mode is a small lie.</strong> Every LP mode exists in two
+polarizations, so LP01 is really two modes: the same spot, polarized two ways,
+travelling at identical speeds in a perfect fiber. In a fiber nobody notices. In
+a silicon waveguide they are not equivalent at all, because a 500 by 220 nm
+rectangle is strongly birefringent and TE and TM behave like different
+waveguides. The fiber delivers whatever polarization it has after a few metres
+of cable, and that state drifts. Handling it is a real subsystem on the chip,
+a polarization splitter and rotator, and it is a stage 4 problem that starts
+here.
+</div>
+
 <h2>Marcuse turns V into a size</h2>
 
 <div class="eq">w/a = 0.65 + 1.619&middot;V<sup>&minus;3/2</sup> + 2.879&middot;V<sup>&minus;6</sup></div>
@@ -189,6 +247,15 @@ A useful check on the result is that <strong>w/a must come out greater than
 1</strong>. The mode is wider than the core. A value below 1 means the exponent
 was mishandled.
 </div>
+
+
+<figure>
+<img src="img/mode-front-view.svg" alt="Front view of the guided mode looking along the propagation direction, with the core radius a as a solid circle and the mode field radius w as a dashed circle outside it, and the same mode as a radial profile below" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The same mode two ways. The dashed circle above is exactly where the
+curve below crosses 1/e. <code>a</code> is a material boundary; <code>w</code>
+is a property of the light. The dashed circle is always outside the solid one,
+and if a calculation ever puts it inside, the calculation is wrong.</figcaption>
+</figure>
 
 <h2>The interactive solver</h2>
 

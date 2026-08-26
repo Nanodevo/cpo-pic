@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 366" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>The fiber to glass-bridge butt joint, with core radius and mode radius annotated</title>
+<rect x="0" y="0" width="680" height="366" fill="#fbfcfd"/>
+<defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5c6b7a"/></marker></defs>
+<text x="40" y="46" fill="#1c2733" font-size="14">the joint, side view</text>
+<rect x="40" y="100" width="256" height="60" rx="3" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="40" y="124" width="256" height="12" fill="#B5D4F4" stroke="#378ADD" stroke-width="0.8"/>
+<text x="52" y="116" fill="#5c6b7a" font-size="12">fiber cladding</text>
+<text x="52" y="152" fill="#5c6b7a" font-size="12">core</text>
+<rect x="298" y="96" width="18" height="68" fill="#FAC775"/>
+<rect x="318" y="80" width="322" height="100" rx="3" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="318" y="124" width="322" height="12" fill="#9FE1CB" stroke="#1D9E75" stroke-width="0.8"/>
+<line x1="318" y1="80" x2="318" y2="180" stroke="#5F5E5A" stroke-width="1.6"/>
+<text x="332" y="98" fill="#5c6b7a" font-size="12">glass substrate</text>
+<text x="332" y="152" fill="#5c6b7a" font-size="12">ion-exchanged guide, buried</text>
+<line x1="307" y1="186" x2="307" y2="172" stroke="#5c6b7a" stroke-width="1" marker-end="url(#m1)"/>
+<text x="248" y="199" fill="#8a5a1b" font-size="12">index-matching adhesive</text>
+<line x1="318" y1="70" x2="318" y2="76" stroke="#5c6b7a" stroke-width="1"/>
+<text x="326" y="70" fill="#5c6b7a" font-size="12">polished edge</text>
+<text x="470" y="199" fill="#5c6b7a" font-size="12">the light never leaves a waveguide</text>
+<text x="40" y="238" fill="#1c2733" font-size="14">end-on, both to the same scale</text>
+<circle cx="120" cy="288" r="31" fill="none" stroke="#1D9E75" stroke-width="1.4" stroke-dasharray="4,3"/>
+<circle cx="120" cy="288" r="25" fill="#D3D1C7" stroke="#888780"/>
+<line x1="120" y1="288" x2="145" y2="288" stroke="#5c6b7a" stroke-width="1" marker-end="url(#m1)"/>
+<line x1="120" y1="288" x2="120" y2="257" stroke="#1D9E75" stroke-width="1" marker-end="url(#m1)"/>
+<text x="128" y="283" fill="#1c2733" font-size="12">a</text>
+<text x="125" y="268" fill="#0F6E56" font-size="12">w</text>
+<text x="120" y="338" text-anchor="middle" fill="#5c6b7a" font-size="12">fiber</text>
+<text x="120" y="356" text-anchor="middle" fill="#1c2733" font-size="12">a 4.1, w 5.2 µm</text>
+<circle cx="320" cy="288" r="23" fill="none" stroke="#1D9E75" stroke-width="1.4" stroke-dasharray="4,3"/>
+<circle cx="320" cy="288" r="21" fill="#D3D1C7" stroke="#888780"/>
+<line x1="320" y1="288" x2="341" y2="288" stroke="#5c6b7a" stroke-width="1" marker-end="url(#m1)"/>
+<line x1="320" y1="288" x2="320" y2="265" stroke="#1D9E75" stroke-width="1" marker-end="url(#m1)"/>
+<text x="327" y="283" fill="#1c2733" font-size="12">a</text>
+<text x="325" y="274" fill="#0F6E56" font-size="12">w</text>
+<text x="320" y="338" text-anchor="middle" fill="#5c6b7a" font-size="12">glass guide at Δn 0.01</text>
+<text x="320" y="356" text-anchor="middle" fill="#1c2733" font-size="12">a 3.4, w 3.8 µm</text>
+<circle cx="540" cy="288" r="31" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1.4" stroke-dasharray="4,3"/>
+<circle cx="540" cy="288" r="23" fill="#CECBF6" stroke="#6b4fa0" stroke-width="1.4" stroke-dasharray="4,3"/>
+<text x="540" y="338" text-anchor="middle" fill="#5c6b7a" font-size="12">the two modes, superimposed</text>
+<text x="540" y="356" text-anchor="middle" fill="#8a5a1b" font-size="12">0.44 dB lost to size alone</text>
+</svg>
