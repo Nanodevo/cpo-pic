@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 1: the fiber, and what it delivers</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a class="here" href="fiber.html">1. The fiber</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Stage 1: the fiber, and what it delivers</h1>
+<div class="meta">
+A 0.45% index step, one surviving mode, and the 10.4 micrometre spot that
+everything downstream has to be designed around. Includes an interactive
+solver for the exact mode, and an investigation into why the datasheet and the
+textbook disagree.
+</div>
+
+<p>
+A thread of glass with a slightly denser thread down its middle. Light
+travelling nearly straight along that middle strikes the boundary at a very
+shallow angle, and beyond a certain shallowness it cannot cross, so it is
+reflected back in. Repeat that forever and the light is trapped, held not by a
+wall but by an index difference smaller than half a percent.
+</p>
+
+<p>
+Everything in this stage is bookkeeping about two things: how shallow "shallow
+enough" is, and how wide the trapped light ends up being. The second number is
+the one that leaves this stage and constrains the next.
+</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 780 366" role="img">
+<title>Anatomy of a single-mode fiber</title>
+<desc>Three panels. Left, the fiber end-on with an 8.2 micrometre core drawn to scale inside a 125 micrometre cladding, so the core is a small dot. Middle, the refractive index profile, a step of only 0.0067, shown exaggerated. Right, the field amplitude of the guided mode, a bell wider than the shaded core, with the mode field diameter marked where amplitude falls to one over e. Below, a four-step chain from given parameters to mode field diameter.</desc>
+<defs>
+<marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5c6b7a"/></marker>
+<marker id="a2" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#5c6b7a"/></marker>
+</defs>
+<text x="140" y="58" text-anchor="middle" fill="#1c2733" font-size="14">the structure</text>
+<text x="390" y="58" text-anchor="middle" fill="#1c2733" font-size="14">the index step</text>
+<text x="640" y="58" text-anchor="middle" fill="#1c2733" font-size="14">the mode it holds</text>
+<circle cx="140" cy="140" r="62" fill="#eef1f4" stroke="#a9b4bf" stroke-width="1.2"/>
+<circle cx="140" cy="140" r="4" fill="#1b6ca8"/>
+<line x1="144" y1="137" x2="203" y2="99" stroke="#a9b4bf" stroke-width="1"/>
+<text x="207" y="96" fill="#5c6b7a" font-size="12">the core</text>
+<text x="140" y="228" text-anchor="middle" fill="#5c6b7a" font-size="12">core 8.2 &micro;m</text>
+<text x="140" y="246" text-anchor="middle" fill="#5c6b7a" font-size="12">cladding 125 &micro;m</text>
+<text x="140" y="264" text-anchor="middle" fill="#8a5a1b" font-size="12">drawn to scale</text>
+<line x1="295" y1="192" x2="487" y2="192" stroke="#a9b4bf" stroke-width="1"/>
+<path d="M300,168 L365,168 L365,132 L415,132 L415,168 L480,168" fill="none" stroke="#6b4fa0" stroke-width="2"/>
+<line x1="437" y1="133" x2="437" y2="167" stroke="#5c6b7a" stroke-width="1" marker-start="url(#a2)" marker-end="url(#a1)"/>
+<text x="445" y="154" fill="#5c6b7a" font-size="12">&Delta;n</text>
+<text x="390" y="228" text-anchor="middle" fill="#5c6b7a" font-size="12">&Delta;n = 0.0067, a 0.45% step</text>
+<text x="390" y="246" text-anchor="middle" fill="#8a5a1b" font-size="12">step shown exaggerated</text>
+<text x="390" y="264" text-anchor="middle" fill="#5c6b7a" font-size="12">NA comes from this alone</text>
+<rect x="615" y="116" width="50" height="76" fill="#e3e9ee"/>
+<line x1="540" y1="192" x2="740" y2="192" stroke="#a9b4bf" stroke-width="1"/>
+<path d="M545,189 C600,187 615,120 640,118 C665,120 680,187 735,189" fill="none" stroke="#1b6ca8" stroke-width="2"/>
+<line x1="545" y1="165" x2="737" y2="165" stroke="#a9b4bf" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="545" y="159" fill="#5c6b7a" font-size="12">1/e</text>
+<line x1="609" y1="177" x2="671" y2="177" stroke="#5c6b7a" stroke-width="1" marker-start="url(#a2)" marker-end="url(#a1)"/>
+<text x="640" y="228" text-anchor="middle" fill="#5c6b7a" font-size="12">MFD 10.4 &micro;m &gt; core 8.2 &micro;m</text>
+<text x="640" y="246" text-anchor="middle" fill="#5c6b7a" font-size="12">the light is not all inside</text>
+<text x="640" y="264" text-anchor="middle" fill="#8a5a1b" font-size="12">the tails are what leaks</text>
+<rect x="45" y="288" width="155" height="54" rx="5" fill="#fff" stroke="#dde4ea"/>
+<text x="122" y="311" text-anchor="middle" fill="#1c2733" font-size="13">core, NA, &lambda;</text>
+<text x="122" y="329" text-anchor="middle" fill="#5c6b7a" font-size="12">what you are given</text>
+<rect x="220" y="288" width="155" height="54" rx="5" fill="#fff" stroke="#dde4ea"/>
+<text x="297" y="311" text-anchor="middle" fill="#1c2733" font-size="13">V number</text>
+<text x="297" y="329" text-anchor="middle" fill="#5c6b7a" font-size="12">2&pi; a NA / &lambda;</text>
+<rect x="395" y="288" width="155" height="54" rx="5" fill="#fff" stroke="#dde4ea"/>
+<text x="472" y="311" text-anchor="middle" fill="#1c2733" font-size="13">V &lt; 2.405</text>
+<text x="472" y="329" text-anchor="middle" fill="#5c6b7a" font-size="12">one mode only</text>
+<rect x="570" y="288" width="155" height="54" rx="5" fill="#eef4f9" stroke="#1b6ca8"/>
+<text x="647" y="311" text-anchor="middle" fill="#1c2733" font-size="13">MFD</text>
+<text x="647" y="329" text-anchor="middle" fill="#5c6b7a" font-size="12">10.4 &micro;m at 1550 nm</text>
+<line x1="202" y1="315" x2="216" y2="315" stroke="#5c6b7a" stroke-width="1.5" marker-end="url(#a1)"/>
+<line x1="377" y1="315" x2="391" y2="315" stroke="#5c6b7a" stroke-width="1.5" marker-end="url(#a1)"/>
+<line x1="552" y1="315" x2="566" y2="315" stroke="#5c6b7a" stroke-width="1.5" marker-end="url(#a1)"/>
+</svg>
+<figcaption>The core is drawn to scale and really is that small. The index step
+is not: at true scale it would be invisible.</figcaption>
+</figure>
+
+<h2>NA is the index step, rewritten</h2>
+
+<p>
+Numerical aperture is not an extra property of the fiber. It is the index
+difference expressed as an angle, and the derivation is three lines.
+</p>
+
+<p>
+At the core-cladding boundary, total internal reflection requires the internal
+angle to exceed the critical angle, <code>sin&theta;c = n&#8322;/n&#8321;</code>.
+A ray entering the flat end face at <code>&theta;a</code> in air refracts to
+<code>&theta;r</code> inside, with
+<code>sin&theta;a = n&#8321; sin&theta;r</code>. The angle it then makes at the
+<em>side</em> boundary is <code>90&deg; &minus; &theta;r</code>, so the
+condition becomes <code>cos&theta;r &gt; n&#8322;/n&#8321;</code>. Combining:
+</p>
+
+<div class="eq">sin &theta;a &lt; n&#8321; &middot; &radic;(1 &minus; n&#8322;&sup2;/n&#8321;&sup2;) = &radic;(n&#8321;&sup2; &minus; n&#8322;&sup2;) &equiv; NA</div>
+
+<p>
+Run it backwards for SMF-28. With NA = 0.14 and n&#8321; &asymp; 1.468, and
+using NA&sup2; = n&#8321;&sup2; &minus; n&#8322;&sup2; &asymp; 2&middot;n&#8321;&middot;&Delta;n:
+</p>
+
+<div class="num">
+&Delta;n &asymp; 0.0067. A single-mode fiber carries light across an ocean on an
+index step of less than half a percent. That is also why it is so sensitive to
+bending: there is very little index difference holding the light in.
+</div>
+
+<div class="warn">
+The acceptance-cone picture that this derivation rests on is honest only for
+multimode fiber. A single-mode fiber has exactly one mode; there are no rays to
+accept or reject. NA survives as a useful quantity not because of the cone but
+because it feeds the next number.
+</div>
+
+<h2>V asks how much room there is for modes</h2>
+
+<p>
+Light bouncing along the core is not free to take any angle. Travelling out to
+the boundary and back has to reproduce its own phase, or the wave cancels
+itself. Only a discrete set of angles survives, and those are the modes.
+</p>
+
+<div class="eq">V = 2&pi; &middot; a &middot; NA / &lambda;</div>
+
+<p>
+Read it as three factors rather than a formula to memorise.
+<code>2&pi;/&lambda;</code> is the wavenumber, phase per micrometre.
+<code>a</code> is how far across the guide is. <code>NA</code> is the steepest
+angle allowed. Their product is how much transverse phase the guide can
+accommodate, which is exactly how much room there is for modes to fit.
+</p>
+
+<p>
+Shrink the core, weaken the step, or lengthen the wavelength and V falls until
+only one pattern still fits. Below <strong>2.405</strong>, one. That number is
+the first zero of the Bessel function J&#8320;, which is precisely where the
+second pattern first becomes able to fit.
+</p>
+
+<h2>Marcuse turns V into a size</h2>
+
+<div class="eq">w/a = 0.65 + 1.619&middot;V<sup>&minus;3/2</sup> + 2.879&middot;V<sup>&minus;6</sup></div>
+
+<p>
+This is not derived from anything. The exact mode is a Bessel function
+J&#8320; inside the core joined to a modified Bessel function K&#8320; outside,
+through an eigenvalue equation with no closed-form solution. Marcuse fitted a
+Gaussian to the exact result and published the fit, accurate to about 1% for
+1.2 &lt; V &lt; 2.4.
+</p>
+
+<p>
+Read the three terms as behaviour. The 0.65 is the floor: hold the mode tightly
+enough and it settles to a fixed fraction of the core. The
+V<sup>&minus;3/2</sup> term is the main one, the mode spreading into the
+cladding as V falls. The V<sup>&minus;6</sup> term is the panic term: approach
+cutoff and the mode balloons, which is why a fiber run too near its cutoff
+wavelength becomes hopelessly bend-sensitive.
+</p>
+
+<p>
+Its purpose is entirely practical. Once modes are Gaussians, the coupling
+integral between two of them has a closed form. Every loss formula used later in
+this chain exists because of this one approximation, and it comes from the same
+1977 paper as those formulas.
+</p>
+
+<div class="warn">
+Common slip: V<sup>&minus;3/2</sup> means
+<code>1/(V&middot;&radic;V)</code>. At V = 2.33 that term is 0.457, not 0.257.
+A useful check on the result is that <strong>w/a must come out greater than
+1</strong>. The mode is wider than the core. A value below 1 means the exponent
+was mishandled.
+</div>
+
+<h2>The interactive solver</h2>
+
+<p>
+The <a href="fiber-mode.html">mode explorer</a> solves the exact eigenvalue
+equation in the browser and plots the true Bessel mode against Marcuse's
+Gaussian, on linear and logarithmic scales, with wavelength and NA as sliders.
+Everything in the next two sections was measured with it.
+</p>
+
+<h2>The datasheet does not agree with the model</h2>
+
+<p>
+Corning's SMF-28 datasheet gives core diameter 8.2 &micro;m, NA 0.14, and mode
+field diameter 10.4 &micro;m at 1550 nm. Feed the first two into the model at
+1550 nm:
+</p>
+
+<div class="num">
+V = 2.326, single mode &#10003;<br>
+w/a = 1.125, so w = 4.61 &micro;m and <strong>MFD = 9.22 &micro;m</strong><br>
+against a specified 10.4 &micro;m. The model is 11% low.
+</div>
+
+<p>
+Worse, the same datasheet contains a second number that can be checked
+independently: the cable cutoff wavelength, specified at 1260 nm or below.
+Cutoff means V = 2.405, so
+</p>
+
+<div class="eq">&lambda;c = 2&pi; &middot; a &middot; NA / 2.405 = 2&pi; &times; 4.1 &times; 0.14 / 2.405 = 1500 nm</div>
+
+<p>
+1500 nm would mean SMF-28 is not single mode at 1310, and it plainly is, since
+the entire access network runs on it there. So NA = 0.14 is not merely imprecise
+for mode calculations; it is contradicted by another line on its own datasheet.
+</p>
+
+<h3>Two independent routes to the real NA</h3>
+
+<p>
+Neither route uses the quoted NA. Both use a different specified quantity and
+solve backwards for the NA that would produce it.
+</p>
+
+<table>
+<tr><th>Route</th><th>Target</th><th>NA it implies</th></tr>
+<tr><td>Cutoff</td><td>&lambda;c = 1260 nm</td><td>0.116 read off the slider, 0.1177 solved exactly</td></tr>
+<tr><td>Mode size</td><td>MFD = 10.4 &micro;m at 1550 nm</td><td>0.120</td></tr>
+</table>
+
+<p>
+They agree within 3%, and they agree in the expected direction: the
+cutoff-derived value comes out slightly lower because cable cutoff is measured
+on deployed fiber with bends in it, and bending strips the second mode early, so
+a cabled measurement always reads low. The physical NA governing the mode is
+about <strong>0.118</strong>.
+</p>
+
+<div class="num">
+A datasheet value is the result of a measurement made under a stated convention,
+not a physical constant that can be dropped into any equation. There are at
+least three quantities called numerical aperture for this fiber and at least
+three called mode field diameter, and they differ by 15 to 20%. Each definition
+exists because it is the one a particular instrument can measure reliably.
+</div>
+
+<p>
+The engineering rule: never mix a spec from one convention into a formula built
+on another, and when the convention cannot be established, do not use the number
+as a design input. Measure it under the convention your model needs, or design
+against a number whose provenance you know.
+</p>
+
+<h2>Why bends matter</h2>
+
+<p>
+The mode extends beyond the core. Now bend the fiber. The whole mode must travel
+around the curve keeping one common phase front, like a rank of soldiers
+wheeling in formation. The part of the mode on the outside of the bend sits at a
+larger radius, so to keep up it would have to move faster. Past a certain
+distance from the axis it would have to exceed the speed of light in the
+cladding, which it cannot. That portion stops being guided and radiates away.
+</p>
+
+<div class="num">
+Bend loss is the tail being amputated. The further the mode extends from the
+core, the sooner the amputation begins, which is why the same fiber bends worse
+at 1550 nm than at 1310 nm.<br><br>
+Solved with NA = 0.118, the fraction of guided power travelling outside the core
+is <strong>19% at 1310 nm and 27% at 1550 nm</strong>. Same core, same glass,
+half as much again outside it.
+</div>
+
+<p>
+This is also where the Gaussian approximation fails hardest. On a logarithmic
+plot the true mode falls off along a straight line, dying as
+exp(&minus;r), while the Gaussian curves away downward, dying as
+exp(&minus;r&sup2;). By 20 &micro;m they differ by orders of magnitude.
+</p>
+
+<div class="warn">
+Use the Gaussian for coupling, never for leakage. Coupling is dominated by the
+bright centre where the fit is excellent. Bend loss and crosstalk are dominated
+by the faint tails, where the fit is wrong by a factor of a thousand. This
+matters for the glass bridge because it carries sixteen channels side by side.
+</div>
+
+<h2>Repeat it yourself</h2>
+
+<ol class="steps">
+<li>Open the <a href="fiber-mode.html">mode explorer</a>.</li>
+<li>At 1550 nm and NA 0.14, confirm V and the Marcuse MFD against the numbers
+above.</li>
+<li>Drag the wavelength down and find where V crosses 2.405. With NA 0.14 this
+happens near 1500 nm, which is the contradiction described above.</li>
+<li>Slide NA until cutoff lands at 1260 nm. Record it.</li>
+<li>Return to 1550 nm and slide NA until the Marcuse MFD reads 10.4 &micro;m.
+Record it. The two should agree within a few percent.</li>
+<li>Compare "power in cladding" at 1310 nm and at 1550 nm, and connect the
+difference to the bend-loss mechanism above.</li>
+</ol>
+
+<h2>Check yourself</h2>
+
+<details><summary>Why is the mode wider than the core?</summary>
+<p>Because the core does not contain the light, it steers it. Guiding is by a
+0.45% index difference, not a wall, and a substantial fraction of the power
+travels in the cladding. If a calculation gives w/a below 1, it is wrong.</p></details>
+
+<details><summary>What does the number 2.405 actually come from?</summary>
+<p>It is the first zero of the Bessel function J&#8320;. Solving Maxwell's
+equations in a cylinder gives Bessel functions in the core and modified Bessel
+functions in the cladding, and that root is where the second mode first becomes
+guided.</p></details>
+
+<details><summary>The same fiber is used at 1310 nm and 1550 nm. Which has the larger mode, and which bends worse?</summary>
+<p>1550 nm on both counts, and for the same reason. V has wavelength in the
+denominator, so the longer wavelength gives a smaller V, a mode held less
+tightly, more power in the cladding, and more to lose when the fiber curves.</p></details>
+
+<details><summary>Two fibers have identical core diameters but different mode field diameters. Will they splice well?</summary>
+<p>No. Coupling is governed by the overlap of the two mode <em>fields</em>, not
+by the geometry of their cores. MFD is the quantity that matters, which is why
+it is the number that leaves this stage.</p></details>
+
+<details><summary>Why can Zemax not be used to model this stage?</summary>
+<p>Ray optics requires apertures large compared with the wavelength. A
+single-mode fiber has one mode and no rays. The applicable tools are mode
+solvers and overlap integrals, or the analytic Gaussian approximation.</p></details>
+
+<h2>What stage 1 hands to stage 2</h2>
+
+<p>Two things, and they are the entire interface:</p>
+
+<ol class="steps">
+<li>A mode of <strong>10.4 &micro;m MFD</strong> arrives at the polished glass
+edge, measured the way the datasheet measures it. The waveguide in the glass
+has to match that, and matching means overlap of fields, not equality of core
+sizes.</li>
+<li>That mode has <strong>exponential tails</strong>, not Gaussian ones. Use the
+Gaussian for the coupling calculation, never for estimating what leaks into the
+neighbouring channel.</li>
+</ol>
+
+<div class="note">
+Reference: D. Marcuse, "Loss analysis of single-mode fiber splices",
+Bell System Technical Journal 56, 703 (1977), which is the source of both the
+mode-size fit and the misalignment loss formulas used later in this chain.
+Fiber specifications from the Corning SMF-28 datasheet. Next: stage 2, the
+waveguides inside the glass.
+</div>
+
+</div>
+</body>
+</html>

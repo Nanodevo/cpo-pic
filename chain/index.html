@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From fiber to ASIC: the optical chain</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a class="here" href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+  <a href="../README.md">cpo-pic</a>
+</nav>
+
+<h1>From fiber to ASIC: the optical chain</h1>
+<div class="meta">
+An explainer that follows a single photon path through a co-packaged optics
+assembly, one stage at a time, from the fiber that delivers the light to the
+point where it stops being light at all. Every stage is built around
+experiments you can re-run yourself in a browser or on your own machine.
+</div>
+
+<p>
+A co-packaged optics package is usually drawn as a single arrow from a fiber
+to a chip. That arrow hides five different physical regimes, four different
+classes of simulation tool, and at least three places where the light can be
+thrown away by a micrometre of misplacement.
+</p>
+
+<p>
+This study walks the path in order. Each stage answers three questions: what
+is physically happening, which equations describe it and where they come from,
+and which tool you would actually reach for to simulate it. The last question
+matters more than it sounds. Ray tracing cannot model a single-mode waveguide,
+and a mode solver cannot model a lens relay, so half of the skill is knowing
+which half of the toolbox a given problem belongs to.
+</p>
+
+<h2>The stages</h2>
+
+<a class="stage" href="rays.html">
+  <div class="n">Foundations</div>
+  <div class="t">Rays, lenses and aberration</div>
+  <div class="d">Where light can be treated as rays, and where that stops working.
+  Focal length by experiment, the thick-lens correction, and spherical aberration
+  measured with a ruler.</div>
+</a>
+
+<a class="stage" href="fiber.html">
+  <div class="n">Stage 1</div>
+  <div class="t">The fiber, and what it delivers</div>
+  <div class="d">Why a 0.45% index step traps light, why only one mode survives,
+  how wide that mode really is, and why the datasheet and the textbook disagree
+  by 11%.</div>
+</a>
+
+<div class="stage todo">
+  <div class="n">Stage 2</div>
+  <div class="t">Waveguides in the glass</div>
+  <div class="d">Ion exchange as a diffusion process, the graded index it produces,
+  mode matching to the fiber, bend loss and channel pitch. Not yet written.</div>
+</div>
+
+<div class="stage todo">
+  <div class="n">Stage 3</div>
+  <div class="t">Glass to PIC</div>
+  <div class="d">Adiabatic evanescent transfer across the bondline: phase matching,
+  supermodes, beat length, and why the taper tip width is a design variable.
+  Not yet written.</div>
+</div>
+
+<div class="stage todo">
+  <div class="n">Stage 4</div>
+  <div class="t">Inside the PIC</div>
+  <div class="d">Routing, polarization, wavelength multiplexing, modulation and
+  detection. Not yet written.</div>
+</div>
+
+<div class="stage todo">
+  <div class="n">Stage 5</div>
+  <div class="t">The O/E boundary</div>
+  <div class="d">Where photons become electrons and the optical chain ends.
+  Not yet written.</div>
+</div>
+
+<h2>Which tool belongs to which stage</h2>
+
+<p>
+Worth keeping in view from the start, because it is the question that decides
+whether a simulation is meaningful or merely produced.
+</p>
+
+<table>
+<tr><th>Stage</th><th>Physics</th><th>Tool family</th></tr>
+<tr><td>Foundations</td><td>geometrical optics, aberration</td><td>ray tracers: Zemax, Code V, rayoptics</td></tr>
+<tr><td>1. Fiber</td><td>guided mode, overlap integrals</td><td>mode solver, or the analytic Gaussian</td></tr>
+<tr><td>2. Glass</td><td>graded-index guiding, bends</td><td>mode solver plus BPM</td></tr>
+<tr><td>3. Glass to PIC</td><td>coupled modes, adiabatic transfer</td><td>mode solver plus EME, or 3D FDTD</td></tr>
+<tr><td>4. PIC</td><td>sub-wavelength structures</td><td>FDTD, then circuit-level S-parameters</td></tr>
+<tr><td>5. O/E</td><td>carrier transport, RF</td><td>not optical at all</td></tr>
+</table>
+
+<p>
+Note that Zemax appears only in the foundations row and, later, wherever a design
+expands the beam into free space. The rest of the chain belongs to the
+Lumerical family of tools and their open-source equivalents. Two different
+skills that are often written on a job advertisement as one word.
+</p>
+
+<h2>How to use this</h2>
+
+<p>
+Each stage carries the exercises that produced its numbers. They are written so
+they can be repeated from scratch, with nothing but a browser for the early ones
+and Python for the later ones. The measured values shown are real results from
+running them, not illustrations, so if you repeat an exercise and get something
+different, one of the two runs is wrong and it is worth finding out which.
+</p>
+
+<p>
+Each stage also ends with questions whose answers are folded away. They are
+there to be attempted before being opened.
+</p>
+
+<div class="note">
+Part of <a href="https://github.com/Nanodevo/cpo-pic">cpo-pic</a>, a passive
+photonic test die for glass-substrate co-packaged optics. The chain studied here
+is the one that die was designed to sit in. Related:
+<a href="https://nanodevo.github.io/reports/optical-connectivity.html">the
+tolerancing study</a> and <a href="https://nanodevo.github.io/reports/cpo-3d.html">the
+interactive 3D assembly</a>.
+</div>
+
+</div>
+</body>
+</html>
