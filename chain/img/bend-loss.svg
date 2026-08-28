@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 348" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 376" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
 <title>Why a bent waveguide leaks: the conformal picture</title>
 <desc>Left: a waveguide curving to the left, with light escaping from its outer edge. Right: the equivalent straight waveguide, in which bending appears as a tilt of the refractive index that rises with transverse position. The guided mode's effective index is a horizontal line. Where the tilted cladding index rises to meet it, at the critical position x sub c, the light is no longer bound and radiates. Between the core edge and that crossing lies a barrier the mode has to tunnel through, and the barrier gets wider as the bend radius grows.</desc>
-<rect x="0" y="0" width="680" height="348" fill="#fbfcfd"/>
+<rect x="0" y="0" width="680" height="376" fill="#fbfcfd"/>
 <defs>
 <marker id="b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#D85A30"/></marker>
 <marker id="b2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5c6b7a"/></marker>
@@ -22,21 +22,26 @@
 <text x="30" y="323" fill="#5c6b7a" font-size="12">outrun light to keep the phase front together</text>
 <text x="30" y="58" fill="#8a5a1b" font-size="12">true arc; bend drawn far tighter than reality</text>
 <text x="360" y="40" fill="#1c2733" font-size="14">the same bend, straightened out</text>
-<rect x="435" y="60" width="50" height="200" fill="#FAEEDA"/>
-<line x1="370" y1="260" x2="655" y2="260" stroke="#5c6b7a" stroke-width="1"/>
-<line x1="370" y1="215" x2="650" y2="120" stroke="#6b4fa0" stroke-width="2"/>
-<polygon points="405,203 405,163 435,153 435,193" fill="#9FE1CB" stroke="#1D9E75" stroke-width="1.2"/>
-<line x1="370" y1="176" x2="650" y2="176" stroke="#1b6ca8" stroke-width="1.4" stroke-dasharray="5,4"/>
-<text x="372" y="170" fill="#1b6ca8" font-size="12">n_eff</text>
-<text x="505" y="128" fill="#6b4fa0" font-size="12">cladding index, tilted</text>
-<text x="505" y="145" fill="#6b4fa0" font-size="12">n(1 + x/R)</text>
-<circle cx="485" cy="176" r="3.5" fill="#1b6ca8"/>
-<line x1="485" y1="176" x2="485" y2="260" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="3,3"/>
-<text x="478" y="278" fill="#1c2733" font-size="13">x_c</text>
-<path d="M485,176 q9,-12 18,0 q9,12 18,0 q9,-12 18,0 q9,12 18,0 q9,-12 18,0 q9,12 18,0 q9,-12 18,0" fill="none" stroke="#D85A30" stroke-width="1.6"/>
-<text x="556" y="204" fill="#D85A30" font-size="12">radiates</text>
+<text x="360" y="58" fill="#8a5a1b" font-size="12">proportions computed, not sketched</text>
+<rect x="435" y="66" width="62" height="194" fill="#FAEEDA"/>
+<line x1="370.0" y1="260" x2="655" y2="260" stroke="#5c6b7a" stroke-width="1"/>
+<line x1="370.0" y1="118" x2="370.0" y2="260" stroke="#5c6b7a" stroke-width="1"/>
+<path d="M365,244 l10,-5 M365,251 l10,-5" stroke="#5c6b7a" stroke-width="1" fill="none"/>
+<text x="360" y="110" fill="#5c6b7a" font-size="12">index</text>
+<line x1="370.0" y1="210.7" x2="650.0" y2="150.6" stroke="#6b4fa0" stroke-width="2"/>
+<polygon points="405,203.2 405,163.2 435,156.8 435,196.8" fill="#9FE1CB" stroke="#1D9E75" stroke-width="1.2"/>
+<line x1="370.0" y1="183" x2="650.0" y2="183" stroke="#1b6ca8" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="374" y="176" fill="#1b6ca8" font-size="12">n_eff</text>
+<text x="512" y="126" fill="#6b4fa0" font-size="12">cladding index, tilted</text>
+<text x="512" y="143" fill="#6b4fa0" font-size="12">n(1 + x/R)</text>
+<circle cx="497" cy="183" r="3.5" fill="#1b6ca8"/>
+<line x1="497" y1="183" x2="497" y2="260" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="488" y="278" fill="#1c2733" font-size="13">x_c</text>
+<path d="M497,183 q9,-12 18,0 q9,12 18,0 q9,-12 18,0 q9,12 18,0 q9,-12 18,0 q9,12 18,0 q9,-12 18,0 q9,12 18,0" fill="none" stroke="#D85A30" stroke-width="1.6"/>
+<text x="566" y="213" fill="#D85A30" font-size="12">radiates</text>
 <text x="420" y="278" fill="#5c6b7a" font-size="12" text-anchor="middle">core</text>
-<line x1="437" y1="292" x2="483" y2="292" stroke="#5c6b7a" stroke-width="1" marker-start="url(#b3)" marker-end="url(#b2)"/>
-<text x="460" y="310" fill="#854F0B" font-size="12" text-anchor="middle">barrier</text>
-<text x="30" y="340" fill="#1c2733" font-size="12">the barrier gets wider as R grows, and tunnelling is exponential in barrier width</text>
+<line x1="437" y1="292" x2="495" y2="292" stroke="#5c6b7a" stroke-width="1" marker-start="url(#b3)" marker-end="url(#b2)"/>
+<text x="466" y="310" fill="#854F0B" font-size="12" text-anchor="middle">barrier, 4.2a wide</text>
+<text x="360" y="332" fill="#5c6b7a" font-size="12">Δn 0.005, a 4.0 µm, R 15 mm, giving x_c = 21 µm = 5.2a</text>
+<text x="30" y="362" fill="#1c2733" font-size="12">the barrier gets wider as R grows, and tunnelling is exponential in barrier width</text>
 </svg>
