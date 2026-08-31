@@ -266,6 +266,286 @@ the index-matching adhesive suppresses</li>
 waveguide one</li>
 </ol>
 
+
+<h2>Bending: why the board is a board</h2>
+
+<p>
+A bend of radius R is mathematically equivalent to a <em>straight</em> waveguide
+whose refractive index is tilted. This is a conformal transformation, not an
+approximation of convenience: all the curvature disappears into a ramp.
+</p>
+
+<div class="eq">n_eq(x) = n(x) &middot; (1 + x/R)</div>
+
+<p>
+with x measured outward from the centre of the bend. Everything then follows by
+inspection. The mode has one effective index. Out on the tilted cladding the
+index climbs, and where it climbs to meet n_eff the light is no longer
+travelling through a medium slower than itself, so it stops being bound:
+</p>
+
+<div class="eq">x_c = R &middot; (n_eff &minus; n_clad) / n_clad</div>
+
+<figure>
+<img src="img/bend-loss.svg" alt="Left, a waveguide bend with light escaping from its outer edge. Right, the equivalent straight waveguide in which the cladding index is tilted, with the effective index as a horizontal line crossing it at the critical position" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The bend, and the same bend straightened out. The right panel's
+proportions are computed from the solved mode, not sketched: n_eff sits 41.6% of
+the way from cladding to core index, which is the normalized propagation
+constant b at V = 2.0.</figcaption>
+</figure>
+
+<h3>Bend loss is tunnelling</h3>
+
+<p>
+Between the edge of the core and x_c the field is evanescent; beyond it the
+field propagates freely. That is a potential barrier with a continuum on the far
+side, and the mode leaks through it exactly as an electron leaks out of a
+quantum well. Substituting the tilted index into the scalar wave equation gives
+a <strong>linear potential</strong>, whose solutions are Airy functions:
+</p>
+
+<div class="eq">d&sup2;E/dx&sup2; = [ &gamma;&sup2; &minus; (2k&#8320;&sup2;n&#8322;&sup2;/R)&middot;x ] &middot; E</div>
+
+<p>
+where <code>&gamma;&sup2; = &beta;&sup2; &minus; k&#8320;&sup2;n&#8322;&sup2;</code>
+is the ordinary cladding decay constant of the straight guide. The bracket
+vanishes at <code>x_t = &gamma;&sup2;R/(2k&#8320;&sup2;n&#8322;&sup2;)</code>,
+which reduces to the same x_c as the geometric argument gives. The wave equation
+and the picture agree, which is the first thing to check.
+</p>
+
+<p>
+WKB then gives the transmission through the barrier as
+<code>exp(&minus;2&int;&kappa;dx)</code>, and since tunnelling is exponential in
+barrier width while barrier width is proportional to R:
+</p>
+
+<div class="num">
+<strong>Bend loss is exponential in bend radius.</strong> In the limit
+a &lt;&lt; x_t the exponent becomes
+<code>(2/3)&middot;&gamma;&sup3;R/&beta;&sup2;</code>, which is Marcuse's 1976
+curvature-loss result, derived here from the conformal picture alone.
+</div>
+
+<p>
+Exponential means a cliff rather than a slope. Increase R slightly and the loss
+falls by orders of magnitude; decrease it slightly and the guide hemorrhages.
+That is why every platform is specified with a <strong>minimum bend
+radius</strong> rather than a loss-versus-radius curve: the curve exists but only
+one point on it is useful.
+</p>
+
+<h3>How it scales with &Delta;n</h3>
+
+<p>
+Since <code>&gamma; &prop; &radic;&Delta;n</code> and
+<code>x_c &prop; R&middot;&Delta;n</code>, the exponent goes as
+<code>R&middot;&Delta;n^1.5</code>. Holding the loss fixed:
+</p>
+
+<div class="eq">R &prop; &Delta;n^(&minus;3/2)</div>
+
+<div class="num">
+Halving &Delta;n multiplies the required bend radius by 2^1.5, about
+<strong>2.8&times;</strong>. The mode-matching fix in the previous section, from
+&Delta;n = 0.01 down to 0.005, nearly tripled the radius the bridge needs.
+</div>
+
+<table>
+<tr><th>Platform</th><th>&Delta;n</th><th>Practical minimum bend radius</th></tr>
+<tr><td>silicon</td><td>&asymp; 2</td><td>~5 &micro;m</td></tr>
+<tr><td>silicon nitride</td><td>&asymp; 0.55</td><td>~50 to 100 &micro;m</td></tr>
+<tr><td>IOX glass</td><td>0.005 to 0.01</td><td>~10 to 25 mm</td></tr>
+<tr><td>standard SMF patch cord</td><td>&asymp; 0.0067</td><td>~30 mm</td></tr>
+</table>
+
+<p>
+The last row is checkable against everyday objects: the minimum bend radius
+printed on any fiber patch cord is this physics and nothing else. And
+bend-insensitive fiber works by placing a low-index trench in the cladding just
+outside the core, which pushes the cladding index down exactly where the tilt is
+trying to bring it up, moving x_c outward and widening the barrier.
+</p>
+
+<h3>What that looks like at true scale</h3>
+
+<figure>
+<img src="img/bend-in-context.svg" alt="A 15 mm radius bend drawn at true scale, where the waveguide is thinner than the drawn line, with a callout magnified 250 times showing the core, the barrier and the caustic 21 micrometres out" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>At bend scale the waveguide should be 0.13 px wide and the caustic
+0.33 px outside it. Neither can be drawn, hence the callout. Inside that callout
+the arc departs from a straight line by 54 nm over 80 &micro;m of length.</figcaption>
+</figure>
+
+<div class="num">
+The light never encounters a bend. Locally it sees a straight waveguide whose
+cladding index rises very slightly outward, and that tilt is the entire physical
+content of the curvature. Bend loss is a slow bleed: a 90&deg; turn at 15 mm is
+23.6 mm of guide, roughly 290 of these windows in a row, each leaking a little
+through a barrier four core radii wide.
+</div>
+
+<h3>The consequence for the package</h3>
+
+<p>
+Sixteen channels leaving an MPO connector and fanning out to a die footprint
+need S-bends, and each costs a centimetre or two of substrate. The coupling
+requirement set &Delta;n, &Delta;n set the bend radius, and the bend radius set
+the physical size of the assembly. <strong>The glass part of a co-packaged
+optics package is a board rather than a chip because of one number at the fiber
+joint.</strong>
+</p>
+
+<h2>What limits propagation loss</h2>
+
+<p>
+Corning report below 0.1 dB/cm at 1310 nm. Worth placing that between the two
+things you already know: an etched silicon waveguide runs a few dB/cm, and
+optical fiber runs 0.2 dB per <em>kilometre</em>. So an ion-exchanged glass guide
+is roughly twenty times better than silicon and four orders of magnitude worse
+than fiber.
+</p>
+
+<p>
+The reason it beats silicon is the same fact that opened this stage:
+<strong>there are no etched sidewalls</strong>. In an etched waveguide the
+dominant loss is scattering from sidewall roughness, and it rises steeply with
+index contrast because more field sits at the wall. An exchanged guide has no
+wall. Its boundary is a diffusion profile, which is smooth by construction.
+No deposition and no etching turns out to be a loss argument as much as a cost
+argument.
+</p>
+
+<p>What is left, in rough order:</p>
+
+<ol class="steps">
+<li><strong>Scattering from index inhomogeneity</strong> in the exchanged region:
+concentration fluctuations and residual stress.</li>
+<li><strong>Surface scattering</strong>, if the guide sits at the polished
+surface. Burial moves the mode away from it, which is a second reason for the
+field-assisted step beyond mode symmetry.</li>
+<li><strong>Absorption in the base glass</strong>: hydroxyl content and
+transition-metal impurities such as iron and copper. This is why the glass maker
+matters and why a co-packaged optics glass substrate is not window glass.</li>
+<li><strong>Ion-specific absorption.</strong> Silver exchange gives a much larger
+&Delta;n but silver can be reduced to metallic colloids in the glass, which
+absorb and scatter. Potassium is optically cleaner and is why it is used where
+loss matters.</li>
+<li><strong>Bend loss</strong> on the routing.</li>
+</ol>
+
+<h2>Stress birefringence</h2>
+
+<p>
+Forcing a large ion into a site sized for a small one leaves the exchanged region
+in compression and its surroundings in tension. Through the photoelastic effect
+that stress makes the guide <strong>birefringent</strong>: TE and TM see
+different effective indices.
+</p>
+
+<p>
+The magnitude is typically 10&#8315;&#8308; to 10&#8315;&#8323;, which against a
+&Delta;n of 0.005 is between two and twenty percent of the guiding contrast
+itself. Not a rounding error.
+</p>
+
+<p>Consequences, all of which are specified quantities on a real datasheet:</p>
+
+<ol class="steps">
+<li><strong>Polarization dependent loss</strong>, because the two polarizations
+have different mode sizes and therefore different coupling to the fiber.</li>
+<li><strong>Polarization dependent wavelength</strong>, if anything in the
+circuit is interferometric.</li>
+<li><strong>Drifting insertion loss</strong>, since a standard fiber delivers a
+polarization state that wanders with temperature and handling. A
+polarization-dependent bridge is a bridge whose loss you cannot specify.</li>
+</ol>
+
+<p>Three levers, each with a cost:</p>
+
+<ol class="steps">
+<li><strong>Anneal</strong> to relax the stress, which also spreads the profile
+and reduces &Delta;n, so it is not free.</li>
+<li><strong>Bury the guide</strong>, which makes both the index profile and the
+stress field more symmetric.</li>
+<li><strong>Choose the ion.</strong> Silver is much closer in size to sodium than
+potassium is, so it produces more index change for less stress, at the cost of
+the colloid problem above.</li>
+</ol>
+
+<h2>Do sixteen channels at 250 &micro;m pitch talk to each other?</h2>
+
+<p>
+Two parallel guides exchange power through the overlap of one's evanescent tail
+with the other's core, and that tail decays as
+<code>exp(&minus;&gamma;x)</code>. For the glass guide solved earlier, with
+&Delta;n = 0.005 at V = 2.0:
+</p>
+
+<div class="num">
+&gamma; = k&#8320;&middot;&radic;(n_eff&sup2; &minus; n_clad&sup2;) = 0.32
+&micro;m&#8315;&sup1;, so the field decay length is
+<strong>1/&gamma; = 3.1 &micro;m</strong>.<br><br>
+At 250 &micro;m separation the field is down by
+<code>exp(&minus;0.32 &times; 250) = exp(&minus;80)</code>, around
+10&#8315;&sup3;&#8309;, and the coupled <em>power</em> goes as the square of
+that.
+</div>
+
+<p>
+So no. Not remotely. The number is so far beyond negligible that it stops being
+a design consideration at all. <strong>The 250 &micro;m pitch is inherited from
+the fiber connector, not chosen for isolation.</strong> Guides in this platform
+could be packed at thirty to fifty micrometres and still be isolated over
+centimetre-scale parallel runs.
+</p>
+
+<p>
+Which reframes what the fan-out on the glass is for. It is not there to separate
+channels for crosstalk reasons; it is there to convert the connector's
+mechanical pitch into whatever pitch the die wants, using bends whose radius is
+set by the physics two sections above.
+</p>
+
+<div class="warn">
+One caveat: direct evanescent coupling is not the only crosstalk path. Light
+scattered out of a guide can travel in the glass slab itself and be recaptured
+elsewhere, and guides that converge at a bend approach much closer than their
+nominal pitch. Both are real, and neither is captured by the exponential above.
+</div>
+
+<h2>What stage 2 establishes</h2>
+
+<p>The whole stage in eleven statements. If any of them is not obvious, that is
+the section to reread.</p>
+
+<ol class="steps">
+<li>An ion-exchanged waveguide is made by <strong>changing glass that is already
+there</strong>, with no deposition and no etching.</li>
+<li>The index rise comes from a larger, more polarizable ion and from the stress
+of forcing it into a smaller site.</li>
+<li>The <strong>small &Delta;n is the point</strong>, not a limitation: glass is
+the intermediate rung between a 10 &micro;m fiber mode and a 0.5 &micro;m chip
+mode.</li>
+<li>Depth follows <code>&radic;(Dt)</code>, and lateral diffusion makes the
+guide <code>W + 1.6d</code> wide, so <strong>depth and width are not
+independent</strong>.</li>
+<li>Three nearly orthogonal knobs: melt composition sets &Delta;n, time and
+temperature set geometry, the burial field sets depth and symmetry.</li>
+<li>Coupling is an <strong>overlap of fields</strong>. Core radii are almost
+irrelevant, and matching them can even be actively wrong.</li>
+<li>Once V is fixed, w/a is fixed, so <code>w_max = 0.652/NA</code> and the only
+way to enlarge the mode is to <strong>weaken the guide</strong>.</li>
+<li>Bend loss is <strong>tunnelling</strong> through a barrier whose width grows
+with R, so loss is exponential in R and
+<code>R &prop; &Delta;n^(&minus;3/2)</code>.</li>
+<li>Therefore the coupling requirement sets &Delta;n, and &Delta;n sets the
+physical size of the package.</li>
+<li>Propagation loss is low because there are <strong>no sidewalls</strong>;
+what remains is inhomogeneity, surface scattering, and base-glass purity.</li>
+<li>Stress makes the guide birefringent, which turns polarization into a
+specified quantity rather than an afterthought.</li>
+</ol>
+
 <h2>Check yourself</h2>
 
 <details><summary>Why can you not simply make the glass waveguide's core the same size as the fiber's?</summary>
@@ -287,10 +567,29 @@ enters the chip. A link whose insertion loss wanders cannot be specified.</p></d
 <p>About 2 + 1.6&times;5 = 10 &micro;m. Lateral diffusion under the mask edges
 dominates the final width once the depth exceeds the opening.</p></details>
 
+
+<details><summary>Why is bend loss exponential in bend radius rather than proportional to it?</summary>
+<p>Because it is a tunnelling process. The mode escapes through a barrier between
+the core edge and the radiation caustic, the barrier width grows in proportion
+to R, and tunnelling probability falls exponentially with barrier width.</p></details>
+
+<details><summary>An ion-exchanged guide runs at 0.1 dB/cm while an etched silicon guide runs at a few dB/cm. Why?</summary>
+<p>No etched sidewalls. Sidewall roughness scattering dominates loss in etched
+waveguides and rises steeply with index contrast. A diffused boundary is smooth
+by construction.</p></details>
+
+<details><summary>Would sixteen channels at 250 &micro;m pitch interfere with each other?</summary>
+<p>No, by an enormous margin. The field decay length is about 3 &micro;m, so at
+250 &micro;m the overlap is of order exp(&minus;80). The pitch comes from the
+fiber connector, not from isolation.</p></details>
+
+<details><summary>You halve &Delta;n to improve fiber coupling. What have you just done to the substrate size?</summary>
+<p>Increased the minimum bend radius by about 2.8&times;, since R scales as
+&Delta;n^(&minus;3/2). Every S-bend in the fan-out grows accordingly, and the
+board grows with them.</p></details>
+
 <div class="note">
-Still to be written into this stage: bend loss quantitatively, what limits
-propagation loss, stress birefringence in exchanged guides, and how sixteen
-channels are routed at 250 &micro;m pitch without coupling to one another.
+Stage 2 is complete. Next: stage 3, where the glass hands the light to the chip.
 Sources:
 <a href="https://imapsource.org/article/74749-glass-substrate-for-co-packaged-optics.pdf">Brusberg
 et al., Glass Substrate for Co-Packaged Optics, IMAPS 2022</a> and
