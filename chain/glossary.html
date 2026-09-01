@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary</title>
+<link rel="stylesheet" href="style.css">
+<style>
+table td:first-child{white-space:nowrap;font-weight:600;width:1%}
+h2{margin-top:2.4em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
+  <a href="bend-derivation.html">Bend derivation</a>
+  <a class="here" href="glossary.html">Glossary</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Glossary</h1>
+<div class="meta">
+Every abbreviation and named quantity used anywhere in this study, expanded and
+explained in one line. If a page uses a short form without expanding it, that is
+a bug in the page and this is the fallback.
+</div>
+
+<h2>Light in a waveguide</h2>
+<table>
+<tr><td>NA</td><td><strong>Numerical aperture.</strong> &radic;(n&#8321;&sup2;&minus;n&#8322;&sup2;) for a fiber: the index step written as an angle.</td></tr>
+<tr><td>V</td><td><strong>Normalized frequency</strong>, or V number. 2&pi;a&middot;NA/&lambda;. Below 2.405 a step-index guide carries one mode.</td></tr>
+<tr><td>b</td><td><strong>Normalized propagation constant.</strong> 0 at cutoff, 1 for a tightly held mode. Says where n<sub>eff</sub> sits between cladding and core.</td></tr>
+<tr><td>MFD, MFR</td><td><strong>Mode field diameter / radius.</strong> Where the field amplitude falls to 1/e, equivalently intensity to 1/e&sup2;.</td></tr>
+<tr><td>n<sub>eff</sub></td><td><strong>Effective index.</strong> &beta;/k&#8320;. The index the mode behaves as though it is travelling in.</td></tr>
+<tr><td>LP</td><td><strong>Linearly polarized</strong> modes. The simplified mode set valid only when the index contrast is small.</td></tr>
+<tr><td>TE, TM</td><td><strong>Transverse electric / transverse magnetic.</strong> The two polarizations of a planar or rectangular guide.</td></tr>
+<tr><td>TIR</td><td><strong>Total internal reflection.</strong></td></tr>
+<tr><td>PDL</td><td><strong>Polarization dependent loss.</strong></td></tr>
+<tr><td>PSR</td><td><strong>Polarization splitter-rotator.</strong> Separates TE and TM and turns one into the other.</td></tr>
+<tr><td>FSR</td><td><strong>Free spectral range.</strong> Spacing between a resonator's successive resonances.</td></tr>
+</table>
+
+<h2>Geometrical optics</h2>
+<table>
+<tr><td>LSA</td><td><strong>Longitudinal spherical aberration.</strong> Distance along the axis between where edge rays and axial rays cross.</td></tr>
+<tr><td>EFL</td><td><strong>Effective focal length.</strong> Measured from the principal plane, which sits inside the glass.</td></tr>
+<tr><td>BFD, FFD</td><td><strong>Back / front focal distance.</strong> Measured from the last / first glass surface, which is where you can put a ruler.</td></tr>
+<tr><td>MTF</td><td><strong>Modulation transfer function.</strong> How much contrast an optic preserves against spatial frequency.</td></tr>
+<tr><td>f/#</td><td><strong>f-number.</strong> Focal length divided by aperture diameter. The single number that says how hard a lens is.</td></tr>
+</table>
+
+<h2>Mathematics and methods</h2>
+<table>
+<tr><td>WKB</td><td><strong>Wentzel-Kramers-Brillouin approximation.</strong> Solves d&sup2;&psi;/dx&sup2; + Q(x)&psi; = 0 when Q varies slowly, by integrating the local wavenumber. In a forbidden region it gives tunnelling as exp(&minus;2&int;&kappa;dx). In optics the same approximation is called the <strong>eikonal</strong> and is what produces rays.</td></tr>
+<tr><td>&nabla;&sup2;</td><td><strong>Laplacian.</strong> Divergence of the gradient, <em>not</em> divergence squared. Measures how far a point is from the average of its neighbours.</td></tr>
+<tr><td>Airy function</td><td>Exact solution of a linear potential, and therefore the universal solution near any simple turning point.</td></tr>
+<tr><td>FDTD</td><td><strong>Finite-difference time-domain.</strong> Full-vector, handles sub-wavelength features and back-reflection. Expensive.</td></tr>
+<tr><td>FEM</td><td><strong>Finite element method.</strong> Used here for mode solving on a cross-section.</td></tr>
+<tr><td>BPM</td><td><strong>Beam propagation method.</strong> Fast for long, slowly varying structures. Fails at high contrast and cannot handle back-reflection.</td></tr>
+<tr><td>EME</td><td><strong>Eigenmode expansion.</strong> The right tool for long adiabatic transitions such as tapers.</td></tr>
+<tr><td>RCWA</td><td><strong>Rigorous coupled-wave analysis.</strong> For periodic structures: gratings, metasurfaces.</td></tr>
+<tr><td>POP</td><td><strong>Physical optics propagation.</strong> Zemax's mode for propagating a real beam rather than rays.</td></tr>
+</table>
+
+<h2>Materials and platforms</h2>
+<table>
+<tr><td>IOX</td><td><strong>Ion exchange.</strong> Making a waveguide by swapping alkali ions in glass, with no deposition and no etching.</td></tr>
+<tr><td>SOI</td><td><strong>Silicon on insulator.</strong> The standard silicon photonics wafer: device silicon over buried oxide.</td></tr>
+<tr><td>BOX</td><td><strong>Buried oxide.</strong> The insulator layer under the device silicon.</td></tr>
+<tr><td>SiN</td><td><strong>Silicon nitride.</strong> Lower contrast than silicon, far lower loss, no two-photon absorption at telecom wavelengths.</td></tr>
+<tr><td>InP</td><td><strong>Indium phosphide.</strong> Direct bandgap III-V: the platform that can make light, amplify it, and provide strong nonlinearity.</td></tr>
+<tr><td>PCM, GST</td><td><strong>Phase change material</strong>, typically <strong>germanium-antimony-tellurium</strong>. Non-volatile optical state.</td></tr>
+<tr><td>SMF</td><td><strong>Single-mode fiber.</strong> SMF-28 is Corning's standard telecom fiber.</td></tr>
+<tr><td>CTE</td><td><strong>Coefficient of thermal expansion.</strong> Mismatch between materials is a packaging failure mode.</td></tr>
+</table>
+
+<h2>Devices</h2>
+<table>
+<tr><td>PIC</td><td><strong>Photonic integrated circuit.</strong></td></tr>
+<tr><td>MZI, MZM</td><td><strong>Mach-Zehnder interferometer / modulator.</strong> Split, phase-shift one arm, recombine.</td></tr>
+<tr><td>EAM</td><td><strong>Electro-absorption modulator.</strong></td></tr>
+<tr><td>V&pi;L</td><td>Voltage-length product of a modulator. Lower is better; it trades against optical loss.</td></tr>
+<tr><td>SOA</td><td><strong>Semiconductor optical amplifier.</strong> A laser without a cavity. Its gain saturation is a usable nonlinearity.</td></tr>
+<tr><td>XGM, XPM</td><td><strong>Cross-gain / cross-phase modulation.</strong> One beam changing what another beam sees. The basis of all-optical logic.</td></tr>
+<tr><td>DFB, DBR</td><td><strong>Distributed feedback / distributed Bragg reflector</strong> lasers. Single-wavelength sources.</td></tr>
+<tr><td>PIN, APD</td><td><strong>p-i-n</strong> and <strong>avalanche</strong> photodiodes. APDs add internal gain and excess noise.</td></tr>
+<tr><td>SPAD</td><td><strong>Single-photon avalanche diode.</strong> An APD biased above breakdown.</td></tr>
+<tr><td>TIA</td><td><strong>Transimpedance amplifier.</strong> Converts detector current to voltage; usually sets receiver noise.</td></tr>
+<tr><td>AWG</td><td><strong>Arrayed waveguide grating.</strong> An on-chip wavelength multiplexer.</td></tr>
+<tr><td>MPO</td><td><strong>Multi-fiber push-on</strong> connector. MPO-16 carries sixteen fibers at 250 &micro;m pitch.</td></tr>
+</table>
+
+<h2>Systems and links</h2>
+<table>
+<tr><td>CPO</td><td><strong>Co-packaged optics.</strong> Putting the photonics in the same package as the switch chip.</td></tr>
+<tr><td>WDM</td><td><strong>Wavelength division multiplexing.</strong> Many channels on one waveguide, one per wavelength.</td></tr>
+<tr><td>BER</td><td><strong>Bit error rate.</strong></td></tr>
+<tr><td>OSNR</td><td><strong>Optical signal-to-noise ratio.</strong></td></tr>
+<tr><td>RIN</td><td><strong>Relative intensity noise</strong> of a laser.</td></tr>
+<tr><td>NEP</td><td><strong>Noise equivalent power.</strong> The optical power that gives a signal-to-noise ratio of one.</td></tr>
+<tr><td>SMSR</td><td><strong>Side mode suppression ratio.</strong> How cleanly a laser runs on one mode.</td></tr>
+<tr><td>ASE</td><td><strong>Amplified spontaneous emission.</strong> The noise an optical amplifier adds; what limits cascading gain stages.</td></tr>
+<tr><td>O/E/O</td><td><strong>Optical-electrical-optical.</strong> Converting out of light and back, which costs energy and latency.</td></tr>
+</table>
+
+<h2>Nonlinear optics</h2>
+<table>
+<tr><td>&chi;<sup>(n)</sup></td><td><strong>Susceptibility of order n.</strong> &chi;<sup>(1)</sup> is ordinary index and absorption, &chi;<sup>(2)</sup> needs a non-centrosymmetric crystal, &chi;<sup>(3)</sup> exists in everything.</td></tr>
+<tr><td>TPA</td><td><strong>Two-photon absorption.</strong> Two photons together exceed the bandgap. The imaginary part of &chi;<sup>(3)</sup>.</td></tr>
+<tr><td>FCA</td><td><strong>Free carrier absorption.</strong> The carriers TPA creates then absorb more light. The practical power ceiling in silicon.</td></tr>
+<tr><td>SPM, XPM, FWM</td><td><strong>Self-phase, cross-phase modulation, four-wave mixing.</strong> Kerr effects.</td></tr>
+<tr><td>Kerr effect</td><td>Index depending on intensity: n = n&#8320; + n&#8322;I.</td></tr>
+</table>
+
+<h2>Measurement</h2>
+<table>
+<tr><td>OTDR, OFDR</td><td><strong>Optical time / frequency domain reflectometry.</strong> Locate loss and reflections along a guide.</td></tr>
+<tr><td>Cutback</td><td>Measure identical structures of different lengths; the slope is loss per unit length and the intercept is coupling.</td></tr>
+<tr><td>VNA</td><td><strong>Vector network analyser.</strong> Measures S-parameters; S21 gives electro-optic bandwidth.</td></tr>
+<tr><td>PRBS</td><td><strong>Pseudo-random binary sequence.</strong> The test pattern behind an eye diagram.</td></tr>
+<tr><td>GRR, MSA</td><td><strong>Gauge repeatability and reproducibility</strong>, <strong>measurement system analysis.</strong> Proving the instrument before trusting the difference.</td></tr>
+</table>
+
+<h2>Process and quality</h2>
+<table>
+<tr><td>DOE</td><td><strong>Design of experiments.</strong> Vary factors deliberately rather than one at a time.</td></tr>
+<tr><td>SPC</td><td><strong>Statistical process control.</strong></td></tr>
+<tr><td>Cp, Cpk</td><td><strong>Process capability indices.</strong> How well a distribution fits inside a specification.</td></tr>
+<tr><td>FMEA</td><td><strong>Failure mode and effects analysis.</strong></td></tr>
+<tr><td>8D</td><td><strong>Eight disciplines.</strong> A structured problem-solving report for an excursion.</td></tr>
+<tr><td>DMAIC</td><td><strong>Define, measure, analyse, improve, control.</strong> The Six Sigma improvement cycle.</td></tr>
+<tr><td>PDK</td><td><strong>Process design kit.</strong> The foundry's rules and validated component library.</td></tr>
+<tr><td>MPW</td><td><strong>Multi-project wafer.</strong> Sharing a mask set and a run between many customers.</td></tr>
+</table>
+
+<h2>Computing</h2>
+<table>
+<tr><td>OISC</td><td><strong>One instruction set computer.</strong> Turing complete with a single instruction.</td></tr>
+<tr><td>SUBLEQ</td><td><strong>Subtract and branch if less than or equal to zero.</strong> The usual choice of that single instruction.</td></tr>
+<tr><td>TOPS</td><td><strong>Tera-operations per second.</strong></td></tr>
+<tr><td>2R</td><td><strong>Reamplification and reshaping.</strong> Signal regeneration without retiming.</td></tr>
+</table>
+
+<div class="note">
+Part of <a href="index.html">the optical chain</a>. If something is missing from
+this list, it should not have appeared in a page without being expanded.
+</div>
+
+</div>
+</body>
+</html>
