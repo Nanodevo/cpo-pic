@@ -49,3 +49,11 @@ ol.steps li{margin:.4em 0}
 .stage.todo{background:#f6f7f8;border-style:dashed}
 .stage.todo .t{color:var(--mut)}
 svg text{font-family:system-ui,-apple-system,sans-serif}
+.eqwrap{display:flex;align-items:flex-start;gap:14px;margin:1.1em 0}
+.eqwrap .eq{flex:1;margin:0}
+.eqno{font:14px/2.6 system-ui,sans-serif;color:var(--mut);white-space:nowrap;padding-top:.3em}
+sup.cite{font-size:.72em;line-height:0}
+sup.cite a{text-decoration:none;padding:0 1px}
+ol.refs{font:14.5px/1.65 system-ui,sans-serif;padding-left:1.4em}
+ol.refs li{margin:.55em 0}
+.verif{font:12.5px/1.5 system-ui,sans-serif;color:var(--mut);display:block;margin-top:.15em}

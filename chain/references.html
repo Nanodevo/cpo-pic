@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>References and conventions</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
+  <a href="bend-derivation.html">Bend derivation</a>
+  <a href="glossary.html">Glossary</a>
+  <a class="here" href="references.html">References</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>References and conventions</h1>
+<div class="meta">
+The bibliography for this study, and a statement of the rules it is written
+under. Every entry below has had its bibliographic record checked against an
+independent index; entries whose full text has not been read are marked as such,
+because a citation is a claim and claims should carry their provenance.
+</div>
+
+<h2>Conventions used throughout</h2>
+
+<ol class="steps">
+<li><strong>Every symbol is defined where it first appears, with SI units.</strong>
+The complete list is in the <a href="glossary.html">glossary</a>, which also
+expands every abbreviation.</li>
+<li><strong>Displayed equations are numbered</strong> so they can be referred to
+without ambiguity.</li>
+<li><strong>Every claim is labelled by type.</strong> Derived here, assumed,
+taken from the literature, or measured. Where a number is assumed, the assumption
+is stated rather than buried.</li>
+<li><strong>Numerical results carry their provenance.</strong> If a figure was
+produced by a script in this repository, the script is named in the caption so
+the result can be regenerated.</li>
+<li><strong>Approximations are named at the point of use</strong>, together with
+the regime in which they fail.</li>
+<li><strong>Nothing is reproduced from a source.</strong> Derivations are worked
+in full and written in the author's own words; where a result is standard, its
+originator is cited rather than paraphrased silently.</li>
+</ol>
+
+<div class="warn">
+<strong>A limitation stated openly.</strong> The bibliographic details below were
+verified against independent indexes, but most of these papers sit behind
+paywalls and their full texts have not been read for this study. Where a result
+is attributed to a source, that attribution reflects the standard scholarly
+record of who first derived it, not a claim to have checked the original
+derivation line by line. Entries marked <em>full text consulted</em> are the
+exceptions. Manufacturing a plausible-looking citation is worse than admitting
+this, so it is admitted.
+</div>
+
+<h2>Guided-wave theory</h2>
+
+<ol class="refs">
+<li id="r1">D. Gloge, "Weakly guiding fibers," <em>Applied Optics</em>
+<strong>10</strong>(10), 2252&ndash;2258 (1971).
+<span class="verif">The origin of the LP mode set and of the weak-guidance
+approximation used in step 2 of the bend derivation. Record verified via
+<a href="https://ui.adsabs.harvard.edu/abs/1971ApOpt..10.2252G/abstract">NASA ADS</a>.</span></li>
+
+<li id="r2">D. Marcuse, "Loss analysis of single-mode fiber splices,"
+<em>Bell System Technical Journal</em> <strong>56</strong>(5), 703&ndash;718 (1977).
+<span class="verif">Source of both the Gaussian mode-size fit
+(w/a = 0.65 + 1.619V<sup>&minus;3/2</sup> + 2.879V<sup>&minus;6</sup>) and the
+lateral, angular and longitudinal misalignment loss formulas. Record verified via
+<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/j.1538-7305.1977.tb00534.x">Wiley</a>;
+full text openly available at the
+<a href="https://archive.org/details/bstj56-5-703">Internet Archive</a>.</span></li>
+
+<li id="r3">D. Marcuse, "Curvature loss formula for optical fibers,"
+<em>Journal of the Optical Society of America</em> <strong>66</strong>(3),
+216&ndash;220 (1976).
+<span class="verif">The closed-form bend loss of a step-index fiber, and the
+source of the exponent (2/3)&gamma;&sup3;R/&beta;&sup2; recovered independently in
+step 11. Record verified via
+<a href="https://opg.optica.org/josa/abstract.cfm?uri=josa-66-3-216">Optica Publishing Group</a>.</span></li>
+
+<li id="r4">E. A. J. Marcatili, "Bends in optical dielectric guides,"
+<em>Bell System Technical Journal</em> <strong>48</strong>(7), 2103&ndash;2132 (1969).
+<span class="verif">The other founding treatment of waveguide bends. Record
+verified via
+<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/j.1538-7305.1969.tb01167.x">Wiley</a>;
+full text openly available at the
+<a href="https://archive.org/details/bstj48-7-2103">Internet Archive</a>.</span></li>
+
+<li id="r5">M. Heiblum and J. H. Harris, "Analysis of curved optical waveguides
+by conformal transformation," <em>IEEE Journal of Quantum Electronics</em>
+<strong>QE-11</strong>(2), 75&ndash;83 (1975).
+<span class="verif"><em>Full text consulted.</em> The conformal transformation of
+step 6, and the treatment of transition loss where a straight guide meets a
+curved one. Open copy at the
+<a href="https://www.weizmann.ac.il/condmat/heiblum/sites/condmat.heiblum/files/publications/ieee_01068563.pdf">author's institution</a>.</span></li>
+</ol>
+
+<h2>Glass waveguides and co-packaged optics</h2>
+
+<ol class="refs" start="6">
+<li id="r6">L. Brusberg et al., "Glass Substrate for Co-Packaged Optics,"
+<em>Proc. IMAPS</em> 2022, pp. 236&ndash;241.
+<span class="verif"><em>Full text consulted.</em> Source of the reported
+ion-exchange waveguide performance: mode-field matched to Corning SMF-28 Ultra at
+1310 nm, propagation loss below 0.1 dB/cm, and fiber coupling loss of 0.3 dB with
+air cladding against 0.1 dB with index-matched adhesive.
+<a href="https://imapsource.org/article/74749-glass-substrate-for-co-packaged-optics.pdf">Open PDF</a>.</span></li>
+
+<li id="r7">L. Brusberg et al., "Glass Substrate With Integrated Waveguides for
+Surface Mount Photonic Packaging," <em>Journal of Lightwave Technology</em> (2021).
+<span class="verif"><em>Full text consulted.</em>
+<a href="https://kocabas.gitlab.io/publications/Brusberg2021.pdf">Open PDF</a>.</span></li>
+</ol>
+
+<h2>Numerical methods</h2>
+
+<ol class="refs" start="8">
+<li id="r8">M. Abramowitz and I. A. Stegun (eds.), <em>Handbook of Mathematical
+Functions</em>, National Bureau of Standards Applied Mathematics Series 55 (1964).
+<span class="verif">Source of the polynomial approximations for J&#8320;, J&#8321;,
+I&#8320;, I&#8321;, K&#8320; and K&#8321; implemented in
+<code>fiber-mode.html</code>, sections 9.4 and 9.8.</span></li>
+
+<li id="r9">Corning Incorporated, <em>SMF-28 Ultra Optical Fiber Product
+Information</em>.
+<span class="verif">Source of the fiber parameters used throughout: core diameter
+8.2 &micro;m, numerical aperture 0.14, mode field diameter 10.4 &micro;m at
+1550 nm and 9.2 &micro;m at 1310 nm, cable cutoff at or below 1260 nm. The
+internal inconsistency between the quoted numerical aperture and the other two
+specifications is analysed in <a href="fiber.html">stage 1</a>.</span></li>
+</ol>
+
+<h2>Software used</h2>
+
+<ol class="refs" start="10">
+<li id="r10">femwell, a finite-element mode solver built on scikit-fem, used for
+the waveguide cross-section solutions.</li>
+<li id="r11">gdsfactory, used for the layout of the companion test die.</li>
+<li id="r12">Ray Optics Simulation by Rick Tu, open source, used for every
+measurement on the <a href="rays.html">foundations</a> page.
+<a href="https://phydemo.app/ray-optics/simulator/">phydemo.app</a></li>
+</ol>
+
+<div class="note">
+Part of <a href="index.html">the optical chain</a>. Corrections to any entry here
+are welcome and will be made rather than defended.
+</div>
+
+</div>
+</body>
+</html>

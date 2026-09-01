@@ -25,6 +25,7 @@
   <a href="stage2-glass.html">2. The glass</a>
   <a class="here" href="bend-derivation.html">Bend derivation</a>
   <a href="glossary.html">Glossary</a>
+  <a href="references.html">References</a>
   <a href="fiber-mode.html">Mode explorer</a>
 </nav>
 
@@ -62,16 +63,16 @@ needs five micrometres.
 <div class="step">
 <span class="n">Step 1</span>
 <h2>Maxwell's equations</h2>
-<div class="eq">&nabla;&middot;<strong>D</strong> = &rho;<sub>f</sub>
+<div class="eqwrap"><div class="eq">&nabla;&middot;<strong>D</strong> = &rho;<sub>f</sub>
 &nabla;&middot;<strong>B</strong> = 0
 &nabla;&times;<strong>E</strong> = &minus;&part;<strong>B</strong>/&part;t
-&nabla;&times;<strong>H</strong> = <strong>J</strong><sub>f</sub> + &part;<strong>D</strong>/&part;t</div>
+&nabla;&times;<strong>H</strong> = <strong>J</strong><sub>f</sub> + &part;<strong>D</strong>/&part;t</div><span class="eqno">(1)</span></div>
 <p>
 Four equations, and none of them mention a material. The material enters through
 two definitions and one assumption.
 </p>
-<div class="eq">definitions:    <strong>D</strong> &equiv; &epsilon;&#8320;<strong>E</strong> + <strong>P</strong>        <strong>H</strong> &equiv; <strong>B</strong>/&mu;&#8320; &minus; <strong>M</strong>
-assumption:     <strong>P</strong> = &epsilon;&#8320;&middot;&chi;&middot;<strong>E</strong>      (linear, isotropic, instantaneous)</div>
+<div class="eqwrap"><div class="eq">definitions:    <strong>D</strong> &equiv; &epsilon;&#8320;<strong>E</strong> + <strong>P</strong>        <strong>H</strong> &equiv; <strong>B</strong>/&mu;&#8320; &minus; <strong>M</strong>
+assumption:     <strong>P</strong> = &epsilon;&#8320;&middot;&chi;&middot;<strong>E</strong>      (linear, isotropic, instantaneous)</div><span class="eqno">(2)</span></div>
 <div class="means">
 <b>What D is for.</b> A dielectric in a field polarizes: bound charges shift and
 create their own opposing field. Writing Gauss's law in terms of <strong>E</strong>
@@ -90,8 +91,8 @@ dispersion, complex &chi; gives absorption, and &chi; as a series in
 For a dielectric with no free charge or current, non-magnetic so &mu;<sub>r</sub> = 1,
 and with &epsilon;<sub>r</sub> = 1 + &chi; = n&sup2;, the two curl equations become
 </p>
-<div class="eq">&nabla;&times;<strong>E</strong> = &minus;&mu;&#8320;&middot;&part;<strong>H</strong>/&part;t
-&nabla;&times;<strong>H</strong> =  &epsilon;&#8320;n&sup2;&middot;&part;<strong>E</strong>/&part;t</div>
+<div class="eqwrap"><div class="eq">&nabla;&times;<strong>E</strong> = &minus;&mu;&#8320;&middot;&part;<strong>H</strong>/&part;t
+&nabla;&times;<strong>H</strong> =  &epsilon;&#8320;n&sup2;&middot;&part;<strong>E</strong>/&part;t</div><span class="eqno">(3)</span></div>
 <div class="means">
 <b>Why n&sup2; = &epsilon;<sub>r</sub>.</b> From
 <strong>D</strong> = &epsilon;&#8320;(1+&chi;)<strong>E</strong> the wave speed
@@ -107,16 +108,16 @@ at low frequency and cannot at 10<sup>14</sup> Hz.
 <span class="n">Step 2</span>
 <h2>Four equations become one</h2>
 <p>Take the curl of Faraday's law and substitute Amp&egrave;re's:</p>
-<div class="eq">&nabla;&times;(&nabla;&times;<strong>E</strong>) = &minus;&mu;&#8320;&epsilon;&#8320;n&sup2;&middot;&part;&sup2;<strong>E</strong>/&part;t&sup2;</div>
+<div class="eqwrap"><div class="eq">&nabla;&times;(&nabla;&times;<strong>E</strong>) = &minus;&mu;&#8320;&epsilon;&#8320;n&sup2;&middot;&part;&sup2;<strong>E</strong>/&part;t&sup2;</div><span class="eqno">(4)</span></div>
 <p>and use the vector identity</p>
-<div class="eq">&nabla;&times;(&nabla;&times;<strong>E</strong>) = &nabla;(&nabla;&middot;<strong>E</strong>) &minus; &nabla;&sup2;<strong>E</strong></div>
+<div class="eqwrap"><div class="eq">&nabla;&times;(&nabla;&times;<strong>E</strong>) = &nabla;(&nabla;&middot;<strong>E</strong>) &minus; &nabla;&sup2;<strong>E</strong></div><span class="eqno">(5)</span></div>
 <p>
 The awkward piece is &nabla;&middot;<strong>E</strong>. It is not zero here,
 because n varies with position:
 &nabla;&middot;(n&sup2;<strong>E</strong>) = 0 gives
 &nabla;&middot;<strong>E</strong> = &minus;<strong>E</strong>&middot;&nabla;(ln n&sup2;).
 </p>
-<div class="eq">&nabla;&sup2;<strong>E</strong> + &nabla;( <strong>E</strong>&middot;&nabla;ln n&sup2; ) = (n&sup2;/c&sup2;)&middot;&part;&sup2;<strong>E</strong>/&part;t&sup2;</div>
+<div class="eqwrap"><div class="eq">&nabla;&sup2;<strong>E</strong> + &nabla;( <strong>E</strong>&middot;&nabla;ln n&sup2; ) = (n&sup2;/c&sup2;)&middot;&part;&sup2;<strong>E</strong>/&part;t&sup2;</div><span class="eqno">(6)</span></div>
 <div class="means">
 <b>The one approximation in this whole derivation.</b> If the index varies weakly,
 the middle term is negligible and the vector components of <strong>E</strong> stop
@@ -124,7 +125,7 @@ coupling to each other. Each Cartesian component then satisfies the same scalar
 equation and you may forget that light is a vector field.
 <br><br>
 At &Delta;n/n = 0.45% in a fiber this is excellent, and it is what licenses the LP
-modes. At &Delta;n/n &asymp; 1 in a silicon waveguide it is not, which is why
+modes<sup class="cite"><a href="references.html#r1">[1]</a></sup>. At &Delta;n/n &asymp; 1 in a silicon waveguide it is not, which is why
 silicon needs a full vector solver and has no LP modes.
 </div>
 </div>
@@ -137,7 +138,7 @@ Write <strong>E</strong>(<strong>r</strong>,t) = <strong>E</strong>(<strong>r</s
 so &part;&sup2;/&part;t&sup2; &rarr; &minus;&omega;&sup2;, and define
 k&#8320; = &omega;/c = 2&pi;/&lambda;:
 </p>
-<div class="eq">&nabla;&sup2;E + k&#8320;&sup2;&middot;n&sup2;(<strong>r</strong>)&middot;E = 0</div>
+<div class="eqwrap"><div class="eq">&nabla;&sup2;E + k&#8320;&sup2;&middot;n&sup2;(<strong>r</strong>)&middot;E = 0</div><span class="eqno">(7)</span></div>
 <div class="means">
 This is the <b>Helmholtz equation</b>, and every problem in guided optics is a
 boundary-value problem on it. Fiber modes, waveguide modes, bend loss, gratings:
@@ -173,7 +174,7 @@ wave. It is the continuum limit of a chain of masses on springs.
 <span class="n">Step 5</span>
 <h2>Choose coordinates that match the geometry</h2>
 <p>In cylindrical coordinates (r, &phi;, z) the Laplacian is</p>
-<div class="eq">&nabla;&sup2; = &part;&sup2;/&part;r&sup2; + (1/r)&middot;&part;/&part;r + (1/r&sup2;)&middot;&part;&sup2;/&part;&phi;&sup2; + &part;&sup2;/&part;z&sup2;</div>
+<div class="eqwrap"><div class="eq">&nabla;&sup2; = &part;&sup2;/&part;r&sup2; + (1/r)&middot;&part;/&part;r + (1/r&sup2;)&middot;&part;&sup2;/&part;&phi;&sup2; + &part;&sup2;/&part;z&sup2;</div><span class="eqno">(8)</span></div>
 <p>
 The (1/r)&middot;&part;/&part;r term is not decoration: a cylindrical shell's area
 grows as r, so an outward-moving wave thins out, and that term encodes it.
@@ -191,8 +192,8 @@ E = E(r)&middot;e<sup>&minus;i&nu;&phi;</sup> turns
 &part;&sup2;/&part;&phi;&sup2; into &minus;&nu;&sup2;, but it arrives divided by
 r&sup2;, so the confinement term <b>depends on position</b>.
 </div>
-<div class="eq">fiber:  d&sup2;E/dr&sup2; + (1/r)dE/dr + [ k&#8320;&sup2;n&sup2;(r) &minus; &beta;&sup2;    ]E = 0
-bend:   d&sup2;E/dr&sup2; + (1/r)dE/dr + [ k&#8320;&sup2;n&sup2;(r) &minus; &nu;&sup2;/r&sup2; ]E = 0</div>
+<div class="eqwrap"><div class="eq">fiber:  d&sup2;E/dr&sup2; + (1/r)dE/dr + [ k&#8320;&sup2;n&sup2;(r) &minus; &beta;&sup2;    ]E = 0
+bend:   d&sup2;E/dr&sup2; + (1/r)dE/dr + [ k&#8320;&sup2;n&sup2;(r) &minus; &nu;&sup2;/r&sup2; ]E = 0</div><span class="eqno">(9)</span></div>
 <div class="means">
 The fiber equation has constant coefficients in the bracket, gives Bessel
 functions, and has genuinely bound modes. That is where J&#8320; and the cutoff
@@ -207,10 +208,10 @@ Everything that follows is a consequence of that single difference.
 <span class="n">Step 6</span>
 <h2>Straighten the bend exactly</h2>
 <p>Substitute a logarithmic stretch of the radial coordinate:</p>
-<div class="eq">u = R&middot;ln(r/R)      so   r = R&middot;e<sup>u/R</sup>,   u = 0 on the guide axis</div>
+<div class="eqwrap"><div class="eq">u = R&middot;ln(r/R)      so   r = R&middot;e<sup>u/R</sup>,   u = 0 on the guide axis</div><span class="eqno">(10)</span></div>
 <p>Then du/dr = R/r = e<sup>&minus;u/R</sup>, and the two radial terms become</p>
-<div class="eq">d&sup2;/dr&sup2;     = e<sup>&minus;2u/R</sup>&middot;[ d&sup2;/du&sup2; &minus; (1/R)&middot;d/du ]
-(1/r)&middot;d/dr = e<sup>&minus;2u/R</sup>&middot;(1/R)&middot;d/du</div>
+<div class="eqwrap"><div class="eq">d&sup2;/dr&sup2;     = e<sup>&minus;2u/R</sup>&middot;[ d&sup2;/du&sup2; &minus; (1/R)&middot;d/du ]
+(1/r)&middot;d/dr = e<sup>&minus;2u/R</sup>&middot;(1/R)&middot;d/du</div><span class="eqno">(11)</span></div>
 <div class="num">
 Add them and the first-derivative terms <strong>cancel exactly</strong>. That
 cancellation is why the logarithm is the right substitution and not one arbitrary
@@ -221,7 +222,7 @@ completely.
 With &beta; &equiv; &nu;/R the centrifugal term becomes
 &beta;&sup2;e<sup>&minus;2u/R</sup>. Multiplying through by e<sup>2u/R</sup>:
 </p>
-<div class="eq">d&sup2;E/du&sup2; + [ k&#8320;&sup2;&middot;n<sub>eq</sub>&sup2;(u) &minus; &beta;&sup2; ]&middot;E = 0      with   n<sub>eq</sub>(u) = n(u)&middot;e<sup>u/R</sup></div>
+<div class="eqwrap"><div class="eq">d&sup2;E/du&sup2; + [ k&#8320;&sup2;&middot;n<sub>eq</sub>&sup2;(u) &minus; &beta;&sup2; ]&middot;E = 0      with   n<sub>eq</sub>(u) = n(u)&middot;e<sup>u/R</sup></div><span class="eqno">(12)</span></div>
 <div class="means">
 That is the equation of a <b>straight</b> waveguide whose index is tilted. It is
 <b>exact</b>. No approximation has been made since step 2. All of the curvature
@@ -251,9 +252,9 @@ theorem, and the only question anyone can ask is how much.
 For u &lt;&lt; R, expand e<sup>2u/R</sup> &asymp; 1 + 2u/R. In the cladding,
 where n = n&#8322; and u &gt; a:
 </p>
-<div class="eq">k&#8320;&sup2;n&#8322;&sup2;(1 + 2u/R) &minus; &beta;&sup2; = &minus;&gamma;&sup2; + (2k&#8320;&sup2;n&#8322;&sup2;/R)&middot;u</div>
+<div class="eqwrap"><div class="eq">k&#8320;&sup2;n&#8322;&sup2;(1 + 2u/R) &minus; &beta;&sup2; = &minus;&gamma;&sup2; + (2k&#8320;&sup2;n&#8322;&sup2;/R)&middot;u</div><span class="eqno">(13)</span></div>
 <p>with &gamma;&sup2; &equiv; &beta;&sup2; &minus; k&#8320;&sup2;n&#8322;&sup2;, giving</p>
-<div class="eq">d&sup2;E/du&sup2; = [ &gamma;&sup2; &minus; (2k&#8320;&sup2;n&#8322;&sup2;/R)&middot;u ]&middot;E</div>
+<div class="eqwrap"><div class="eq">d&sup2;E/du&sup2; = [ &gamma;&sup2; &minus; (2k&#8320;&sup2;n&#8322;&sup2;/R)&middot;u ]&middot;E</div><span class="eqno">(14)</span></div>
 <div class="means">
 &gamma; is the decay rate of the straight guide's evanescent tail. At u = 0 the
 field decays exactly as it would in a straight guide; moving outward, the bend
@@ -270,12 +271,12 @@ mathematics.
 <span class="n">Step 9</span>
 <h2>Where it stops decaying</h2>
 <p>Set the bracket to zero:</p>
-<div class="eq">x<sub>t</sub> = &gamma;&sup2;&middot;R / (2&middot;k&#8320;&sup2;&middot;n&#8322;&sup2;)</div>
+<div class="eqwrap"><div class="eq">x<sub>t</sub> = &gamma;&sup2;&middot;R / (2&middot;k&#8320;&sup2;&middot;n&#8322;&sup2;)</div><span class="eqno">(15)</span></div>
 <p>
 and since &gamma;&sup2; = k&#8320;&sup2;(n<sub>eff</sub>&sup2; &minus; n&#8322;&sup2;)
 &asymp; 2k&#8320;&sup2;n&#8322;(n<sub>eff</sub> &minus; n&#8322;), this reduces to
 </p>
-<div class="eq">x<sub>t</sub> = R&middot;(n<sub>eff</sub> &minus; n&#8322;)/n&#8322;</div>
+<div class="eqwrap"><div class="eq">x<sub>t</sub> = R&middot;(n<sub>eff</sub> &minus; n&#8322;)/n&#8322;</div><span class="eqno">(16)</span></div>
 <div class="means">
 <b>The same answer from a completely different argument.</b> Light at transverse
 position x must travel around a radius R + x, so it needs a phase velocity higher
@@ -294,20 +295,20 @@ same expression. That is the check that tells you neither is nonsense.
 WKB gives a transmission of e<sup>&minus;I</sup> through the barrier, where the
 integral runs from the core edge out to the turning point:
 </p>
-<div class="eq">I = 2&middot;&int;<sub>a</sub><sup>x<sub>t</sub></sup> &kappa;(u) du      &kappa;(u) = &gamma;&middot;&radic;(1 &minus; u/x<sub>t</sub>)</div>
+<div class="eqwrap"><div class="eq">I = 2&middot;&int;<sub>a</sub><sup>x<sub>t</sub></sup> &kappa;(u) du      &kappa;(u) = &gamma;&middot;&radic;(1 &minus; u/x<sub>t</sub>)</div><span class="eqno">(17)</span></div>
 <p>Substitute s = 1 &minus; u/x<sub>t</sub>, so du = &minus;x<sub>t</sub>&middot;ds:</p>
-<div class="eq">&int; &gamma;&radic;(1 &minus; u/x<sub>t</sub>) du = &gamma;&middot;x<sub>t</sub>&middot;&int;<sub>0</sub><sup>s&#8320;</sup>&radic;s ds = (2/3)&middot;&gamma;&middot;x<sub>t</sub>&middot;s&#8320;<sup>3/2</sup></div>
+<div class="eqwrap"><div class="eq">&int; &gamma;&radic;(1 &minus; u/x<sub>t</sub>) du = &gamma;&middot;x<sub>t</sub>&middot;&int;<sub>0</sub><sup>s&#8320;</sup>&radic;s ds = (2/3)&middot;&gamma;&middot;x<sub>t</sub>&middot;s&#8320;<sup>3/2</sup></div><span class="eqno">(18)</span></div>
 <p>with s&#8320; = 1 &minus; a/x<sub>t</sub>, so</p>
-<div class="eq">I = (4/3)&middot;&gamma;&middot;x<sub>t</sub>&middot;(1 &minus; a/x<sub>t</sub>)<sup>3/2</sup></div>
+<div class="eqwrap"><div class="eq">I = (4/3)&middot;&gamma;&middot;x<sub>t</sub>&middot;(1 &minus; a/x<sub>t</sub>)<sup>3/2</sup></div><span class="eqno">(19)</span></div>
 </div>
 
 <div class="step">
 <span class="n">Step 11</span>
 <h2>The famous limit</h2>
 <p>If the core is small compared with the caustic distance, the bracket goes to one:</p>
-<div class="eq">I &rarr; (4/3)&middot;&gamma;&middot;x<sub>t</sub> = (2/3)&middot;&gamma;&sup3;&middot;R / &beta;&sup2;</div>
+<div class="eqwrap"><div class="eq">I &rarr; (4/3)&middot;&gamma;&middot;x<sub>t</sub> = (2/3)&middot;&gamma;&sup3;&middot;R / &beta;&sup2;</div><span class="eqno">(20)</span></div>
 <div class="num">
-That is <strong>Marcuse's 1976 curvature-loss exponent</strong>, obtained from
+That is <strong>Marcuse's 1976 curvature-loss exponent</strong><sup class="cite"><a href="references.html#r3">[3]</a></sup>, obtained from
 nothing but a coordinate change and a tunnelling integral.
 </div>
 </div>
@@ -348,7 +349,7 @@ with <code>chain/bend_loss.py</code>.</figcaption>
 <div class="step">
 <span class="n">Step 13</span>
 <h2>What each symbol controls</h2>
-<div class="eq">I &prop; &gamma;&sup3; &middot; R</div>
+<div class="eqwrap"><div class="eq">I &prop; &gamma;&sup3; &middot; R</div><span class="eqno">(21)</span></div>
 <ol class="steps">
 <li><strong>R appears linearly in an exponent</strong>, so loss is exponential in
 radius. That is why the curves are near-vertical and why platforms are specified
@@ -367,7 +368,7 @@ at 1550 nm than at 1310 nm. It is the same fact as more power in the cladding.</
 
 <h2>The whole thing on one page</h2>
 
-<div class="eq">1.  Maxwell + (D = &epsilon;&#8320;E + P) + (P = &epsilon;&#8320;&chi;E)
+<div class="eqwrap"><div class="eq">1.  Maxwell + (D = &epsilon;&#8320;E + P) + (P = &epsilon;&#8320;&chi;E)
 2.  curl of curl, drop the &nabla;(E&middot;&nabla;ln n&sup2;) term   [weak guidance]
 3.  one frequency:            &nabla;&sup2;E + k&#8320;&sup2;n&sup2;E = 0
 4.  cylindrical, propagate in &phi;:  &minus;&nu;&sup2;/r&sup2; instead of &minus;&beta;&sup2;
@@ -377,7 +378,7 @@ at 1550 nm than at 1310 nm. It is the same fact as more power in the cladding.</
 8.  turning point:            x_t = R(n_eff &minus; n&#8322;)/n&#8322;
 9.  WKB:                      I = (4/3)&gamma;&middot;x_t&middot;(1 &minus; a/x_t)^(3/2)
 10. limit a &lt;&lt; x_t:           I = (2/3)&gamma;&sup3;R/&beta;&sup2;      [Marcuse 1976]
-11. loss &prop; e^(&minus;I):           exponential in R, R &prop; &Delta;n^(&minus;3/2)</div>
+11. loss &prop; e^(&minus;I):           exponential in R, R &prop; &Delta;n^(&minus;3/2)</div><span class="eqno">(22)</span></div>
 
 <h2>Check yourself</h2>
 
@@ -403,14 +404,21 @@ ones.</p></details>
 waveguide has a truly bound mode, so the loss is never zero, only exponentially
 small.</p></details>
 
-<div class="note">
-Reference: Heiblum and Harris, "Analysis of curved optical waveguides by
-conformal transformation", IEEE J. Quantum Electron. QE-11, 75 (1975), which
-derives this and also treats the transition loss where a straight guide meets a
-curved one. Marcuse, "Curvature loss formula for optical fibers", J. Opt. Soc.
-Am. 66, 216 (1976) for the closed form. Part of
-<a href="index.html">the optical chain</a>.
-</div>
+<h2>References</h2>
+<ol class="refs">
+<li>D. Gloge, "Weakly guiding fibers," <em>Appl. Opt.</em> <strong>10</strong>(10), 2252&ndash;2258 (1971). Origin of the weak-guidance approximation used in step 2.</li>
+<li>D. Marcuse, "Loss analysis of single-mode fiber splices," <em>Bell Syst. Tech. J.</em> <strong>56</strong>(5), 703&ndash;718 (1977). Source of the Gaussian mode-size fit used for &gamma;.</li>
+<li>D. Marcuse, "Curvature loss formula for optical fibers," <em>J. Opt. Soc. Am.</em> <strong>66</strong>(3), 216&ndash;220 (1976). The closed form recovered in step 11.</li>
+<li>E. A. J. Marcatili, "Bends in optical dielectric guides," <em>Bell Syst. Tech. J.</em> <strong>48</strong>(7), 2103&ndash;2132 (1969).</li>
+<li>M. Heiblum and J. H. Harris, "Analysis of curved optical waveguides by conformal transformation," <em>IEEE J. Quantum Electron.</em> <strong>QE-11</strong>(2), 75&ndash;83 (1975). The conformal transformation of step 6, and transition loss.</li>
+</ol>
+<p style="font:14px/1.6 system-ui,sans-serif;color:var(--mut)">
+Full bibliographic records, verification status and the conventions this study is
+written under are on the <a href="references.html">references page</a>. The
+derivation above is worked in full rather than reproduced; where a result is
+standard, its originator is cited.
+</p>
+<div class="note">Part of <a href="index.html">the optical chain</a>.</div>
 
 </div>
 </body>
