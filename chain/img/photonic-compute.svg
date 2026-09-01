@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 356" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>Where nonlinearity sits in a photonic neural network layer</title>
+<desc>Light enters from the left and passes through a mesh of Mach-Zehnder interferometers, which performs an arbitrary matrix multiplication passively. It then reaches the activation function. Two routes are shown: the solid route drops out of the optical domain into a photodiode, an electronic nonlinear function and a modulator before returning to light, which is what commercial systems do and which costs energy and latency at every layer. The dashed route stays in the optical domain using a nonlinear optical element, which is possible but weak and power hungry. After the activation the signal continues to the next layer.</desc>
+<rect x="0" y="0" width="680" height="356" fill="#fbfcfd"/>
+<defs><marker id="p1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5c6b7a"/></marker></defs>
+<text x="30" y="38" fill="#1c2733" font-size="14">one layer of a photonic neural network</text>
+<text x="30" y="112" fill="#5c6b7a" font-size="12">input</text>
+<line x1="30" y1="128" x2="146" y2="128" stroke="#1D9E75" stroke-width="2.4" marker-end="url(#p1)"/>
+<rect x="150" y="86" width="196" height="84" rx="5" fill="#E1F5EE" stroke="#1D9E75"/>
+<line x1="164" y1="102" x2="332" y2="102" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="164" y1="122" x2="332" y2="122" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="164" y1="142" x2="332" y2="142" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="164" y1="160" x2="332" y2="160" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="188" y1="102" x2="188" y2="122" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="216" y1="122" x2="216" y2="142" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="244" y1="142" x2="244" y2="160" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="244" y1="102" x2="244" y2="122" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="272" y1="122" x2="272" y2="142" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="300" y1="102" x2="300" y2="122" stroke="#0F6E56" stroke-width="1.2"/>
+<line x1="300" y1="142" x2="300" y2="160" stroke="#0F6E56" stroke-width="1.2"/>
+<text x="248" y="80" text-anchor="middle" fill="#0F6E56" font-size="13">mesh of interferometers</text>
+<line x1="346" y1="128" x2="404" y2="128" stroke="#1D9E75" stroke-width="2.4" marker-end="url(#p1)"/>
+<line x1="408" y1="128" x2="536" y2="128" stroke="#a9b4bf" stroke-width="2" stroke-dasharray="6,5"/>
+<text x="472" y="118" text-anchor="middle" fill="#5c6b7a" font-size="12">all-optical, if you can</text>
+<path d="M408,128 L408,196" stroke="#D85A30" stroke-width="2.2" fill="none"/>
+<path d="M536,196 L536,128" stroke="#D85A30" stroke-width="2.2" fill="none" marker-end="url(#p1)"/>
+<rect x="386" y="196" width="172" height="56" rx="5" fill="#FAEEDA" stroke="#BA7517"/>
+<text x="472" y="219" text-anchor="middle" fill="#854F0B" font-size="13">detect, apply f(x), re-modulate</text>
+<text x="472" y="238" text-anchor="middle" fill="#854F0B" font-size="12">this part is electronic</text>
+<line x1="540" y1="128" x2="632" y2="128" stroke="#1D9E75" stroke-width="2.4" marker-end="url(#p1)"/>
+<text x="576" y="112" fill="#5c6b7a" font-size="12">next layer</text>
+<text x="30" y="290" fill="#0F6E56" font-size="13">the linear half is free</text>
+<text x="30" y="309" fill="#5c6b7a" font-size="12">an arbitrary matrix multiply happens as the light</text>
+<text x="30" y="326" fill="#5c6b7a" font-size="12">crosses the mesh: passive, no clock, no energy</text>
+<text x="30" y="343" fill="#5c6b7a" font-size="12">per operation once the light is in.</text>
+<text x="366" y="290" fill="#854F0B" font-size="13">the nonlinear half is the whole problem</text>
+<text x="366" y="309" fill="#5c6b7a" font-size="12">stack linear layers and they collapse into one</text>
+<text x="366" y="326" fill="#5c6b7a" font-size="12">matrix, so something between them must be</text>
+<text x="366" y="343" fill="#5c6b7a" font-size="12">nonlinear. Light does not do that easily.</text>
+</svg>
