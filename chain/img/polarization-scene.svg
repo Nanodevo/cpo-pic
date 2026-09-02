@@ -40,6 +40,6 @@
 </g>
 <text x="550" y="234" text-anchor="middle" fill="#5c6b7a" font-size="12">add up all the little p&#8217;s</text>
 <text x="550" y="252" text-anchor="middle" fill="#1c2733" font-size="12">per cubic metre, and that is P</text>
-<text x="40" y="292" fill="#5c6b7a" font-size="12">P is the polarization of the material: how far the charges inside it have been pulled apart, counted per unit volume.</text>
+<text x="40" y="292" fill="#5c6b7a" font-size="12">P is the polarization of the material: how far the charges inside it have been pulled apart, per unit volume.</text>
 <text x="40" y="310" fill="#5c6b7a" font-size="12">E is the electric field of the light itself. Nothing else in the scene is charged or applying a field.</text>
 </svg>
