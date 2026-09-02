@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 268" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>Why a sweeping searchlight spot can outrun light without anything travelling</title>
+<desc>A rotating lighthouse sends two rays outward to a distant screen. Each ray travels outward at the speed of light along its own radius. The bright spot on the screen appears to move from one landing point to the other, and if the screen is far enough away that apparent motion can exceed the speed of light. But the two spots are made of different light that left the lighthouse at different moments, and nothing travels from one landing point to the other.</desc>
+<rect x="0" y="0" width="680" height="268" fill="#fbfcfd"/>
+<defs><marker id="l1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#BA7517"/></marker>
+<marker id="l2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker></defs>
+<rect x="52" y="106" width="26" height="62" fill="#d3d1c7" stroke="#888780"/>
+<circle cx="65" cy="98" r="11" fill="#FAC775" stroke="#BA7517"/>
+<text x="65" y="192" text-anchor="middle" fill="#5c6b7a" font-size="12">lighthouse</text>
+<text x="65" y="209" text-anchor="middle" fill="#5c6b7a" font-size="12">rotating slowly</text>
+<line x1="76" y1="94" x2="548" y2="60" stroke="#BA7517" stroke-width="1.8" marker-end="url(#l1)"/>
+<line x1="76" y1="102" x2="548" y2="196" stroke="#BA7517" stroke-width="1.8" marker-end="url(#l1)"/>
+<text x="300" y="66" fill="#854F0B" font-size="12">travels outward at c</text>
+<text x="300" y="164" fill="#854F0B" font-size="12">travels outward at c</text>
+<line x1="556" y1="34" x2="556" y2="222" stroke="#5c6b7a" stroke-width="2"/>
+<text x="566" y="30" fill="#5c6b7a" font-size="12">a distant cloud</text>
+<circle cx="556" cy="60" r="6" fill="#FAC775" stroke="#BA7517"/>
+<text x="572" y="64" fill="#1c2733" font-size="12">A</text>
+<circle cx="556" cy="196" r="6" fill="#FAC775" stroke="#BA7517"/>
+<text x="572" y="200" fill="#1c2733" font-size="12">B</text>
+<path d="M596,66 Q622,128 596,190" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#l2)"/>
+<text x="612" y="122" fill="#c0392b" font-size="12">v = ωR</text>
+<text x="40" y="240" fill="#1c2733" font-size="12">The spot sweeps from A to B at ωR, which for a large enough R exceeds c. Nothing is violated: the light at A and the light at B</text>
+<text x="40" y="258" fill="#1c2733" font-size="12">are different photons that each left the lighthouse at c. Nothing travels from A to B, so nothing can be sent from A to B.</text>
+</svg>
