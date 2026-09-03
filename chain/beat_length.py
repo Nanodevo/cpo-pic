@@ -36,8 +36,8 @@ ax0.add_patch(plt.Rectangle((0, 3.6), 1200, 1.0, color="#FAEEDA"))          # ad
 ax0.add_patch(plt.Rectangle((0, 4.6), 1200, 0.9, color="#378ADD"))          # silicon, fixed 155 nm
 ax0.text(170, 2.0, "ion-exchanged guide in the glass", color="#0F6E56", va="center")
 ax0.text(8, 5.05, "silicon guide, held at 155 nm", color="#fff", va="center")
-ax0.annotate("", xy=(975, 4.6), xytext=(975, 3.6), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.4))
-ax0.text(990, 4.1, "adhesive, 1 µm\nACROSS the light", color="#8a5a1b", va="center")
+ax0.annotate("", xy=(955, 4.6), xytext=(955, 3.6), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.4))
+ax0.text(972, 4.1, "adhesive, 1 µm\nACROSS the light", color="#8a5a1b", va="center")
 ax0.annotate("", xy=(L_BEAT, 7.6), xytext=(0, 7.6), arrowprops=dict(arrowstyle="<->", color="#c0392b", lw=1.6))
 ax0.text(L_BEAT / 2, 8.3, f"beat length, {L_BEAT:.0f} µm, ALONG the light", color="#c0392b", ha="center")
 ax0.annotate("", xy=(140, 2.3), xytext=(20, 2.3), arrowprops=dict(arrowstyle="->", color="#0F6E56", lw=2))
