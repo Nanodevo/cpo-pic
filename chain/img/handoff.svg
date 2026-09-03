@@ -17,7 +17,8 @@
 <text x="560" y="100" fill="#185FA5" font-size="11">500 nm</text>
 <path d="M60,155 C220,155 300,150 360,132 C420,114 520,112 630,111" fill="none" stroke="#1D9E75" stroke-width="6" stroke-opacity="0.35" stroke-linecap="round"/>
 <line x1="44" y1="155" x2="100" y2="155" stroke="#1D9E75" stroke-width="2.2" marker-end="url(#h1)"/>
-<text x="30" y="215" fill="#5c6b7a" font-size="12">silicon thickness and taper width are exaggerated about thirty times; the glass guide is 6 µm across, the silicon 0.22 µm thick</text>
+<text x="30" y="213" fill="#5c6b7a" font-size="12">silicon thickness and taper width exaggerated about thirty times:</text>
+<text x="30" y="230" fill="#5c6b7a" font-size="12">the glass guide is 6 µm across, the silicon only 0.22 µm thick</text>
 <line x1="160" y1="44" x2="160" y2="200" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="4,4"/>
 <line x1="380" y1="44" x2="380" y2="200" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="4,4"/>
 <line x1="600" y1="44" x2="600" y2="200" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="4,4"/>
