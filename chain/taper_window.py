@@ -34,19 +34,21 @@ a.axhspan(W0, W1, color="#fdf1e0")
 a.axvspan(z0, z1, color="#fdf1e0")
 a.annotate("", xy=(z1, 128), xytext=(z0, 128), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
 a.text((z0 + z1) / 2, 100, f"the taper spends {z1 - z0:.0f} µm here", ha="center", fontsize=10.5, color="#8a5a1b")
-a.text(1320, 165, "hand-off window,\n140 to 180 nm of width", fontsize=10, color="#8a5a1b", va="center")
+a.text(560, 240, "hand-off window: 140 to 180 nm of width", fontsize=10, color="#8a5a1b", va="center")
 a.set_ylabel("silicon width  (nm)", fontsize=10.5)
 a.set_ylim(80, 520); a.grid(alpha=.22)
 a.set_title(f"A linear taper: {TIP:.0f} nm tip at z = 0, {END:.0f} nm at z = {LEN:.0f} µm", fontsize=11.5)
 
 b.semilogy(zb, beat[:, 1], "o-", lw=2.4, ms=6, color="#c0392b")
 b.axvspan(z0, z1, color="#fdf1e0")
-for zz, (wn, L) in zip(zb, beat):
+for k, (zz, (wn, L)) in enumerate(zip(zb, beat)):
     if 140 <= wn <= 180:
-        b.text(zz, L * 1.35, f"{L:.0f} µm\nat {wn:.0f} nm", ha="center", fontsize=9, color="#c0392b")
+        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 150, L * (1.9 if k % 2 else 0.55)),
+                   fontsize=9, color="#c0392b", va="center",
+                   arrowprops=dict(arrowstyle="-", color="#c0392b", lw=0.7))
 b.annotate("", xy=(z1, 25), xytext=(z0, 25), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
 b.text((z0 + z1) / 2, 15, f"offered: {z1 - z0:.0f} µm", ha="center", fontsize=10.5, color="#8a5a1b")
-b.text(700, 400, "needed: one full slosh takes this long\nat each point of the window", fontsize=10, color="#c0392b")
+b.text(520, 1500, "needed: one full slosh takes this long at each point", fontsize=10, color="#c0392b")
 b.set_ylim(10, 3000); b.set_xlim(0, 900)
 b.set_xlabel("position along the taper, z  (µm)", fontsize=10.5)
 b.set_ylabel("beat length  (µm)", fontsize=10.5)
