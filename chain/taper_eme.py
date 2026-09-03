@@ -36,6 +36,19 @@ sweep = np.array([[0.500,2.44966],[0.450,2.36236],[0.400,2.24035],[0.350,2.07525
                   [0.140,1.49971],[0.130,1.49908],[0.120,1.49908]])[::-1]
 delta = lambda w: np.interp(w, sweep[:, 0], sweep[:, 1]) - 1.50522
 
+def write_for_2_11(sim, path):
+    """Write the simulation JSON without the fields tidy3d 2.12 added (min_steps_per_size,
+    eme_diagnostics); the Tidy3D hosted notebook runs 2.11.2 and rejects them."""
+    import json
+    drop = {"min_steps_per_size", "eme_diagnostics"}
+    def strip(o):
+        if isinstance(o, dict): return {k: strip(v) for k, v in o.items() if k not in drop}
+        if isinstance(o, list): return [strip(v) for v in o]
+        return o
+    d = strip(json.loads(sim.json())); d["version"] = "2.11.2"
+    pathlib.Path(path).write_text(json.dumps(d, indent=1))
+
+
 def profile(n=600):
     z = np.linspace(0, L, n)
     if PROFILE == "linear":
@@ -71,7 +84,7 @@ sim = td.EMESimulation(
     sweep_spec=td.EMELengthSweep(scale_factors=[0.15, 0.25, 0.4, 0.6, 1.0, 1.5, 2.5]) if PROFILE == "shaped" else None,
 )
 out = pathlib.Path(__file__).parent / "eme"; out.mkdir(exist_ok=True)
-sim.to_file(str(out / f"{PROFILE}.json"))
+write_for_2_11(sim, str(out / f"{PROFILE}.json"))
 g = sim.grid.num_cells
 print(f"{PROFILE}: validated. cross-section grid {g[0]} x {g[1]} points, {sim.eme_grid_spec.num_cells} EME cells x {sim.eme_grid_spec.mode_spec.num_modes} modes")
 print("port modes stored:", sim.store_port_modes, "| sweep:", sim.sweep_spec.scale_factors.tolist() if sim.sweep_spec else None)
