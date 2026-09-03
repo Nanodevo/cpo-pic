@@ -39,7 +39,7 @@ ax.set_xticklabels(["0", "π", "2π", "3π", "4π"])
 ax.set_xlabel("phase of the wave")
 ax.set_ylabel("electric field")
 ax.set_title("One thin layer of material: the sum lags the original", pad=10)
-ax.grid(alpha=.22); ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=1, frameon=False)
+ax.grid(alpha=.22); ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.34), ncol=1, frameon=False)
 fig.tight_layout()
 out = pathlib.Path(__file__).parent / "img" / "phase-delay.png"
 fig.savefig(out, bbox_inches="tight", facecolor="white")
