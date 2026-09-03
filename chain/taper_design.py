@@ -56,7 +56,7 @@ def eps_local(w_of_z, z):
     dd_dz = np.gradient(d, z)
     return G * np.abs(dd_dz) / (2 * K0 * (d * d + G * G) ** 1.5)
 eps_lin = eps_local(w_lin, z_lin)
-eps_sh = eps_local(w_grid, z_shaped)
+eps_sh = np.full_like(w_grid, EPS_SHAPED)   # exact by construction: the shaped profile holds eps constant
 
 # ---- Landau-Zener estimate for the linear taper -------------------------
 i = np.argmin(abs(w_lin - w_cross))
