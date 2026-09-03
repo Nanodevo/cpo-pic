@@ -66,8 +66,7 @@ for k, (r, lab) in enumerate(cases):
     axk = fig.add_subplot(gs[1, k])
     axk.plot(t, push, lw=1.8, color="#888780", ls="--", label="push")
     axk.plot(t, x, lw=2.4, color="#1b6ca8", label="swing")
-    axk.set_title(f"{lab}
-A = {a:.3g} m, lag {p:.0f}°")
+    axk.set_title(f"{lab}\nA = {a:.3g} m, lag {p:.0f}°")
     axk.set_xlabel("time (s)"); axk.set_yticks([])
     axk.grid(alpha=.2)
     if k == 0:
