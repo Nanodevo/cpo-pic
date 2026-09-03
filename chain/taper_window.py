@@ -35,7 +35,7 @@ a.plot(z, w(z), lw=2.6, color="#378ADD")
 a.axhspan(W0, W1, color="#fdf1e0")
 a.axvspan(z0, z1, color="#fdf1e0")
 a.annotate("", xy=(z1, 128), xytext=(z0, 128), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
-a.text((z0 + z1) / 2, 100, f"the taper spends {z1 - z0:.0f} µm here", ha="center", fontsize=13.5, color="#8a5a1b")
+a.text(z1 + 25, 128, f"the taper spends {z1 - z0:.0f} µm here", ha="left", va="center", fontsize=13, color="#8a5a1b")
 a.text(400, 300, "hand-off window:\n140 to 180 nm wide", fontsize=13, color="#8a5a1b", va="center")
 a.set_ylabel("silicon width  (nm)", fontsize=13.5)
 a.set_ylim(80, 520); a.grid(alpha=.22)
@@ -45,7 +45,7 @@ b.semilogy(zb, beat[:, 1], "o-", lw=2.4, ms=6, color="#c0392b")
 b.axvspan(z0, z1, color="#fdf1e0")
 for k, (zz, (wn, L)) in enumerate(zip(zb, beat)):
     if 140 <= wn <= 180:
-        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 130, L * (2.4 if k % 2 else 0.42)),
+        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 140, L),
                    fontsize=12, color="#c0392b", va="center",
                    arrowprops=dict(arrowstyle="-", color="#c0392b", lw=0.7))
 b.annotate("", xy=(z1, 25), xytext=(z0, 25), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
