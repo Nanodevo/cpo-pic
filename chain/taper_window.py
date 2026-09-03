@@ -45,17 +45,17 @@ b.semilogy(zb, beat[:, 1], "o-", lw=2.4, ms=6, color="#c0392b")
 b.axvspan(z0, z1, color="#fdf1e0")
 for k, (zz, (wn, L)) in enumerate(zip(zb, beat)):
     if 140 <= wn <= 180:
-        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 120, L * (2.0 if k % 2 else 0.5)),
+        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 130, L * (2.4 if k % 2 else 0.42)),
                    fontsize=12, color="#c0392b", va="center",
                    arrowprops=dict(arrowstyle="-", color="#c0392b", lw=0.7))
 b.annotate("", xy=(z1, 25), xytext=(z0, 25), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
 b.text((z0 + z1) / 2, 15, f"offered: {z1 - z0:.0f} µm", ha="center", fontsize=13.5, color="#8a5a1b")
-b.text(420, 1500, "needed: one full slosh\ntakes this long here", fontsize=13, color="#c0392b")
-b.set_ylim(10, 3000); b.set_xlim(0, 900)
+b.text(470, 2600, "needed: one full slosh\ntakes this long here", fontsize=13, color="#c0392b")
+b.set_ylim(10, 6000); b.set_xlim(0, 900)
 b.set_xlabel("position along the taper, z  (µm)", fontsize=13.5)
 b.set_ylabel("beat length  (µm)", fontsize=13.5)
 b.grid(alpha=.22, which="both")
-b.set_title("Beat length of the coupled pair at each point along the taper", fontsize=14)
+b.set_title("Beat length of the coupled pair along the taper", fontsize=14, pad=14)
 
 out = pathlib.Path(__file__).parent / "img" / "taper-window.png"
 fig.savefig(out, dpi=170, bbox_inches="tight", facecolor="white")
