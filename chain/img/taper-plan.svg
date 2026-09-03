@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 400" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>The silicon taper seen from above</title>
+<desc>A long thin trapezoid of silicon, 120 nanometres wide at its tip on the left, widening steadily to 500 nanometres at the right over two millimetres. Light enters at the tip and travels right. The stretch where the width passes from 140 to 180 nanometres is shaded: that is where the light crosses from the glass into the silicon. A small rectangle shows the cross-section at the wide end, 500 by 220 nanometres. The length is compressed about seven hundred times to fit on the page.</desc>
+<rect x="0" y="0" width="680" height="400" fill="#fbfcfd"/>
+<defs><marker id="t1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0F6E56"/></marker>
+<marker id="t2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5c6b7a"/></marker>
+<marker id="t3" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#5c6b7a"/></marker></defs>
+<text x="30" y="34" fill="#1c2733" font-size="16">the taper, seen from above</text>
+<rect x="89" y="112" width="59" height="116" fill="#fdf1e0"/>
+<polygon points="60,158 620,120 620,220 60,182" fill="#378ADD"/>
+<line x1="20" y1="170" x2="52" y2="170" stroke="#0F6E56" stroke-width="3" marker-end="url(#t1)"/>
+<text x="14" y="200" fill="#0F6E56" font-size="14">light</text>
+<text x="60" y="100" fill="#1c2733" font-size="15" text-anchor="middle">120 nm</text>
+<text x="620" y="100" fill="#1c2733" font-size="15" text-anchor="middle">500 nm</text>
+<line x1="60" y1="240" x2="620" y2="240" stroke="#5c6b7a" stroke-width="1.2" marker-start="url(#t3)" marker-end="url(#t2)"/>
+<text x="340" y="262" fill="#1c2733" font-size="15" text-anchor="middle">2 mm long</text>
+<text x="118" y="290" fill="#8a5a1b" font-size="14" text-anchor="middle">hand-off window</text>
+<text x="118" y="308" fill="#8a5a1b" font-size="14" text-anchor="middle">140 to 180 nm wide</text>
+<line x1="118" y1="232" x2="118" y2="276" stroke="#8a5a1b" stroke-width="1"/>
+<rect x="520" y="300" width="100" height="44" fill="#378ADD"/>
+<text x="570" y="365" fill="#5c6b7a" font-size="13" text-anchor="middle">cross-section at the wide end</text>
+<text x="570" y="382" fill="#5c6b7a" font-size="13" text-anchor="middle">500 × 220 nm, to scale</text>
+<text x="30" y="345" fill="#5c6b7a" font-size="13">length compressed about 700 times.</text>
+<text x="30" y="363" fill="#5c6b7a" font-size="13">at true scale the taper is 4000 times</text>
+<text x="30" y="381" fill="#5c6b7a" font-size="13">longer than it is wide.</text>
+</svg>

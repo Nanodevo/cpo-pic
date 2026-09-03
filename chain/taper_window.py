@@ -14,6 +14,8 @@ import pathlib
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.rcParams.update({"font.size": 13})
+
 TIP, END, LEN = 120.0, 500.0, 2000.0
 slope = (END - TIP) / LEN                       # nm per um
 w = lambda z: TIP + slope * z
@@ -26,34 +28,34 @@ beat = np.array([[200, 136], [190, 104], [180, 118], [170, 186], [160, 366],
                  [155, 556], [150, 851], [140, 1787]])
 zb = zw(beat[:, 0])
 
-fig, (a, b) = plt.subplots(2, 1, figsize=(10.5, 7.2), sharex=True,
+fig, (a, b) = plt.subplots(2, 1, figsize=(7.6, 8.4), sharex=True,
                            gridspec_kw=dict(hspace=0.12, height_ratios=[1, 1.2]))
 z = np.linspace(0, LEN, 400)
 a.plot(z, w(z), lw=2.6, color="#378ADD")
 a.axhspan(W0, W1, color="#fdf1e0")
 a.axvspan(z0, z1, color="#fdf1e0")
 a.annotate("", xy=(z1, 128), xytext=(z0, 128), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
-a.text((z0 + z1) / 2, 100, f"the taper spends {z1 - z0:.0f} µm here", ha="center", fontsize=10.5, color="#8a5a1b")
-a.text(560, 240, "hand-off window: 140 to 180 nm of width", fontsize=10, color="#8a5a1b", va="center")
-a.set_ylabel("silicon width  (nm)", fontsize=10.5)
+a.text((z0 + z1) / 2, 100, f"the taper spends {z1 - z0:.0f} µm here", ha="center", fontsize=13.5, color="#8a5a1b")
+a.text(400, 300, "hand-off window:\n140 to 180 nm wide", fontsize=13, color="#8a5a1b", va="center")
+a.set_ylabel("silicon width  (nm)", fontsize=13.5)
 a.set_ylim(80, 520); a.grid(alpha=.22)
-a.set_title(f"A linear taper: {TIP:.0f} nm tip at z = 0, {END:.0f} nm at z = {LEN:.0f} µm", fontsize=11.5)
+a.set_title(f"A linear taper: {TIP:.0f} nm tip at z = 0, {END:.0f} nm at z = {LEN:.0f} µm", fontsize=14)
 
 b.semilogy(zb, beat[:, 1], "o-", lw=2.4, ms=6, color="#c0392b")
 b.axvspan(z0, z1, color="#fdf1e0")
 for k, (zz, (wn, L)) in enumerate(zip(zb, beat)):
     if 140 <= wn <= 180:
-        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 150, L * (1.9 if k % 2 else 0.55)),
-                   fontsize=9, color="#c0392b", va="center",
+        b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(zz + 120, L * (2.0 if k % 2 else 0.5)),
+                   fontsize=12, color="#c0392b", va="center",
                    arrowprops=dict(arrowstyle="-", color="#c0392b", lw=0.7))
 b.annotate("", xy=(z1, 25), xytext=(z0, 25), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
-b.text((z0 + z1) / 2, 15, f"offered: {z1 - z0:.0f} µm", ha="center", fontsize=10.5, color="#8a5a1b")
-b.text(520, 1500, "needed: one full slosh takes this long at each point", fontsize=10, color="#c0392b")
+b.text((z0 + z1) / 2, 15, f"offered: {z1 - z0:.0f} µm", ha="center", fontsize=13.5, color="#8a5a1b")
+b.text(420, 1500, "needed: one full slosh\ntakes this long here", fontsize=13, color="#c0392b")
 b.set_ylim(10, 3000); b.set_xlim(0, 900)
-b.set_xlabel("position along the taper, z  (µm)", fontsize=10.5)
-b.set_ylabel("beat length  (µm)", fontsize=10.5)
+b.set_xlabel("position along the taper, z  (µm)", fontsize=13.5)
+b.set_ylabel("beat length  (µm)", fontsize=13.5)
 b.grid(alpha=.22, which="both")
-b.set_title("Beat length of the coupled pair at each point along the taper", fontsize=11.5)
+b.set_title("Beat length of the coupled pair at each point along the taper", fontsize=14)
 
 out = pathlib.Path(__file__).parent / "img" / "taper-window.png"
 fig.savefig(out, dpi=170, bbox_inches="tight", facecolor="white")
