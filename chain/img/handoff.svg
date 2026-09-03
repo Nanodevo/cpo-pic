@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 680 392" role="img" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title>Stage 3: the glass hands the light to the silicon taper</title>
+<desc>Top: a side view along the direction of travel. The ion-exchanged waveguide runs in the glass substrate at the bottom. Above it, across a thin adhesive bondline, the face-down silicon die presents a taper that starts as a narrow tip and widens to the routing width. The guided light, drawn as a shaded band, begins in the glass and climbs into the silicon as the taper widens. Bottom: three cross-sections looking along the light. At the tip the mode sits in the glass. Where the two guides are phase matched the mode is shared. Where the silicon is wide the mode has moved entirely into the silicon.</desc>
+<rect x="0" y="0" width="680" height="392" fill="#fbfcfd"/>
+<defs><marker id="h1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1D9E75"/></marker></defs>
+<text x="30" y="30" fill="#1c2733" font-size="14">side view, light travelling left to right</text>
+<rect x="40" y="132" width="600" height="60" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="40" y="148" width="600" height="14" fill="#9FE1CB" stroke="#1D9E75" stroke-width="0.8"/>
+<text x="48" y="186" fill="#5c6b7a" font-size="12">glass substrate</text>
+<text x="360" y="160" fill="#0F6E56" font-size="11">ion-exchanged waveguide</text>
+<rect x="40" y="118" width="600" height="14" fill="#FAEEDA"/>
+<text x="48" y="129" fill="#854F0B" font-size="11">adhesive bondline, about 1 µm</text>
+<rect x="40" y="58" width="600" height="60" fill="#e9ecef" stroke="#B4B2A9"/>
+<text x="48" y="74" fill="#5c6b7a" font-size="12">silicon die, face down (oxide above the silicon)</text>
+<polygon points="110,116 640,104 640,118 110,118" fill="#378ADD"/>
+<text x="112" y="100" fill="#185FA5" font-size="11">taper tip, 120 to 180 nm wide</text>
+<text x="560" y="100" fill="#185FA5" font-size="11">500 nm</text>
+<path d="M60,155 C220,155 300,150 360,132 C420,114 520,112 630,111" fill="none" stroke="#1D9E75" stroke-width="6" stroke-opacity="0.35" stroke-linecap="round"/>
+<line x1="44" y1="155" x2="100" y2="155" stroke="#1D9E75" stroke-width="2.2" marker-end="url(#h1)"/>
+<text x="30" y="215" fill="#5c6b7a" font-size="12">silicon thickness and taper width are exaggerated about thirty times; the glass guide is 6 µm across, the silicon 0.22 µm thick</text>
+<line x1="160" y1="44" x2="160" y2="200" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="380" y1="44" x2="380" y2="200" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="600" y1="44" x2="600" y2="200" stroke="#5c6b7a" stroke-width="1" stroke-dasharray="4,4"/>
+<text x="164" y="52" fill="#1c2733" font-size="12">A</text>
+<text x="384" y="52" fill="#1c2733" font-size="12">B</text>
+<text x="604" y="52" fill="#1c2733" font-size="12">C</text>
+<text x="30" y="250" fill="#1c2733" font-size="14">cross-sections, looking along the light</text>
+<g transform="translate(60,262)">
+<rect x="0" y="52" width="170" height="52" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="55" y="60" width="60" height="36" fill="#9FE1CB"/>
+<rect x="0" y="42" width="170" height="10" fill="#FAEEDA"/>
+<rect x="0" y="0" width="170" height="42" fill="#e9ecef" stroke="#B4B2A9"/>
+<rect x="82" y="36" width="6" height="6" fill="#378ADD"/>
+<ellipse cx="85" cy="76" rx="34" ry="19" fill="#1D9E75" fill-opacity="0.45"/>
+<text x="85" y="122" text-anchor="middle" fill="#1c2733" font-size="12">A · tip: mode in the glass</text>
+</g>
+<g transform="translate(255,262)">
+<rect x="0" y="52" width="170" height="52" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="55" y="60" width="60" height="36" fill="#9FE1CB"/>
+<rect x="0" y="42" width="170" height="10" fill="#FAEEDA"/>
+<rect x="0" y="0" width="170" height="42" fill="#e9ecef" stroke="#B4B2A9"/>
+<rect x="79" y="36" width="12" height="6" fill="#378ADD"/>
+<ellipse cx="85" cy="72" rx="30" ry="16" fill="#1D9E75" fill-opacity="0.30"/>
+<ellipse cx="85" cy="40" rx="22" ry="9" fill="#1D9E75" fill-opacity="0.45"/>
+<text x="85" y="122" text-anchor="middle" fill="#1c2733" font-size="12">B · phase matched: shared</text>
+</g>
+<g transform="translate(450,262)">
+<rect x="0" y="52" width="170" height="52" fill="#F1EFE8" stroke="#B4B2A9"/>
+<rect x="55" y="60" width="60" height="36" fill="#9FE1CB"/>
+<rect x="0" y="42" width="170" height="10" fill="#FAEEDA"/>
+<rect x="0" y="0" width="170" height="42" fill="#e9ecef" stroke="#B4B2A9"/>
+<rect x="72" y="36" width="26" height="6" fill="#378ADD"/>
+<ellipse cx="85" cy="39" rx="17" ry="6" fill="#1D9E75" fill-opacity="0.6"/>
+<text x="85" y="122" text-anchor="middle" fill="#1c2733" font-size="12">C · wide: mode in the silicon</text>
+</g>
+</svg>
