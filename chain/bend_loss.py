@@ -77,10 +77,10 @@ for c, col in ((SI, "#1b6ca8"), (SIN, "#6b4fa0"), (GLASS, "#1D9E75")):
     y = np.exp(-barrier(c, R))
     ax.loglog(R, np.clip(y, 1e-18, None), color=col, lw=2.2, label=c["name"])
 ax.axhline(1e-4, color="#888", ls=":", lw=1)
-ax.text(300, 1.6e-4, "an arbitrary 'low enough' line", color="#5c6b7a")
+ax.text(300, 1.6e-4, "a 'low enough' line", color="#5c6b7a")
 for x, lab in ((5, "5 µm"), (100, "100 µm"), (15000, "15 mm")):
     ax.axvline(x, color="#d8dee4", lw=1, zorder=0)
-    ax.text(x*1.15, 0.35, lab, color="#5c6b7a")
+    ax.text(x*1.18, 1e-11, lab, color="#5c6b7a", rotation=90, va="bottom")
 ax.set_xlim(1, 1.6e5); ax.set_ylim(1e-17, 3)
 ax.set_xlabel("bend radius (µm)"); ax.set_ylabel("relative leakage, exp(−I)")
 ax.set_title("Bend leakage against radius, three platforms, same physics")
