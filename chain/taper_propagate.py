@@ -71,7 +71,7 @@ for name, prof, col, ls in (("linear, as drawn", w_linear, "#888780", "--"), ("s
     A = sol.sol(z)[0]
     a.plot(z, abs(A) ** 2, lw=2.4, color=col, ls=ls, label=name)
 a.set_xlabel("position along the taper, z  (µm)"); a.set_ylabel("fraction of the power in the silicon")
-a.set_ylim(0, 1.05); a.grid(alpha=.22); a.legend(loc="center right")
+a.set_ylim(0, 1.05); a.grid(alpha=.22); a.legend(loc="lower right")
 a.set_title("Light along the two 2 mm tapers, all of it starting in the glass")
 
 # ---- transmission against taper length ------------------------------------
@@ -82,9 +82,11 @@ lz = np.array([1 - np.exp(-2*np.pi*KAPPA**2 / (K0 * abs(np.gradient(delta_of_w(w
 b.semilogx(Ls, T_lin, "o-", ms=5, lw=2.2, color="#888780", label="linear taper")
 b.semilogx(Ls, lz, ":", lw=1.6, color="#888780", label="Landau-Zener estimate, linear")
 b.semilogx(Ls, T_sh, "o-", ms=5, lw=2.4, color="#1b6ca8", label="shaped taper")
-b.axvline(L_DRAWN, color="#c0392b", lw=1.2, ls="--"); b.text(L_DRAWN * 1.06, 0.06, "as drawn, 2 mm", color="#c0392b")
+b.axvline(L_DRAWN, color="#c0392b", lw=1.2, ls="--"); b.text(L_DRAWN * 1.06, 0.30, "as drawn,\n2 mm", color="#c0392b")
 b.set_ylim(0, 1.05); b.set_xlabel("total taper length  (µm)"); b.set_ylabel("transferred into the silicon")
-b.grid(alpha=.22, which="both"); b.legend(loc="lower right")
+b.grid(alpha=.22, which="both")
+from matplotlib.ticker import FixedLocator, FixedFormatter, NullFormatter
+b.xaxis.set_major_locator(FixedLocator([200, 500, 1000, 2000, 5000])); b.xaxis.set_major_formatter(FixedFormatter(["200", "500", "1000", "2000", "5000"])); b.xaxis.set_minor_formatter(NullFormatter()); b.legend(loc="upper center", bbox_to_anchor=(0.5, -0.24), ncol=1, frameon=False)
 b.set_title("How much crosses, against how long the taper is")
 
 out = pathlib.Path(__file__).parent / "img" / "taper-propagate.png"
