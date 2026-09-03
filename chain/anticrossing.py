@@ -41,13 +41,13 @@ ax.text(137, 1.5245, "below 150 nm the lower\ncurve is the glass\ncontinuum, not
 i = np.argmin(abs(w_c - 155))
 ax.annotate("", xy=(155, upper[i]), xytext=(155, lower[i]),
             arrowprops=dict(arrowstyle="<->", color="#c0392b", lw=1.6))
-ax.text(161, 1.5225, f"gap at 155 nm: Δn = {coupled[i,2]:.1e}\nbeat length λ/Δn = {LAM/coupled[i,2]:.0f} µm", color="#c0392b", va="center")
-ax.annotate("", xy=(156.2, (upper[i]+lower[i])/2), xytext=(161, 1.5212),
+ax.text(163, 1.5275, f"gap at 155 nm: Δn = {coupled[i,2]:.1e}\nbeat length λ/Δn = {LAM/coupled[i,2]:.0f} µm", color="#c0392b", va="center")
+ax.annotate("", xy=(156.2, (upper[i]+lower[i])/2), xytext=(163, 1.5275),
             arrowprops=dict(arrowstyle="-", color="#c0392b", lw=0.9))
 ax.axvline(156, color="#c0392b", lw=1, ls=":")
-ax.text(156.8, 1.531, "phase match, 156 nm", color="#c0392b", rotation=90, va="top")
+ax.text(154.6, 1.5345, "phase match, 156 nm", color="#c0392b", rotation=90, va="top", ha="center")
 ax.set_xlim(125, 205); ax.set_ylim(1.497, 1.536)
-ax.set_xlabel("silicon taper width (nm); light enters at the narrow tip on the left and travels to the right")
+ax.set_xlabel("silicon width (nm); light enters at the narrow tip on the left")
 ax.set_ylabel("effective index")
 ax.set_title("Two guides that would cross, and what they do instead", pad=8)
 ax.grid(alpha=.22); ax.legend(loc="lower right")

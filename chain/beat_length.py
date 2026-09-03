@@ -26,7 +26,7 @@ z = np.linspace(0, 1200, 1200)
 p_si = np.sin(np.pi * z / L_BEAT) ** 2
 p_gl = 1 - p_si
 
-fig, (ax0, ax1) = plt.subplots(2, 1, figsize=figstyle.size(10.5, 6.6), height_ratios=[1, 1.35],
+fig, (ax0, ax1) = plt.subplots(2, 1, figsize=figstyle.size(7.6, 8.0), height_ratios=[1.05, 1.2],
                                gridspec_kw=dict(hspace=0.42))
 
 # --- top: the geometry, two directions labelled ---------------------------
@@ -34,10 +34,10 @@ ax0.set_xlim(0, 1200); ax0.set_ylim(0, 10); ax0.axis("off")
 ax0.add_patch(plt.Rectangle((0, 1.0), 1200, 2.6, color="#9FE1CB"))          # glass guide
 ax0.add_patch(plt.Rectangle((0, 3.6), 1200, 1.0, color="#FAEEDA"))          # adhesive
 ax0.add_patch(plt.Rectangle((0, 4.6), 1200, 0.9, color="#378ADD"))          # silicon, fixed 155 nm
-ax0.text(8, 2.0, "ion-exchanged guide in the glass", color="#0F6E56", va="center")
-ax0.text(8, 5.05, "silicon guide, held at 155 nm (no taper, for this picture)", color="#fff", va="center")
-ax0.annotate("", xy=(1120, 4.6), xytext=(1120, 3.6), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.4))
-ax0.text(1132, 4.1, "adhesive, 1 µm\nACROSS the light", color="#8a5a1b", va="center")
+ax0.text(170, 2.0, "ion-exchanged guide in the glass", color="#0F6E56", va="center")
+ax0.text(8, 5.05, "silicon guide, held at 155 nm", color="#fff", va="center")
+ax0.annotate("", xy=(975, 4.6), xytext=(975, 3.6), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.4))
+ax0.text(990, 4.1, "adhesive, 1 µm\nACROSS the light", color="#8a5a1b", va="center")
 ax0.annotate("", xy=(L_BEAT, 7.6), xytext=(0, 7.6), arrowprops=dict(arrowstyle="<->", color="#c0392b", lw=1.6))
 ax0.text(L_BEAT / 2, 8.3, f"beat length, {L_BEAT:.0f} µm, ALONG the light", color="#c0392b", ha="center")
 ax0.annotate("", xy=(140, 2.3), xytext=(20, 2.3), arrowprops=dict(arrowstyle="->", color="#0F6E56", lw=2))
@@ -57,7 +57,7 @@ ax1.set_xlim(0, 1200); ax1.set_ylim(0, 1.12)
 ax1.set_xlabel("distance along the guides, z  (µm)")
 ax1.set_ylabel("fraction of the power")
 ax1.grid(alpha=.22); ax1.legend(loc="center right")
-ax1.set_title("Phase-matched and held fixed: the light sloshes between the guides with period L_beat")
+ax1.set_title("Held phase-matched: the power sloshes with period L_beat")
 
 out = pathlib.Path(__file__).parent / "img" / "beat-length.png"
 fig.savefig(out, bbox_inches="tight", facecolor="white")

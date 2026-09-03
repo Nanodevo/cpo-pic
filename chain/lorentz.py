@@ -26,7 +26,7 @@ phase = np.degrees(np.arctan2(GAMMA * w, W0**2 - w**2))     # lag of x behind th
 chi = WP2 / (W0**2 - w**2 - 1j * GAMMA * w)                 # susceptibility
 n = np.sqrt(1 + chi)                                        # complex index
 
-fig, ax = plt.subplots(1, 2, figsize=figstyle.size(11.2, 4.3))
+fig, ax = plt.subplots(2, 1, figsize=figstyle.size(7.6, 10.4))
 
 ax[0].axvspan(0, 0.72, color="#e6f0e9", zorder=0)
 ax[0].plot(w, phase, lw=2.4, color="#1b6ca8")
@@ -56,7 +56,7 @@ ax[1].set_xlim(0, 2); ax[1].grid(alpha=.22)
 h1, l1 = ax[1].get_legend_handles_labels(); h2, l2 = ax2.get_legend_handles_labels()
 ax[1].legend(h1 + h2, l1 + l2, loc="upper right")
 
-fig.suptitle("One driven electron explains the refractive index, dispersion and absorption", y=1.02)
+fig.suptitle("One driven electron: refractive index, dispersion and absorption", y=0.995)
 fig.tight_layout()
 out = pathlib.Path(__file__).parent / "img" / "lorentz.png"
 fig.savefig(out, bbox_inches="tight", facecolor="white")

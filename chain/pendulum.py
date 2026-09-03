@@ -35,8 +35,8 @@ for r, lab in cases:
 w = np.logspace(-1.3, 1.3, 1200) * w0
 A, ph = response(w)
 
-fig = plt.figure(figsize=figstyle.size(11.5, 8.2))
-gs = fig.add_gridspec(2, 3, height_ratios=[1.25, 1], hspace=0.5, wspace=0.32)
+fig = plt.figure(figsize=figstyle.size(7.6, 10.2))
+gs = fig.add_gridspec(2, 3, height_ratios=[1.35, 1], hspace=0.6, wspace=0.28)
 
 ax = fig.add_subplot(gs[0, :])
 ax.loglog(w / w0, A, lw=2.4, color="#1b6ca8", label="amplitude A (m)")
@@ -66,7 +66,8 @@ for k, (r, lab) in enumerate(cases):
     axk = fig.add_subplot(gs[1, k])
     axk.plot(t, push, lw=1.8, color="#888780", ls="--", label="push")
     axk.plot(t, x, lw=2.4, color="#1b6ca8", label="swing")
-    axk.set_title(f"{lab}:  A = {a:.3g} m,  lag {p:.0f}°")
+    axk.set_title(f"{lab}
+A = {a:.3g} m, lag {p:.0f}°")
     axk.set_xlabel("time (s)"); axk.set_yticks([])
     axk.grid(alpha=.2)
     if k == 0:

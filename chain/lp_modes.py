@@ -64,11 +64,11 @@ def field(l, u, V, n=420, span=2.2):
     return X, Y, E * np.cos(l * P)
 
 
-fig = plt.figure(figsize=figstyle.size(11, 8.4))
-gs = fig.add_gridspec(3, 3, height_ratios=[1, 1, 0.42], hspace=0.42, wspace=0.18)
+fig = plt.figure(figsize=figstyle.size(7.6, 13.2))
+gs = fig.add_gridspec(4, 2, height_ratios=[1, 1, 1, 0.5], hspace=0.38, wspace=0.12)
 
 for i, (l, m, cut, name) in enumerate(MODES):
-    ax = fig.add_subplot(gs[i // 3, i % 3])
+    ax = fig.add_subplot(gs[i // 2, i % 2])
     u = solve_u(l, m, V_PLOT)
     X, Y, E = field(l, u, V_PLOT)
     ax.imshow((E ** 2) / (E ** 2).max(), extent=[X.min(), X.max(), Y.min(), Y.max()],
@@ -77,7 +77,7 @@ for i, (l, m, cut, name) in enumerate(MODES):
     ax.set_xticks([]); ax.set_yticks([])
     ax.set_title(f"{name}   cutoff V = {cut:.3f}" if cut else f"{name}   no cutoff", pad=6)
 
-ax = fig.add_subplot(gs[2, :])
+ax = fig.add_subplot(gs[3, :])
 ax.set_xlim(0, 6.2); ax.set_ylim(0, 1)
 ax.get_yaxis().set_visible(False)
 for s in ("left", "right", "top"):
@@ -94,7 +94,7 @@ ax.annotate("SMF-28 at 1550 nm\nV = 2.0", xy=(2.0, 0.06), xytext=(2.0, 0.88),
             ha="center",
             arrowprops=dict(arrowstyle="->", color="#1b6ca8", lw=1.4))
 ax.set_xlabel("V number")
-fig.suptitle("The first six LP modes, and the V at which each one switches on", y=0.975)
+fig.suptitle("The first six LP modes, and the V at which each one switches on", y=0.99)
 
 out = pathlib.Path(__file__).parent / "img" / "lp-modes.png"
 fig.savefig(out, bbox_inches="tight", facecolor="white")
