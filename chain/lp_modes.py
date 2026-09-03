@@ -14,6 +14,8 @@ Run:  python chain/lp_modes.py   ->  chain/img/lp-modes.png
 import pathlib
 
 import matplotlib.pyplot as plt
+
+import figstyle
 import numpy as np
 from scipy.optimize import brentq
 from scipy.special import jn_zeros, jv, kv
@@ -62,7 +64,7 @@ def field(l, u, V, n=420, span=2.2):
     return X, Y, E * np.cos(l * P)
 
 
-fig = plt.figure(figsize=(11, 8.4))
+fig = plt.figure(figsize=figstyle.size(11, 8.4))
 gs = fig.add_gridspec(3, 3, height_ratios=[1, 1, 0.42], hspace=0.42, wspace=0.18)
 
 for i, (l, m, cut, name) in enumerate(MODES):
@@ -73,8 +75,7 @@ for i, (l, m, cut, name) in enumerate(MODES):
               cmap="magma", origin="lower")
     ax.add_patch(plt.Circle((0, 0), A, fill=False, ec="#7fd4ff", lw=1.1, ls="--"))
     ax.set_xticks([]); ax.set_yticks([])
-    ax.set_title(f"{name}   cutoff V = {cut:.3f}" if cut else f"{name}   no cutoff",
-                 fontsize=11, pad=6)
+    ax.set_title(f"{name}   cutoff V = {cut:.3f}" if cut else f"{name}   no cutoff", pad=6)
 
 ax = fig.add_subplot(gs[2, :])
 ax.set_xlim(0, 6.2); ax.set_ylim(0, 1)
@@ -82,22 +83,21 @@ ax.get_yaxis().set_visible(False)
 for s in ("left", "right", "top"):
     ax.spines[s].set_visible(False)
 ax.axvspan(0, 2.405, color="#cfe8dd")
-ax.text(0.95, 0.60, "single mode:\nonly LP01 exists here", ha="center", fontsize=10)
+ax.text(0.95, 0.60, "single mode:\nonly LP01 exists here", ha="center")
 LABEL_Y = {"LP11": 0.30, "LP21": 0.30, "LP02": 0.54, "LP31": 0.30, "LP12": 0.54}
 for l, m, cut, name in MODES:
     if cut == 0:
         continue
     ax.axvline(cut, color="#444", lw=1)
-    ax.text(cut, LABEL_Y[name], f" {name}", fontsize=9.5, va="center")
+    ax.text(cut, LABEL_Y[name], f" {name}", va="center")
 ax.annotate("SMF-28 at 1550 nm\nV = 2.0", xy=(2.0, 0.06), xytext=(2.0, 0.88),
-            ha="center", fontsize=10,
+            ha="center",
             arrowprops=dict(arrowstyle="->", color="#1b6ca8", lw=1.4))
-ax.set_xlabel("V number", fontsize=11)
-fig.suptitle("The first six LP modes, and the V at which each one switches on",
-             fontsize=13, y=0.975)
+ax.set_xlabel("V number")
+fig.suptitle("The first six LP modes, and the V at which each one switches on", y=0.975)
 
 out = pathlib.Path(__file__).parent / "img" / "lp-modes.png"
-fig.savefig(out, dpi=170, bbox_inches="tight", facecolor="white")
+fig.savefig(out, bbox_inches="tight", facecolor="white")
 print("wrote", out)
 for l, m, cut, name in MODES:
     print(f"{name}: cutoff V {cut:6.3f}   u at V={V_PLOT} -> {solve_u(l, m, V_PLOT):.4f}")

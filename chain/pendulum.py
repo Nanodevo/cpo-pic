@@ -12,6 +12,8 @@ Run:  python chain/pendulum.py  ->  chain/img/pendulum.png
 import pathlib
 
 import matplotlib.pyplot as plt
+
+import figstyle
 import numpy as np
 
 L, m, g, GAMMA, F0 = 2.5, 25.0, 9.81, 0.10, 20.0
@@ -33,28 +35,27 @@ for r, lab in cases:
 w = np.logspace(-1.3, 1.3, 1200) * w0
 A, ph = response(w)
 
-fig = plt.figure(figsize=(11.5, 8.2))
+fig = plt.figure(figsize=figstyle.size(11.5, 8.2))
 gs = fig.add_gridspec(2, 3, height_ratios=[1.25, 1], hspace=0.5, wspace=0.32)
 
 ax = fig.add_subplot(gs[0, :])
 ax.loglog(w / w0, A, lw=2.4, color="#1b6ca8", label="amplitude A (m)")
 ax.axhline(SMALL_ANGLE_M, color="#8a5a1b", ls=":", lw=1.4)
-ax.text(0.055, SMALL_ANGLE_M * 1.18, "small-angle model stops being trustworthy above here (15°)",
-        fontsize=9.5, color="#8a5a1b")
-ax.set_ylabel("amplitude A  (m)", color="#1b6ca8", fontsize=10.5)
-ax.set_xlabel("push frequency  ω / ω₀", fontsize=10.5)
+ax.text(0.055, SMALL_ANGLE_M * 1.18, "small-angle model stops being trustworthy above here (15°)", color="#8a5a1b")
+ax.set_ylabel("amplitude A  (m)", color="#1b6ca8")
+ax.set_xlabel("push frequency  ω / ω₀")
 ax2 = ax.twinx()
 ax2.semilogx(w / w0, ph, lw=2.2, color="#c0392b", ls="--", label="lag φ (degrees)")
-ax2.set_ylabel("lag of the swing behind the push  (degrees)", color="#c0392b", fontsize=10.5)
+ax2.set_ylabel("lag of the swing behind the push  (degrees)", color="#c0392b")
 ax2.set_ylim(-10, 190); ax2.set_yticks([0, 90, 180])
 for r, lab in cases:
     a, p = response(r * w0)
     ax.plot(r, a, "o", ms=8, color="#1b6ca8", zorder=5)
     ax2.plot(r, p, "o", ms=8, color="#c0392b", zorder=5)
-ax.set_title("Steady-state response of the swing", fontsize=12.5, pad=8)
+ax.set_title("Steady-state response of the swing", pad=8)
 ax.grid(alpha=.22, which="both")
 h1, l1 = ax.get_legend_handles_labels(); h2, l2 = ax2.get_legend_handles_labels()
-ax.legend(h1 + h2, l1 + l2, fontsize=9.5, loc="upper left")
+ax.legend(h1 + h2, l1 + l2, loc="upper left")
 
 for k, (r, lab) in enumerate(cases):
     a, p = response(r * w0)
@@ -65,15 +66,15 @@ for k, (r, lab) in enumerate(cases):
     axk = fig.add_subplot(gs[1, k])
     axk.plot(t, push, lw=1.8, color="#888780", ls="--", label="push")
     axk.plot(t, x, lw=2.4, color="#1b6ca8", label="swing")
-    axk.set_title(f"{lab}:  A = {a:.3g} m,  lag {p:.0f}°", fontsize=10.5)
-    axk.set_xlabel("time (s)", fontsize=9.5); axk.set_yticks([])
+    axk.set_title(f"{lab}:  A = {a:.3g} m,  lag {p:.0f}°")
+    axk.set_xlabel("time (s)"); axk.set_yticks([])
     axk.grid(alpha=.2)
     if k == 0:
-        axk.legend(fontsize=9, loc="lower left")
-        axk.set_ylabel("normalised", fontsize=9.5)
+        axk.legend(loc="lower left")
+        axk.set_ylabel("normalised")
 
 fig.suptitle(f"Swing: L = {L} m, m = {m:.0f} kg, Γ = {GAMMA} s⁻¹, F₀ = {F0:.0f} N.   "
-             f"ω₀ = {w0:.2f} rad/s, period {T0:.2f} s", fontsize=11.5, y=0.985)
+             f"ω₀ = {w0:.2f} rad/s, period {T0:.2f} s", y=0.985)
 out = pathlib.Path(__file__).parent / "img" / "pendulum.png"
-fig.savefig(out, dpi=170, bbox_inches="tight", facecolor="white")
+fig.savefig(out, bbox_inches="tight", facecolor="white")
 print("wrote", out)
