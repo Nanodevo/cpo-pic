@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Figures</title>
+<link rel="stylesheet" href="style.css">
+<style>
+figure{margin:0 0 2.6em;scroll-margin-top:16px}
+figure img{width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff}
+figcaption{font:13.5px/1.55 system-ui,sans-serif;color:var(--mut);margin-top:.5em}
+.fid{font:12px/1 ui-monospace,monospace;color:var(--acc);margin-bottom:.35em;display:block}
+.toc{columns:2;column-gap:2em;font:14px/1.7 system-ui,sans-serif;margin:1em 0 2.2em}
+.toc a{text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="matter.html">Foundations: matter</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
+  <a href="bend-derivation.html">Bend derivation</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="references.html">References</a>
+  <a class="here" href="figures.html">Figures</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Figures</h1>
+<div class="meta">Every figure in the study on one page, full width, in the order
+of the chain. Meant to sit in a side window while the text is read. Each has an
+anchor: <code>figures.html#name</code> jumps straight to it.</div>
+
+<div class="toc">
+<a href="#polarization-scene">polarization-scene</a><br>
+<a href="#phase-delay">phase-delay</a><br>
+<a href="#lighthouse">lighthouse</a><br>
+<a href="#lorentz">lorentz</a><br>
+<a href="#pendulum">pendulum</a><br>
+<a href="#anharmonic">anharmonic</a><br>
+<a href="#mode-front-view">mode-front-view</a><br>
+<a href="#lp-modes">lp-modes</a><br>
+<a href="#iox-process">iox-process</a><br>
+<a href="#fiber-glass-joint">fiber-glass-joint</a><br>
+<a href="#bend-loss">bend-loss</a><br>
+<a href="#bend-in-context">bend-in-context</a><br>
+<a href="#bend-loss-curve">bend-loss-curve</a><br>
+<a href="#handoff">handoff</a><br>
+<a href="#anticrossing">anticrossing</a><br>
+<a href="#photonic-compute">photonic-compute</a>
+</div>
+
+<h2>Foundations: light in matter</h2>
+<figure id="polarization-scene"><span class="fid">polarization-scene</span><img src="img/polarization-scene.svg" alt=""><figcaption>The scene behind every equation: an atom with no light, the same atom with the light's field displacing its electron cloud, and every atom doing so at once. P is the polarization of the material; E is the field of the light itself.</figcaption></figure>
+<figure id="phase-delay"><span class="fid">phase-delay</span><img src="img/phase-delay.png" alt=""><figcaption>One thin layer of material. The re-radiated wave lags the incident wave by a quarter cycle; their sum peaks later. Accumulated over many layers, that retardation is the refractive index.</figcaption></figure>
+<figure id="lighthouse"><span class="fid">lighthouse</span><img src="img/lighthouse.svg" alt=""><figcaption>A pattern may outrun light. The spot sweeps faster than c for a large enough radius, but the light at A and at B are different photons that each travelled at c. Nothing crosses from A to B.</figcaption></figure>
+<figure id="lorentz"><span class="fid">lorentz</span><img src="img/lorentz.png" alt=""><figcaption>The bound electron as a driven damped oscillator. Left: its lag behind the driving field, from zero below resonance to half a cycle above. Right: the refractive index and absorption that lag produces.</figcaption></figure>
+<figure id="pendulum"><span class="fid">pendulum</span><img src="img/pendulum.png" alt=""><figcaption>The same equation as a 2.5 m playground swing, solved in steady state. Below resonance it follows the hands; at resonance it lags a quarter cycle and the linear model exceeds its validity; far above it moves against the push.</figcaption></figure>
+<figure id="anharmonic"><span class="fid">anharmonic</span><img src="img/anharmonic.png" alt=""><figcaption>Nonlinearity is the departure of the electron's binding well from a parabola. A symmetric well has no second-order term, which is why silicon and glass have no χ⁽²⁾ and lithium niobate does.</figcaption></figure>
+
+<h2>Stage 1: the fiber</h2>
+<figure id="mode-front-view"><span class="fid">mode-front-view</span><img src="img/mode-front-view.svg" alt=""><figcaption>A guided mode seen along the direction of travel. The solid circle is the core, a material boundary. The dashed circle is the mode field radius, a property of the light, always outside the core.</figcaption></figure>
+<figure id="lp-modes"><span class="fid">lp-modes</span><img src="img/lp-modes.png" alt=""><figcaption>The first six LP modes of a step-index fiber, solved, and the V number at which each switches on. Single mode means only LP01 fits.</figcaption></figure>
+
+<h2>Stage 2: the glass</h2>
+<figure id="iox-process"><span class="fid">iox-process</span><img src="img/iox-process.svg" alt=""><figcaption>Ion exchange: masked exchange in a molten salt, the graded surface profile it leaves, and field-assisted burial. No deposition and no etching.</figcaption></figure>
+<figure id="fiber-glass-joint"><span class="fid">fiber-glass-joint</span><img src="img/fiber-glass-joint.svg" alt=""><figcaption>The fiber butt-coupled to the polished glass edge through index-matching adhesive, and both modes end-on at the same scale. The mismatch alone costs 0.44 dB with no misalignment.</figcaption></figure>
+<figure id="bend-loss"><span class="fid">bend-loss</span><img src="img/bend-loss.svg" alt=""><figcaption>A bend, and the same bend straightened by the conformal transformation. The tilted cladding index meets the mode's effective index at the caustic; between the core and the caustic is a barrier the light tunnels through.</figcaption></figure>
+<figure id="bend-in-context"><span class="fid">bend-in-context</span><img src="img/bend-in-context.svg" alt=""><figcaption>A 15 mm bend at true scale, where the waveguide is thinner than the drawn line, with the caustic region magnified 250 times.</figcaption></figure>
+<figure id="bend-loss-curve"><span class="fid">bend-loss-curve</span><img src="img/bend-loss-curve.png" alt=""><figcaption>Relative leakage against bend radius for silicon, silicon nitride and ion-exchanged glass. Same physics, cliffs four orders of magnitude apart.</figcaption></figure>
+
+<h2>Stage 3: glass to silicon</h2>
+<figure id="handoff"><span class="fid">handoff</span><img src="img/handoff.svg" alt=""><figcaption>The scene: the ion-exchanged guide in the glass, the adhesive bondline, and the silicon taper of the face-down die. The mode starts in the glass and climbs into the silicon as the taper widens.</figcaption></figure>
+<figure id="anticrossing"><span class="fid">anticrossing</span><img src="img/anticrossing.png" alt=""><figcaption>The two guides alone would cross at 156 nm. Solved together they refuse to, and the light rides the upper curve from a glass mode into a silicon mode. The gap sets the beat length, and the beat length sets how slowly the taper must change.</figcaption></figure>
+
+<h2>Aside: photonic computing</h2>
+<figure id="photonic-compute"><span class="fid">photonic-compute</span><img src="img/photonic-compute.svg" alt=""><figcaption>One layer of a photonic neural network. The matrix multiply happens passively in a mesh of interferometers; the nonlinearity has to leave the optical domain or use a weak optical effect.</figcaption></figure>
+
+<div class="note">Part of <a href="index.html">the optical chain</a>.</div>
+</div>
+</body>
+</html>
