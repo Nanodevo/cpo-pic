@@ -1,0 +1,7 @@
+# KLayout 2.5D view z-stack for stack_shaped.gds (units: micrometres).
+# Tools > 2.5d View, load this file (or paste it), then Apply.
+# Matches chain/taper_eme.py: glass below, IOX guide in it, 1 um adhesive, 220 nm silicon on top.
+z(input(4, 0), zstart: -8.0, zstop: 0.0,  name: "glass",     color: 0xa9c4d8)
+z(input(2, 0), zstart: -4.0, zstop: 0.0,  name: "IOX guide", color: 0xc8698a)
+z(input(3, 0), zstart:  0.0, zstop: 1.0,  name: "adhesive",  color: 0xe9d8a6)
+z(input(1, 0), zstart:  1.0, zstop: 1.22, name: "silicon",   color: 0x1b6ca8)
