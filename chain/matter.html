@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foundations: light in matter</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.means{background:#f4f7f9;border-left:3px solid #b9c7d3;padding:.6em .9em;
+       font:14.5px/1.6 system-ui,sans-serif;margin:.9em 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a class="here" href="matter.html">Foundations: matter</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
+  <a href="bend-derivation.html">Bend derivation</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="references.html">References</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Foundations: light in matter</h1>
+<div class="meta">
+Why a refractive index exists at all. One electron in a well, driven by the
+light's own field, explains the index, dispersion, absorption and the origin of
+nonlinearity. Every later page rests on this one.
+</div>
+
+<h2>Symbols</h2>
+<table>
+<tr><th>Symbol</th><th>Name</th><th>Units</th></tr>
+<tr><td><strong>E</strong></td><td>electric field of the light</td><td>V/m</td></tr>
+<tr><td><strong>P</strong></td><td>polarization of the material, dipole moment per unit volume</td><td>C/m&sup2;</td></tr>
+<tr><td><strong>p</strong></td><td>dipole moment of one atom</td><td>C&middot;m</td></tr>
+<tr><td>&epsilon;&#8320;</td><td>vacuum permittivity</td><td>F/m</td></tr>
+<tr><td>&chi;</td><td>electric susceptibility</td><td>dimensionless</td></tr>
+<tr><td>&epsilon;<sub>r</sub>, n</td><td>relative permittivity, refractive index; n&sup2; = &epsilon;<sub>r</sub></td><td>dimensionless</td></tr>
+<tr><td>c, v</td><td>speed of light in vacuum, phase speed in the material</td><td>m/s</td></tr>
+<tr><td>&omega;, &omega;&#8320;</td><td>driving frequency of the light, natural frequency of the bound electron</td><td>rad/s</td></tr>
+<tr><td>&Gamma;</td><td>damping rate of the electron's motion</td><td>1/s</td></tr>
+<tr><td>m, e</td><td>electron mass, elementary charge</td><td>kg, C</td></tr>
+<tr><td>x</td><td>displacement of the electron cloud from the nucleus</td><td>m</td></tr>
+<tr><td>&phi;</td><td>phase lag of the displacement behind the driving force</td><td>rad or degrees</td></tr>
+<tr><td>n&prime;, n&Prime;</td><td>real and imaginary parts of the index; n&Prime; is absorption</td><td>dimensionless</td></tr>
+</table>
+
+<h2>1. The scene</h2>
+
+<figure>
+<img src="img/polarization-scene.svg" alt="Three panels: an atom with no light, its electron cloud centred on the nucleus; the same atom with light passing, the cloud displaced to one side making a dipole; and many atoms all displaced at once" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Figure 1. A block of glass with light passing through it. That is the
+entire scene behind every equation on this page.</figcaption>
+</figure>
+
+<p>
+Every atom is a positive nucleus with a negative electron cloud around it. With
+no light present the cloud is centred on the nucleus, and the atom has no
+dipole. Light is an oscillating electric field. As it passes, that field pushes
+the electron cloud one way and the nucleus the other, by an amount so small that
+in a fiber carrying a milliwatt of laser light it is around 10<sup>&minus;16</sup> m,
+a millionth of the width of the atom. The atom is now a tiny dipole
+<strong>p</strong>.
+</p>
+
+<p>
+Add up all the little dipoles in a cubic metre and the total is the
+<strong>polarization P</strong>. It is a property of the material: how far the
+charges inside it have been pulled apart. And <strong>E</strong> is the field of
+the light itself. Nothing in the scene is charged or applying a field from
+outside.
+</p>
+
+<h2>2. What &chi; is, and what kind of statement it is</h2>
+
+<p>For a weak field the response is proportional to the push:</p>
+
+<div class="eqwrap"><div class="eq"><strong>P</strong> = &epsilon;&#8320; &middot; &chi; &middot; <strong>E</strong></div><span class="eqno">(1)</span></div>
+
+<div class="means">
+Equation (1) is not a law of nature. It is a <strong>constitutive
+relation</strong>: an assumption about a particular material in a particular
+regime, and the only place in the whole framework where the material enters.
+The definitions around it, such as <strong>D</strong> &equiv; &epsilon;&#8320;<strong>E</strong> + <strong>P</strong>,
+cannot be wrong. Equation (1) can, and when a model disagrees with a
+measurement, this is the line to suspect.
+</div>
+
+<p>Combining (1) with the definition of <strong>D</strong> gives
+<strong>D</strong> = &epsilon;&#8320;(1 + &chi;)<strong>E</strong>, and the wave
+equation then propagates at speed v = c/&radic;(1 + &chi;). Since the index is
+<em>defined</em> as n = c/v:</p>
+
+<div class="eqwrap"><div class="eq">n&sup2; = &epsilon;<sub>r</sub> = 1 + &chi;</div><span class="eqno">(2)</span></div>
+
+<p>
+The 1 is the vacuum, present even with no material. The &chi; is what the
+material adds. For ordinary transparent matter &chi; &gt; 0, which is why the
+index is always greater than one.
+</p>
+
+<div class="warn">
+Both sides of (2) must be evaluated at the <em>same frequency</em>. Water has
+&epsilon;<sub>r</sub> &asymp; 80 at DC and n&sup2; = 1.77 at optical frequencies,
+because whole molecules can rotate to follow a slow field and cannot follow one
+at 10<sup>14</sup> Hz. The frequency dependence of &chi; is dispersion.
+</div>
+
+<h2>3. Why the light appears to slow down</h2>
+
+<figure>
+<img src="img/phase-delay.png" alt="Three sine waves: the incident wave, a smaller re-radiated wave lagging it by a quarter cycle, and their sum, whose peaks arrive later than the incident wave's" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Figure 2. One thin layer of material. Adding a small wave that lags
+by a quarter cycle to the original gives a resultant that peaks later. Regenerate
+with <code>chain/phase_delay.py</code>.</figcaption>
+</figure>
+
+<p>
+The speed of light in vacuum, c, is constant and is never violated. A light pulse
+nevertheless takes measurably longer to cross a block of glass. Both are true,
+and two tempting pictures of why are wrong: photons do not bounce between atoms,
+or glass would look like milk, and atoms do not absorb and re-emit with a delay,
+or the beam would lose direction and phase.
+</p>
+
+<p>
+What happens is interference. Between the atoms the field always travels at c.
+But the oscillating electrons radiate their own wave at the same frequency, and
+that re-radiated wave arrives a quarter cycle behind the incident one. The sum,
+which is what any detector sees, has almost the original shape but its peaks
+arrive later. Stack layer upon layer and the retardation accumulates in
+proportion to distance, which is indistinguishable from a wave travelling more
+slowly.
+</p>
+
+<div class="num">
+The light is not slowed. It is continuously rebuilt out of interference, and
+the rebuilt wave peaks late. The refractive index is a count of how much phase
+the material steals per unit distance.
+</div>
+
+<h3>Which speed</h3>
+
+<table>
+<tr><th>Speed</th><th>What it is</th><th>May it differ from c?</th></tr>
+<tr><td>front velocity</td><td>the leading edge of a wave that has just been switched on</td><td>never; always exactly c</td></tr>
+<tr><td>phase velocity, v<sub>p</sub> = c/n</td><td>how fast a crest advances</td><td>yes, and it may exceed c</td></tr>
+<tr><td>group velocity, v<sub>g</sub></td><td>how fast a pulse envelope moves; carries the signal</td><td>yes</td></tr>
+</table>
+
+<figure>
+<img src="img/lighthouse.svg" alt="A rotating lighthouse sends two rays to a distant cloud; the bright spot sweeps between the two landing points faster than light, but each ray travelled outward at c and nothing crossed between the points" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Figure 3. A pattern may outrun light. At one rotation per second the
+spot exceeds c beyond 47,700 km. Nothing travels from A to B, so nothing can be
+sent from A to B.</figcaption>
+</figure>
+
+<p>
+Relativity constrains what can carry energy or information. A crest in an
+established wave is a label on a pattern, like the lighthouse spot, and carries
+neither. To send information something must <em>change</em>, a change is a new
+front, and fronts travel at exactly c. That is why v<sub>p</sub> = c/n is free to
+be less than c, or in some materials more, without troubling anyone.
+</p>
+
+<h2>4. The driven electron</h2>
+
+<p>
+Near the bottom of its binding well the electron feels a restoring force
+proportional to displacement, plus damping, plus the push from the light:
+</p>
+
+<div class="eqwrap"><div class="eq">m&middot;x&Prime; + m&middot;&Gamma;&middot;x&prime; + m&middot;&omega;&#8320;&sup2;&middot;x = &minus;e&middot;E(t)</div><span class="eqno">(3)</span></div>
+
+<p>A mass on a spring being shaken. Writing E = E&#8320;cos(&omega;t) and solving
+for the steady state with complex exponentials gives an amplitude and a lag:</p>
+
+<div class="eqwrap"><div class="eq">x&#8320; = (e&middot;E&#8320;/m) / &radic;[(&omega;&#8320;&sup2; &minus; &omega;&sup2;)&sup2; + &Gamma;&sup2;&omega;&sup2;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tan &phi; = &Gamma;&omega; / (&omega;&#8320;&sup2; &minus; &omega;&sup2;)</div><span class="eqno">(4)</span></div>
+
+<figure>
+<img src="img/lorentz.png" alt="Left: the lag of the electron behind the driving force rising from zero through ninety degrees at resonance to one hundred eighty degrees above it. Right: the real refractive index and the absorption against frequency from the same oscillator" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Figure 4. The Lorentz oscillator. Left, how far the electron lags.
+Right, what that lag produces. Regenerate with <code>chain/lorentz.py</code>.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>&omega; &lt;&lt; &omega;&#8320;: in phase.</strong> The electron simply
+follows the field. This is glass at telecom: silica's resonance is in the deep
+ultraviolet near 120 nm, and 1550 nm light drives it at about 8% of that
+frequency. Far out on the flat side of the curve, where absorption is negligible,
+which is why a fiber loses 0.2 dB per kilometre.</li>
+<li><strong>&omega; = &omega;&#8320;: a quarter cycle behind.</strong> Power
+delivered is force times velocity, and velocity peaks a quarter cycle after
+displacement, so pushing a quarter cycle ahead of the position is the condition
+for maximum energy transfer. That is resonance, and it is absorption.</li>
+<li><strong>&omega; &gt;&gt; &omega;&#8320;: half a cycle behind.</strong> Inertia
+wins; the electron moves against the field. Here &chi; goes negative and n dips
+below 1, which is why the X-ray refractive index of matter is slightly less
+than unity.</li>
+</ol>
+
+<div class="means">
+<strong>Where the quarter-cycle-late re-radiation of Figure 2 comes from.</strong>
+Radiation follows acceleration, which is half a cycle from displacement, and
+summing the wavelets from a whole plane of dipoles contributes a further
+quarter cycle from the geometry of the sum. Net: a quarter cycle behind, which
+is a pure phase delay with no energy exchange. At resonance the electron's own
+lag adds another quarter cycle and the re-radiated field is in antiphase with
+the incident one: cancellation, which is absorption. Same oscillator, two
+faces. This is the physical content of the Kramers-Kronig relations: a material
+cannot have dispersion without absorption somewhere in its spectrum.
+</div>
+
+<p>
+And why prisms work: in the transparent window n rises with frequency because
+rising frequency means climbing toward the resonance. Blue is nearer the
+ultraviolet than red, sees a larger index, and bends more.
+</p>
+
+<h2>5. The same equation on a playground</h2>
+
+<table>
+<tr><th>Swing</th><th>Bound electron</th></tr>
+<tr><td>child and seat, mass m</td><td>the electron's mass</td></tr>
+<tr><td>gravity pulling it back</td><td>the binding, m&omega;&#8320;&sup2;x</td></tr>
+<tr><td>natural rate, set by rope length: &omega;&#8320;&sup2; = g/L</td><td>&omega;&#8320;, set by how tightly the electron is bound</td></tr>
+<tr><td>air resistance and the pivot</td><td>damping &Gamma;</td></tr>
+<tr><td>the parent's hands, pushing at &omega;</td><td>the light's field, at &omega;</td></tr>
+<tr><td>how far the swing goes</td><td>displacement x, and so P</td></tr>
+</table>
+
+<p>
+Worked with numbers: L = 2.5 m, m = 25 kg, &Gamma; = 0.10 s<sup>&minus;1</sup>,
+F&#8320; = 20 N. Resolving along the arc and using sin &theta; &asymp; &theta;
+gives equation (3) with m&middot;g/L in place of m&omega;&#8320;&sup2;, so
+&omega;&#8320; = &radic;(g/L) = 1.98 rad/s and the period is 3.17 s.
+</p>
+
+<figure>
+<img src="img/pendulum.png" alt="Top: swing amplitude and lag against push frequency, with three operating points marked. Bottom: push and swing traced in time at a tenth of resonance, at resonance, and at ten times resonance" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Figure 5. The swing solved from equation (4). Regenerate with
+<code>chain/pendulum.py</code>.</figcaption>
+</figure>
+
+<table>
+<tr><th>push</th><th>amplitude</th><th>lag</th><th>swing angle</th></tr>
+<tr><td>0.1&middot;&omega;&#8320;</td><td>0.206 m</td><td>0.3&deg;</td><td>4.7&deg;</td></tr>
+<tr><td>&omega;&#8320;</td><td>4.04 m, linear model</td><td>90&deg;</td><td>93&deg;, not valid</td></tr>
+<tr><td>10&middot;&omega;&#8320;</td><td>2.1 mm</td><td>179.7&deg;</td><td>0.05&deg;</td></tr>
+</table>
+
+<div class="warn">
+At resonance the quality factor Q = &omega;&#8320;/&Gamma; = 20 amplifies the static
+deflection twentyfold, to more than the rope length. The small-angle model has
+left its range of validity. In reality sin &theta; &lt; &theta;, the restoring
+force weakens at large angle, the resonance detunes and the amplitude saturates.
+A pendulum at large amplitude is the anharmonic well of the next section:
+nonlinear optics on a playground.
+</div>
+
+<h2>6. Four ways equation (1) can fail</h2>
+
+<p>
+There is one &chi;. Equation (1) quietly assumes that P is parallel to E,
+instantaneous, in phase with E, and proportional to E. Each assumption can be
+dropped on its own.
+</p>
+
+<table>
+<tr><th>Assumption dropped</th><th>&chi; becomes</th><th>Phenomenon</th></tr>
+<tr><td>P parallel to E</td><td>a tensor &chi;<sub>ij</sub></td><td>birefringence, polarization dependent loss</td></tr>
+<tr><td>instantaneous</td><td>a function &chi;(&omega;)</td><td>dispersion</td></tr>
+<tr><td>in phase with E</td><td>complex, &chi;&prime; + i&chi;&Prime;</td><td>absorption: n&Prime; and &alpha; = 2k&#8320;n&Prime;</td></tr>
+<tr><td>proportional to E</td><td>a series, &chi;<sup>(1)</sup>E + &chi;<sup>(2)</sup>E&sup2; + &chi;<sup>(3)</sup>E&sup3;</td><td>all of nonlinear optics</td></tr>
+</table>
+
+<p>
+The superscripts in the last row are orders in a Taylor expansion, not
+alternatives. &chi;<sup>(1)</sup> is the ordinary &chi;; the higher terms are
+always present and merely too small to notice until the field is large. Their
+units follow from the equation: &chi;<sup>(2)</sup> in m/V, &chi;<sup>(3)</sup>
+in m&sup2;/V&sup2;.
+</p>
+
+<figure>
+<img src="img/anharmonic.png" alt="Two potential wells with a harmonic parabola overlaid. Left, a symmetric well such as silicon or silica. Right, an asymmetric well such as lithium niobate" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Figure 6. The higher orders of &chi; are the departure of the
+electron's binding well from a parabola. Regenerate with
+<code>chain/anharmonic.py</code>.</figcaption>
+</figure>
+
+<div class="num">
+If the well is symmetric, V(&minus;x) = V(x), its expansion has only even powers,
+the restoring force has only odd powers, and the second-order response vanishes
+identically: <strong>centrosymmetric materials have &chi;<sup>(2)</sup> = 0
+exactly</strong>. Silicon, silica and glass are centrosymmetric. That single
+symmetry is why silicon modulators must use the plasma dispersion effect rather
+than the Pockels effect, and why lithium niobate exists as a rival platform.
+</div>
+
+<h2>Check yourself</h2>
+
+<details><summary>P is the polarization of what, and where does E come from?</summary>
+<p>P is the polarization of the material: the dipole moment per unit volume from
+electron clouds displaced relative to their nuclei. E is the electric field of
+the light itself. Nothing else in the scene is charged.</p></details>
+
+<details><summary>If c is constant, in what sense does light travel slower in glass?</summary>
+<p>The phase velocity is c/n. Between atoms the field always moves at c; the
+re-radiated waves from the electrons add to it with a lag, and the sum peaks
+later at each layer. The front of a switched-on wave still travels at exactly
+c.</p></details>
+
+<details><summary>Why is the lag exactly a quarter cycle at resonance?</summary>
+<p>Power is force times velocity. Velocity peaks a quarter cycle after
+displacement, so the force must lead the displacement by a quarter cycle to
+transfer energy fastest. Resonance is that condition.</p></details>
+
+<details><summary>Why does silicon have no second-order nonlinearity?</summary>
+<p>Its binding well is symmetric, so the expansion of the restoring force
+contains no even term, and &chi;<sup>(2)</sup> vanishes by parity. The same
+argument applies to the pendulum.</p></details>
+
+<h2>References</h2>
+<ol class="refs">
+<li>R. P. Feynman, R. B. Leighton and M. Sands, <em>The Feynman Lectures on
+Physics</em>, Vol. I, Addison-Wesley (1963): Ch. 23, "Resonance", for the driven
+oscillator; Ch. 30 and 31, "Diffraction" and "The Origin of the Refractive
+Index", for the re-radiation argument of Section 3. Freely available online from
+Caltech.</li>
+</ol>
+<p style="font:14px/1.6 system-ui,sans-serif;color:var(--mut)">
+Full records and the conventions this study is written under are on the
+<a href="references.html">references page</a>.
+</p>
+
+<div class="note">Part of <a href="index.html">the optical chain</a>. Next:
+<a href="fiber.html">stage 1, the fiber</a>, where the guided mode is built on
+this index.</div>
+
+</div>
+</body>
+</html>
