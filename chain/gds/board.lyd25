@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<klayout-macro>
+ <description>cpo-pic board: die + glass bridge</description>
+ <version/>
+ <category>d25</category>
+ <prolog/>
+ <epilog/>
+ <doc/>
+ <autorun>false</autorun>
+ <autorun-early>false</autorun-early>
+ <priority>0</priority>
+ <shortcut/>
+ <show-in-menu>true</show-in-menu>
+ <group-name>d25_scripts</group-name>
+ <menu-path>tools_menu.d25.end</menu-path>
+ <interpreter>dsl</interpreter>
+ <dsl-interpreter-name>d25-dsl-xml</dsl-interpreter-name>
+ <text>
+# cpo-pic board: die photonics-up, glass bridge tongue glued onto the circuit face.
+# Units: micrometres. Die layers are the gdsfactory generic 220 nm SOI PDK; the
+# back-end heights (heater, vias, metals) are illustrative, not a foundry stack.
+# The bridge heights match chain/taper_eme.py: 1 um adhesive, 4 um deep IOX guide.
+# The glass tongue is drawn 100 um thick for viewing (the EME models its first 12 um).
+zz(name: "die") do
+  z(input(1, 0),  zstart: 0.0,  zstop: 0.22, name: "silicon",  color: 0x1b6ca8)
+  z(input(47, 0), zstart: 1.2,  zstop: 1.32, name: "heater",   color: 0xb23a3a)
+  z(input(44, 0), zstart: 1.32, zstop: 2.0,  name: "via1",     color: 0x8c8c8c)
+  z(input(45, 0), zstart: 2.0,  zstop: 2.7,  name: "metal2",   color: 0xc9a227)
+  z(input(43, 0), zstart: 2.7,  zstop: 3.4,  name: "via2",     color: 0x8c8c8c)
+  z(input(49, 0), zstart: 3.4,  zstop: 4.4,  name: "metal3",   color: 0xe0c060)
+  z(input(99, 0), zstart: -1.0, zstop: 0.0,  name: "die frame", color: 0x606060)
+end
+zz(name: "glass bridge") do
+  z(input(202, 0), zstart: 0.22,  zstop: 1.22,   name: "adhesive",    color: 0xe9d8a6)
+  z(input(201, 0), zstart: 1.22,  zstop: 5.22,   name: "IOX guide",   color: 0xc8698a)
+  z(input(203, 0), zstart: 1.22,  zstop: 101.22, name: "glass tongue", color: 0xa9c4d8)
+  z(input(204, 0), zstart: -150.0, zstop: 150.0, name: "ferrule",     color: 0x5c7a5c)
+  z(input(205, 0), zstart: -59.3, zstop: 65.7,   name: "fiber",       color: 0xf2f2f2)
+end
+
+</text>
+</klayout-macro>
