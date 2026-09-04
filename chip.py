@@ -176,11 +176,20 @@ def cpo_pic() -> gf.Component:
             (5, 6, SPIRAL_LONG, 16, "SPIRAL 2.0cm")]:
         t_in = place_coupler(c, ch_in)
         t_out = place_coupler(c, ch_out)
+        # The spiral's two ports sit side by side at one end of the body, both
+        # facing outward. Attach it port-to-port: the feed straight ends at
+        # X_DUT + 60, the spiral rotates so its ports face the feed and its
+        # body lies beyond it, and the return route leaves from o2 (now facing
+        # west, 3 um beside the feed) to the output taper. Placing it with a
+        # bare move() and routing to o1 sent the feed straight through the arms
+        # (v0.3 defect, caught by check_layout.py).
+        feed = c << gf.components.straight(
+            length=X_DUT + 60 - (EDGE_MARGIN + TAPER_LEN), cross_section="strip")
+        feed.connect("o1", t_in.ports["o2"])
         sp = c << spiral_of_length(target, n_loops)
-        sp.move((X_DUT + 60, ch_y(ch_in)))
-        gf.routing.route_single(c, t_in.ports["o2"], sp.ports["o1"],
+        sp.connect("o1", feed.ports["o2"])
+        gf.routing.route_single(c, sp.ports["o2"], t_out.ports["o2"],
                                 cross_section="strip")
-        loop_back(c, sp.ports["o2"], t_out.ports["o2"])
         label(c, name, 3600, ch_y(ch_in) + 70)
 
     # --- ch7-8: WDM bank, the demux skeleton of a transceiver engine.
@@ -218,7 +227,7 @@ def cpo_pic() -> gf.Component:
         f.move((x, y))
 
     # die labels
-    label(c, "NANODEVO CPO-PIC v0.3", 300, 260, size=110)
+    label(c, "NANODEVO CPO-PIC v0.4", 300, 260, size=110)
     label(c, "WEST EDGE: 16 TAPERS, 250UM PITCH, TO IOX GLASS (MPO-16)",
           300, 120, size=60)
     return c

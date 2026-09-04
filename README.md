@@ -99,6 +99,18 @@ python -m venv .venv && .venv/bin/pip install gdsfactory
 .venv/bin/python chip.py     # writes build/cpo_pic.gds and build/cpo_pic.png
 ```
 
+After every build, run the layout check:
+
+```bash
+.venv/bin/python check_layout.py   # PASS/FAIL: overlapping shapes, spacings under 150 nm
+```
+
+It flags any two separate shapes on the silicon layer that share area
+(a waveguide routed across another one) or come closer than 150 nm
+without touching (the smallest intended spacing on the die is the
+200 nm ring-to-bus gap). Port-to-port joins are allowed. It is a sanity
+check, not a foundry DRC.
+
 Layout is generated with [gdsfactory](https://gdsfactory.github.io/gdsfactory/)
 on the generic 220 nm SOI strip-waveguide PDK. The design intent lives in
 the cell parameters, not the process: retargeting to a foundry PDK is a
@@ -109,8 +121,20 @@ cross-section swap.
 - Mode solver (femwell) on the taper cross-sections: effective-index
   walk along the 2 mm taper, adiabaticity check
 - FDTD (MEEP) on the tip region
-- DRC against a public foundry rule deck
+- DRC against a public foundry rule deck (beyond the in-house `check_layout.py`)
 - Retarget to a SiN platform (closer index match to IOX glass)
+
+## Revision notes
+
+- **v0.4 (2026-09-04).** The cutback spirals on channels 3-6 are now
+  attached port-to-port. In v0.3 the feed waveguide was routed straight
+  through the spiral arms (dozens of unintended crossings; the cutback
+  channels would have been unusable). Found with `check_layout.py`,
+  added in the same revision; the die now passes it.
+
+  ![spiral feed](docs/spiral_feed.png)
+
+- **v0.3 (2026-08-21).** First complete die.
 
 ## References
 
