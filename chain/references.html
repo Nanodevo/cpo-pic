@@ -15,6 +15,7 @@
   <a href="matter.html">Foundations: matter</a>
   <a href="fiber.html">1. The fiber</a>
   <a href="stage2-glass.html">2. The glass</a>
+  <a href="stage3-handoff.html">3. The hand-off</a>
   <a href="bend-derivation.html">Bend derivation</a>
   <a href="glossary.html">Glossary</a>
   <a class="here" href="references.html">References</a>
@@ -149,6 +150,47 @@ internal inconsistency between the quoted numerical aperture and the other two
 specifications is analysed in <a href="fiber.html">stage 1</a>.</span></li>
 </ol>
 
+<h2>Coupled modes and adiabatic transitions</h2>
+
+<ol class="refs" start="14">
+<li id="r14">A. Yariv, "Coupled-mode theory for guided-wave optics," <em>IEEE
+Journal of Quantum Electronics</em> <strong>9</strong>(9), 919&ndash;933 (1973).
+<span class="verif">The coupled amplitude equations of stage 3, equation (3), and
+the supermode picture that follows from them. Record verified via Crossref, DOI
+<a href="https://doi.org/10.1109/JQE.1973.1077767">10.1109/JQE.1973.1077767</a>.</span></li>
+
+<li id="r15">L. D. Landau, "Zur Theorie der Energie&uuml;bertragung. II,"
+<em>Physikalische Zeitschrift der Sowjetunion</em> <strong>2</strong>, 46&ndash;51
+(1932); C. Zener, "Non-adiabatic crossing of energy levels," <em>Proceedings of
+the Royal Society of London A</em> <strong>137</strong>(833), 696&ndash;702 (1932).
+<span class="verif">The two-level crossing formula used as the estimate in
+equation (9). Zener's record verified via Crossref, DOI
+<a href="https://doi.org/10.1098/rspa.1932.0165">10.1098/rspa.1932.0165</a>;
+Landau's is cited from the standard literature and was not verified online for
+this study.</span></li>
+
+<li id="r16">A. W. Snyder and J. D. Love, <em>Optical Waveguide Theory</em>,
+Chapman and Hall, London (1983).
+<span class="verif">The local-mode description of slowly varying waveguides and
+the adiabaticity criterion in the form used here. Cited as the standard
+reference; full text not consulted for this study.</span></li>
+
+<li id="r17">X. Sun, H.-C. Liu and A. Yariv, "Adiabaticity criterion and the
+shortest adiabatic mode transformer in a coupled-waveguide system," <em>Optics
+Letters</em> <strong>34</strong>(3), 280&ndash;282 (2009).
+<span class="verif">Source of the constant-adiabaticity profile, equation (8): the
+taper that holds &epsilon; fixed is the shortest adiabatic transformer. Record
+verified via Crossref, DOI
+<a href="https://doi.org/10.1364/OL.34.000280">10.1364/OL.34.000280</a>.</span></li>
+
+<li id="r18">D. F. G. Gallagher and T. P. Felici, "Eigenmode expansion methods
+for simulation of optical propagation in photonics: pros and cons,"
+<em>Proceedings of SPIE</em> <strong>4987</strong>, 69&ndash;82 (2003).
+<span class="verif">The method of rung 2, equation (10), and the argument for
+why it suits long slowly varying structures. Record verified via Crossref, DOI
+<a href="https://doi.org/10.1117/12.473173">10.1117/12.473173</a>.</span></li>
+</ol>
+
 <h2>Software used</h2>
 
 <ol class="refs" start="10">
@@ -158,6 +200,10 @@ the waveguide cross-section solutions.</li>
 <li id="r12">Ray Optics Simulation by Rick Tu, open source, used for every
 measurement on the <a href="rays.html">foundations</a> page.
 <a href="https://phydemo.app/ray-optics/simulator/">phydemo.app</a></li>
+<li id="r19" value="19">Tidy3D by Flexcompute, eigenmode-expansion solver, used
+for rung 2 of stage 3 (simulation files written with version 2.12.0, run on the
+hosted version 2.11.2). The local mode solver of the same package was used for
+the port cross-check.</li>
 </ol>
 
 <div class="note">

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 3: the hand-off from glass to silicon</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="matter.html">Foundations: matter</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
+  <a class="here" href="stage3-handoff.html">3. The hand-off</a>
+  <a href="bend-derivation.html">Bend derivation</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="references.html">References</a>
+  <a href="figures.html">Figures</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Stage 3: the hand-off from glass to silicon</h1>
+<div class="meta">
+How light leaves a 6 &micro;m glass guide and ends up in a 0.5 &micro;m silicon
+wire without ever crossing an interface. Phase matching, supermodes, the beat
+length, why the taper as first drawn does not work, the profile that does, and
+the two rungs of simulation that say so.
+</div>
+
+<h2>The scene</h2>
+
+<figure>
+<img src="img/handoff.svg?v=7ee56839" alt="Side view of the ion-exchanged guide in the glass, the adhesive bondline above it, and the silicon taper of the die lying on the adhesive; the mode starts in the glass and climbs into the silicon as the taper widens" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The ion-exchanged guide in the glass, the adhesive bondline, and the
+silicon taper lying on it. The mode starts in the glass and climbs into the
+silicon as the taper widens. Light travels left to right in every figure of this
+stage.</figcaption>
+</figure>
+
+<p>
+Stage 2 ended with a number that closes the obvious route: butt-coupling the
+glass guide's 6.6 &micro;m mode straight into a silicon wire's 0.5 &micro;m mode
+would cost 5.55 dB in size mismatch alone. The hand-off is therefore not a joint
+at all. The two guides lie side by side, one on each side of a 1 &micro;m
+adhesive layer, and the light moves from one to the other <em>through</em> their
+overlapping evanescent tails while both guides run in parallel for two
+millimetres.<sup class="cite"><a href="references.html#r6">[6]</a></sup> Nothing
+is cut, nothing is aligned face to face, and the transfer is decided by the
+shape of the silicon along the way.
+</p>
+
+<p>
+The parts, with the numbers this stage uses throughout. The glass guide is the
+6 &times; 4 &micro;m ion-exchanged channel of stage 2 with an index step
+&Delta;n = 0.012, whose fundamental mode has an effective index
+n<sub>eff</sub> = 1.50522 and a mode field diameter of 6.6 &micro;m. The
+adhesive is 1 &micro;m of index-matched glue, n = 1.500. The silicon is a
+220 nm thick strip whose width w changes along the light: 130 nm at the tip,
+500 nm at the far end, over a length L = 2 mm. Effective index is the one
+symbol the whole stage turns on:
+</p>
+
+<div class="eqwrap"><div class="eq">&beta; = k<sub>0</sub> &middot; n<sub>eff</sub>,        k<sub>0</sub> = 2&pi;/&lambda;</div><span class="eqno">(1)</span></div>
+<div class="means">
+&beta; is the propagation constant of a guided mode, the phase it accumulates per
+micrometre along the guide, in radians per micrometre. k<sub>0</sub> is the
+free-space wavenumber at the wavelength &lambda; = 1.55 &micro;m, so
+k<sub>0</sub> = 4.054 rad/&micro;m. n<sub>eff</sub> is the index a plane wave
+would need in order to travel at the mode's phase velocity. A mode in a
+waveguide has one n<sub>eff</sub>, and it lies between the cladding index and
+the core index.
+</div>
+
+<figure>
+<img src="img/taper-plan.svg?v=ab18c745" alt="Plan view of the silicon taper, narrow tip on the left widening to 500 nm on the right, with the hand-off window shaded" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The taper from above. The length is compressed about 700 times; at
+true scale the shape is 4000 times longer than it is wide, which is why every
+layout viewer shows it as a line.</figcaption>
+</figure>
+
+<h2>Phase matching: where the two guides agree</h2>
+
+<p>
+A wide silicon strip guides tightly: at w = 500 nm the mode has
+n<sub>eff</sub> = 2.450, most of its power inside the silicon. Narrow the strip
+and the mode spills out. Its n<sub>eff</sub> falls toward the index of whatever
+surrounds it, which here is the adhesive at 1.500. The table is the finite-element
+solution of the isolated silicon strip at 1550 nm, transverse-electric
+polarization, the electric field along the width.<sup class="cite"><a href="references.html#r10">[10]</a></sup>
+</p>
+
+<table>
+<tr><th>width w</th><th>n<sub>eff</sub> of the isolated strip</th><th>power inside the silicon</th></tr>
+<tr><td>500 nm</td><td>2.450</td><td>78%</td></tr>
+<tr><td>300 nm</td><td>1.861</td><td>52%</td></tr>
+<tr><td>220 nm</td><td>1.558</td><td>14%</td></tr>
+<tr><td>180 nm</td><td>1.519</td><td>7%</td></tr>
+<tr><td>160 nm</td><td>1.507</td><td>4.5%</td></tr>
+<tr><td>155 nm</td><td>1.5048</td><td>3.9%</td></tr>
+<tr><td>150 nm</td><td>1.5028</td><td>3.2%</td></tr>
+<tr><td>145 nm</td><td>1.5010</td><td>2.4%</td></tr>
+<tr><td>140 nm</td><td>1.4997</td><td>not bound: below the adhesive index</td></tr>
+</table>
+
+<p>
+Two things to read off. First, below about 141 nm the isolated strip is not a
+waveguide at all: its would-be n<sub>eff</sub> drops under 1.500 and the mode
+is no longer bound. A 130 nm tip on its own guides nothing. It exists only as a
+small perturbation on the glass mode, which is exactly the role it needs to play
+at the start. Second, on the way down n<sub>eff</sub> passes through the glass
+guide's value:
+</p>
+
+<div class="eqwrap"><div class="eq">n<sub>eff,Si</sub>(w*) = n<sub>eff,glass</sub> = 1.50522        &rarr;        w* = 156 nm</div><span class="eqno">(2)</span></div>
+<div class="means">
+This is the <strong>phase-matching</strong> condition. At the width w* the two
+guides, each solved alone, carry modes with the same propagation constant. Only
+there can power move between them freely, because only there do the two fields
+stay in step as they travel. Everywhere else they drift apart in phase and the
+exchange averages out.
+</div>
+
+<p>
+Where w* sits depends on the glass, not on the silicon. The silicon curve is
+fixed by the strip thickness and the platform; the glass line is set by how
+much ion exchange the bridge maker did. The finite-element solve repeated over
+a range of glass contrasts:
+</p>
+
+<table>
+<tr><th>glass &Delta;n</th><th>glass n<sub>eff</sub></th><th>phase-match width w*</th></tr>
+<tr><td>0.008</td><td>1.50245</td><td>149 nm</td></tr>
+<tr><td>0.010</td><td>1.50377</td><td>153 nm</td></tr>
+<tr><td>0.012</td><td>1.50522</td><td>156 nm</td></tr>
+<tr><td>0.016</td><td>1.50836</td><td>162 nm</td></tr>
+<tr><td>0.020</td><td>1.51171</td><td>168 nm</td></tr>
+</table>
+
+<p>
+Five nanometres of silicon width per 0.004 of glass contrast. This is why the
+taper sweeps from 130 nm all the way to 500 nm rather than from 150 to 160: it
+must pass through the crossing wherever the glass process actually put it. It is
+also why the test die carries tapers with three different tip widths, 120, 150
+and 180 nm, on channels 11 to 14. A tip that starts at 180 nm begins on the
+wide side of every crossing in the table, and the light launched from the glass
+would find the silicon already out of step.
+</p>
+
+<h2>Solved together: supermodes and the anticrossing</h2>
+
+<figure>
+<img src="img/anticrossing.png?v=5bd7a45f" alt="Effective index of the two guides against silicon width: the isolated curves cross at 156 nm, the coupled solution splits into an upper and a lower supermode that avoid each other" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The two guides alone would cross at 156 nm. Solved together they
+refuse to. The light rides the upper curve from a glass-like mode on the left
+into a silicon-like mode on the right, and the gap at the closest approach sets
+the beat length.</figcaption>
+</figure>
+
+<p>
+Now solve the two guides as one structure. The modes of the pair are not the
+glass mode and the silicon mode; they are two <strong>supermodes</strong>, each
+living partly in both. Coupled-mode theory<sup class="cite"><a href="references.html#r14">[14]</a></sup>
+describes this with two amplitudes: A(z) for the field in the silicon mode and
+B(z) for the field in the glass mode, both slowly varying along z, with the
+glass mode's phase factored out so that only the difference between the guides
+remains:
+</p>
+
+<div class="eqwrap"><div class="eq">dA/dz = &minus;i &middot; [ k<sub>0</sub>&delta;(z) &middot; A + &kappa; &middot; B ]
+dB/dz = &minus;i &middot; &kappa; &middot; A</div><span class="eqno">(3)</span></div>
+<div class="means">
+&delta;(z) = n<sub>eff,Si</sub>(w(z)) &minus; n<sub>eff,glass</sub> is the
+<strong>detuning</strong>, in index units: how far apart the two isolated
+guides are at the width the taper has reached at z. It is negative on the narrow
+side of the crossing and positive on the wide side. &kappa; is the
+<strong>coupling coefficient</strong> in radians per micrometre, set by how much
+the two mode fields overlap across the adhesive. Thicker adhesive, smaller
+&kappa;. i is the imaginary unit; the minus-i form means each amplitude advances
+in phase as it propagates.
+</div>
+
+<p>
+With &delta; held fixed, equation (3) has two solutions that propagate
+unchanged, the supermodes, and their effective indices are
+</p>
+
+<div class="eqwrap"><div class="eq">n<sub>&plusmn;</sub> = n<sub>eff,glass</sub> + &delta;/2 &plusmn; &frac12; &radic;( &delta;&sup2; + G&sup2; ),        G = 2&kappa;/k<sub>0</sub></div><span class="eqno">(4)</span></div>
+<div class="means">
+G is the <strong>gap</strong>: the smallest separation the two supermodes ever
+reach, in index units, attained exactly at the crossing where &delta; = 0. Away
+from the crossing the curves approach the isolated ones, n<sub>+</sub> tending
+to whichever isolated index is larger. The full two-guide finite-element solve
+at the crossing gives G = 2.8 &times; 10<sup>&minus;3</sup> for this geometry,
+and that single number, together with the isolated silicon curve, is all the
+two-mode model needs.
+</div>
+
+<p>
+How much of the upper supermode lives in the silicon follows from the same
+algebra:
+</p>
+
+<div class="eqwrap"><div class="eq">f<sub>Si</sub> = &frac12; &middot; [ 1 + &delta; / &radic;( &delta;&sup2; + G&sup2; ) ]</div><span class="eqno">(5)</span></div>
+<div class="means">
+f<sub>Si</sub> is the fraction of the upper supermode's power carried in the
+silicon. Far on the narrow side (&delta; &lt;&lt; &minus;G) it is 0: the mode is
+the glass mode with a whisper of silicon. At the crossing it is exactly &frac12;.
+Far on the wide side it is 1. The full solve agrees: at the 120, 150 and 180 nm
+tips the upper supermode is 95%, 72% and 18% in the glass respectively, and
+half the power has crossed at about 158 nm.
+</div>
+
+<p>
+That is the whole mechanism in one sentence: <strong>if the taper changes
+slowly enough, the light stays in the upper supermode, and the upper supermode
+turns from glass into silicon by itself.</strong> Nothing is coupled "across"
+in the ordinary sense. The mode the light is in simply changes its shape as the
+structure changes underneath it. Everything that follows is about the words
+"slowly enough".
+</p>
+
+<h2>The beat length</h2>
+
+<figure>
+<img src="img/beat-length.png?v=6311a473" alt="Power in the silicon and in the glass against distance for two phase-matched guides of fixed geometry: full transfer after half a beat length, back after one" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Two phase-matched guides of fixed geometry. Light launched in the
+glass is entirely in the silicon after half a beat length and back in the glass
+after one. The beat length runs along the light. The adhesive thickness runs
+across it and is one of the things that sets the beat length, not something to
+be compared with it.</figcaption>
+</figure>
+
+<p>
+Launch light into the glass mode alone at some fixed width. The glass mode is
+not a supermode; it is an equal mixture of the two, and the two travel at
+different speeds. As they slip in phase the power sloshes from one guide to the
+other and back. One full slosh takes
+</p>
+
+<div class="eqwrap"><div class="eq">L<sub>b</sub> = &lambda; / ( n<sub>+</sub> &minus; n<sub>&minus;</sub> ) = &lambda; / &radic;( &delta;&sup2; + G&sup2; )</div><span class="eqno">(6)</span></div>
+<div class="means">
+L<sub>b</sub> is the <strong>beat length</strong>, the distance over which the
+two supermodes accumulate one full wave of phase difference. At the crossing it
+is longest, &lambda;/G = 1.55 &micro;m / 0.0028 &asymp; 550 &micro;m; the
+two-guide solve gives 556 &micro;m. Full transfer at fixed geometry takes half of
+that, 278 &micro;m. Away from the crossing L<sub>b</sub> shortens but the slosh
+is incomplete: at 180 nm it is 109 &micro;m long and only about 18% of the power
+ever visits the other guide.
+</div>
+
+<p>
+A number to hold on to: 550 &micro;m is half a millimetre, at a place where the
+guides are a micrometre apart. The two lengths are not in competition. The
+adhesive thickness sets &kappa;, &kappa; sets G, and G sets L<sub>b</sub>. A
+thicker bondline makes the slosh slower, and it is the slowness that the taper
+must respect.
+</p>
+
+<h2>Offered against needed</h2>
+
+<figure>
+<img src="img/taper-window.png?v=0b3302b1" alt="Top: silicon width against position for the linear taper with the 140 to 180 nm window shaded. Bottom: beat length of the coupled pair at each position along that window" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>On one axis: the length the linear taper spends inside the 140 to
+180 nm window, and the beat length of the coupled pair at each point of it. The
+taper offers 210 &micro;m; one full slosh needs up to 550 &micro;m near the
+crossing.</figcaption>
+</figure>
+
+<p>
+The taper as first drawn on the die is linear: 120 nm at the tip, 500 nm at
+2 mm, so it widens at 0.19 nm per micrometre. The hand-off happens where the
+supermode changes character, roughly between 140 and 180 nm, and the linear
+taper crosses that 40 nm of width in 210 &micro;m. Along the same stretch, the
+beat length from equation (6) rises from 109 &micro;m at 180 nm through
+550 &micro;m at the crossing and falls back to 250 &micro;m at 140 nm. The taper
+leaves the crossing region in less than half a slosh.
+</p>
+
+<p>
+A correction is recorded here rather than hidden. An earlier version of this
+figure took its beat lengths from the two-guide solver's "splitting" column,
+which reported up to 1.8 mm on the narrow side. That column had, away from the
+crossing, measured the distance to the wrong neighbouring mode, one of the glass
+guide's own higher modes rather than the silicon-like supermode. Equation (6),
+which is the same two-mode relation the propagation model integrates, is what
+the figure now shows. The conclusion is unchanged; the numbers on the narrow
+side are smaller.
+</p>
+
+<h2>Adiabaticity, made a number</h2>
+
+<p>
+"Slowly enough" can be quantified. Write the upper supermode's composition as a
+mixing angle &theta;, with f<sub>Si</sub> = sin&sup2;&theta;, so that &theta;
+runs from 0 on the glass side to &pi;/2 on the silicon side. The light stays in
+the supermode if the angle turns slowly compared with the rate at which the two
+supermodes drift apart in phase. The ratio is the <strong>adiabaticity
+parameter</strong>:<sup class="cite"><a href="references.html#r16">[16]</a>, <a href="references.html#r17">[17]</a></sup>
+</p>
+
+<div class="eqwrap"><div class="eq">&epsilon;(z) = | d&theta;/dz | / ( k<sub>0</sub> &radic;( &delta;&sup2; + G&sup2; ) ) = G &middot; | d&delta;/dz | / ( 2 k<sub>0</sub> ( &delta;&sup2; + G&sup2; )<sup>3/2</sup> )</div><span class="eqno">(7)</span></div>
+<div class="means">
+The denominator is the local beat rate in radians per micrometre, the phase the
+supermodes gain on each other per unit length. The numerator is how fast the
+mode's composition is being asked to change. &epsilon; &lt;&lt; 1 means the
+structure changes over many beat lengths and the transfer is adiabatic;
+&epsilon; near 1 means the structure changes within one beat and the light
+cannot follow. The second form uses tan 2&theta; = G/&delta;. The
+(&delta;&sup2; + G&sup2;)<sup>3/2</sup> in the denominator is the point: at the
+crossing &delta; = 0 and &epsilon; is largest, so it is there that the taper
+must be slowest.
+</div>
+
+<figure>
+<img src="img/taper-design.png?v=c46448e7" alt="Top: width against position for the linear taper and for the shaped taper of the same length. Bottom: the adiabaticity parameter along each; the linear one exceeds 1 at the crossing, the shaped one holds about 0.04 everywhere" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Top: the linear taper and a taper of the same 2 mm reshaped to move
+slowly where the guides are close in index and quickly where they are not.
+Bottom: &epsilon; along each. The linear taper exceeds 1 at the crossing; the
+shaped one holds 0.042 everywhere.</figcaption>
+</figure>
+
+<p>
+For the linear taper, d&delta;/dz is the slope of the silicon curve at the
+crossing, about 4.5 &times; 10<sup>&minus;4</sup> per nanometre of width, times
+the taper's 0.19 nm per micrometre, giving 8.5 &times; 10<sup>&minus;5</sup>
+per micrometre. Put into equation (7) at &delta; = 0, &epsilon; comes out at
+1.4. The linear taper is not adiabatic where it matters; it is, at the crossing,
+about as far from adiabatic as a taper can be.
+</p>
+
+<p>
+The repair follows from asking the opposite question: what profile holds
+&epsilon; constant? Set &epsilon; to a chosen value in equation (7) and
+integrate:<sup class="cite"><a href="references.html#r17">[17]</a></sup>
+</p>
+
+<div class="eqwrap"><div class="eq">z(&delta;) = &delta; / ( 2 &epsilon; k<sub>0</sub> G &radic;( &delta;&sup2; + G&sup2; ) ) + constant</div><span class="eqno">(8)</span></div>
+<div class="means">
+This gives position as a function of detuning, and through the silicon curve,
+as a function of width. The profile crawls through the crossing, where the
+bracket is smallest, and races through the wide part, where nothing is
+happening. Choosing &epsilon; so that the whole profile is 2 mm long gives
+&epsilon; = 0.042. Read back onto the layout: the shaped taper spends 1.78 of
+its 2 mm between 140 and 162 nm of width and does all of 162 to 500 nm in the
+last 240 &micro;m. The linear taper spends 210 &micro;m in the same window.
+</div>
+
+<p>
+There is a classical result for what happens when a linear sweep passes a
+crossing too fast. Landau and Zener solved exactly this two-level problem in
+1932, for an atom whose energy levels are swept through a crossing in
+time;<sup class="cite"><a href="references.html#r15">[15]</a></sup> replace
+time with z and energy with propagation constant and the mathematics is
+identical. The probability that the light does <em>not</em> follow the
+supermode, and stays in the glass, is
+</p>
+
+<div class="eqwrap"><div class="eq">P<sub>stay</sub> = exp( &minus;2&pi; &kappa;&sup2; / | d(k<sub>0</sub>&delta;)/dz | )</div><span class="eqno">(9)</span></div>
+<div class="means">
+&kappa; = k<sub>0</sub>G/2 is the coupling coefficient from equation (4), and the
+denominator is the rate at which the detuning is swept, in radians per
+micrometre squared. For the linear taper the exponent is about 0.55, so
+P<sub>stay</sub> &asymp; 0.58: the Landau-Zener estimate says 58% of the light
+is left behind in the glass and at most 42% reaches the silicon. The formula
+assumes the sweep runs from far below the crossing to far above it, which a
+taper starting at 130 nm does not quite do; that is what the next section
+tests.
+</div>
+
+<h2>Rung 1: integrating the two-mode equations</h2>
+
+<figure>
+<img src="img/taper-propagate.png?v=0b584b89" alt="Top: power in the silicon along the linear and the shaped 2 mm tapers, starting entirely in the glass. Bottom: transferred fraction against total taper length for both profiles, with the Landau-Zener estimate for the linear one dotted" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Equation (3) integrated along the taper. Top: power in the silicon
+along the two 2 mm profiles, all of it starting in the glass. Bottom: the
+fraction transferred against total taper length for both profiles, with the
+Landau-Zener estimate for the linear one dotted. Regenerate with
+<code>chain/taper_propagate.py</code>.</figcaption>
+</figure>
+
+<p>
+Equation (3) is two coupled ordinary differential equations with a
+z-dependent coefficient, and a numerical integrator solves them in a fraction
+of a second for any profile. All the light starts in the glass, B(0) = 1,
+A(0) = 0, and the quantity reported is |A(L)|&sup2;, the power in the silicon
+at the end.
+</p>
+
+<table>
+<tr><th>profile</th><th>length</th><th>power reaching the silicon</th></tr>
+<tr><td>linear, 120 &rarr; 500 nm</td><td>2000 &micro;m</td><td>61.8%</td></tr>
+<tr><td>linear, Landau-Zener estimate</td><td>&infin;</td><td>42.9%</td></tr>
+<tr><td>shaped, constant &epsilon; = 0.042</td><td>2000 &micro;m</td><td>93.9%</td></tr>
+<tr><td>shaped, &epsilon; = 0.10</td><td>841 &micro;m</td><td>90.4%</td></tr>
+<tr><td>shaped, &epsilon; = 0.27</td><td>314 &micro;m</td><td>99.1%</td></tr>
+</table>
+
+<p>
+Three readings. The linear taper does better than Landau-Zener predicts, 62%
+against 43%, because it does not start far from the crossing: at 130 nm the
+detuning is only 2.2 gaps below it, so the sweep is truncated and part of the
+"lost" light was never given the chance to be lost. The shaped taper reaches
+94% at the same length, and the bottom panel shows why the number is not
+higher and why it is not monotonic in length: the profile begins abruptly at
+that same tip, 2.2 gaps from the crossing, where the glass mode is already
+5% silicon. That mismatch launches a few percent into the lower supermode,
+which then beats against the upper one, and the final fraction oscillates with
+length around a level the abrupt start has set. A 314 &micro;m shaped taper
+happening to land on a crest at 99.1% is the oscillation, not a better design.
+The cure is a gentler start, a tip below 130 nm or a lead-in that eases the
+silicon in, and 130 nm is already at the edge of what lithography draws.
+</p>
+
+<div class="warn">
+What the two-mode model cannot see: radiation into the adhesive, the
+transverse-magnetic mode, the glass guide's own higher modes, reflection, and
+the fact that &kappa; itself changes along the taper as the silicon mode
+swells. It is a model of one mechanism, and it says the mechanism is marginal
+for the linear taper and comfortable for the shaped one. Whether the other
+mechanisms take a share is what rung 2 is for.
+</div>
+
+<h2>Rung 2: eigenmode expansion in three dimensions</h2>
+
+<figure>
+<img src="img/eme-setup.png?v=89bda54f" alt="Top: the cross-section the mode solver sees at z = 1000 micrometres, silicon on the adhesive over the glass guide. Bottom: the taper sliced into 120 cells along z with ports at both ends" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The rung-2 setup. Top: what the mode solver sees at one z, the
+silicon 156 nm wide there, sitting on the adhesive over the glass guide. Bottom:
+the taper sliced into 120 cells along the light, eight modes solved in each,
+with a port at each end. Built by <code>chain/taper_eme.py</code>.</figcaption>
+</figure>
+
+<p>
+<strong>Eigenmode expansion</strong> (EME) is the method built for structures
+like this one: long along the light, slowly varying, with nothing happening in
+the transverse plane that a mode solver cannot capture.<sup class="cite"><a href="references.html#r18">[18]</a></sup>
+The taper is cut into cells along z. In each cell the cross-section is frozen
+and its modes are solved, all of them, glass-like, silicon-like, the
+transverse-magnetic ones, the leaky ones, up to a chosen count. Within a cell
+every field is a sum of those modes, each propagating with its own &beta;:
+</p>
+
+<div class="eqwrap"><div class="eq">E(x, y, z) = &Sigma;<sub>m</sub> [ a<sub>m</sub><sup>+</sup> e<sup>&minus;i&beta;<sub>m</sub>z</sup> + a<sub>m</sub><sup>&minus;</sup> e<sup>+i&beta;<sub>m</sub>z</sup> ] &middot; E<sub>m</sub>(x, y)</div><span class="eqno">(10)</span></div>
+<div class="means">
+E<sub>m</sub>(x, y) is the field pattern of mode m in that cell and
+&beta;<sub>m</sub> its propagation constant. a<sub>m</sub><sup>+</sup> and
+a<sub>m</sub><sup>&minus;</sup> are the amplitudes travelling forward and
+backward. At every boundary between cells the fields on the two sides are
+matched by overlap integrals, which gives a scattering matrix for that
+interface; the matrices of all cells and interfaces are multiplied together
+into one scattering matrix for the whole taper. Its element S<sub>21</sub>
+between the glass mode at port 1 and the silicon mode at port 2 is the answer,
+and |S<sub>21</sub>|&sup2; is the transferred power. Because each cell's modes
+are solved once, changing the length of every cell by the same factor costs
+nothing new: a sweep over taper lengths comes free with a single run.
+</div>
+
+<p>
+The model as built: a 16 &times; 12 &micro;m box in the cross-section, the
+glass and its guide, the adhesive, the silicon strip as a polygon whose width
+follows the profile, oxide above; a mesh of 20 nm on the silicon and 120 nm on
+the glass guide, 238 &times; 162 cells across; 120 slices along the 2.02 mm;
+eight modes per slice; absorbing layers on the box walls so that radiated light
+leaves rather than reflects; one wavelength, 1550 nm.<sup class="cite"><a href="references.html#r19">[19]</a></sup>
+The modes at the two ports were cross-checked against the stage-1 and stage-2
+solver: the glass mode at port 1 comes out at n<sub>eff</sub> = 1.50520 against
+1.50522, the silicon mode at port 2 within 1%. Two jobs were built, the shaped
+taper with a sweep over seven lengths from 0.3 to 5 mm, and the linear taper
+with a field monitor down the middle for the picture of the light crossing the
+bondline. The cloud solver priced the shaped job at 1.33 credits, and it was
+run on 2026-09-04.
+</p>
+
+<div class="note">
+<strong>Result: not yet entered.</strong> The run has completed under the
+author's account; its scattering matrix has not yet been read into this page.
+When it is, this box becomes a table of transferred power against taper length
+for the shaped profile, set beside the rung-1 column above, and a field picture
+for the linear one. If the three-dimensional number lands near 94% at 2 mm, the
+two-mode picture was adequate. If it lands well below, the mechanisms the
+two-mode model cannot see are taking their share, and that is a finding too.
+</div>
+
+<h2>What stage 3 establishes</h2>
+
+<p>The stage in ten statements. If any of them is not obvious, that is the
+section to reread.</p>
+
+<ol class="steps">
+<li>The hand-off is <strong>not a joint</strong>. The guides run in parallel
+across a 1 &micro;m bondline and the light moves through the overlap of their
+evanescent tails.</li>
+<li>Power moves freely only where the two isolated guides are <strong>phase
+matched</strong>, here at a silicon width of 156 nm, and that width is set by
+the glass, not by the silicon.</li>
+<li>Below about 141 nm the isolated silicon strip is not a waveguide at all,
+which is exactly what a tip should be.</li>
+<li>Solved together, the pair has two <strong>supermodes</strong> that avoid
+each other by a gap G at the crossing. The light rides the upper one from glass
+into silicon.</li>
+<li>The <strong>beat length</strong> &lambda;/&radic;(&delta;&sup2;+G&sup2;)
+is the distance of one full exchange. It is longest at the crossing, about
+550 &micro;m here, and it is set by the bondline, not compared with it.</li>
+<li>Whether the light stays in the supermode is decided by the
+<strong>adiabaticity parameter</strong> &epsilon;, the rate of change of the
+mode's composition over the local beat rate.</li>
+<li>The linear taper as drawn reaches &epsilon; = 1.4 at the crossing. It is
+not adiabatic where adiabaticity matters.</li>
+<li>Holding &epsilon; constant gives a profile in closed form. At the same
+2 mm it holds &epsilon; = 0.042 and spends 1.78 mm inside 22 nm of width.</li>
+<li>The two-mode integration says 62% for the linear taper and 94% for the
+shaped one at 2 mm, with the residual set by the abrupt start at the tip.</li>
+<li>A model that tracks one mechanism can only say that mechanism is fine. The
+three-dimensional solve is the check on everything it left out.</li>
+</ol>
+
+<h2>Check yourself</h2>
+
+<details><summary>Why is butt-coupling the glass guide to the silicon wire not an option?</summary>
+<p>Because the modes are 6.6 &micro;m and 0.5 &micro;m across, and coupling is
+an overlap of fields. The size mismatch alone costs 5.55 dB, before any
+misalignment. The evanescent hand-off avoids ever putting the two modes face to
+face.</p></details>
+
+<details><summary>The bridge maker changes the ion exchange and the glass contrast rises from 0.012 to 0.016. What happens to the taper?</summary>
+<p>The crossing moves from 156 to 162 nm of silicon width. A taper that sweeps
+through both is unaffected in principle; a taper designed to start at 160 nm
+would now start on the wrong side of the crossing and launch most of the light
+out of step.</p></details>
+
+<details><summary>The beat length at the crossing is 550 &micro;m. Does the adhesive have to be thinner than that?</summary>
+<p>No. The two lengths lie along different directions and are not in
+competition. The adhesive thickness sets the coupling &kappa;, which sets the
+gap G, which sets the beat length. A thicker bondline lengthens the beat and
+makes the taper's job slower, it does not compete with the beat length.</p></details>
+
+<details><summary>Why must the taper be slowest exactly at the crossing?</summary>
+<p>Because the adiabaticity parameter carries (&delta;&sup2;+G&sup2;)<sup>3/2</sup>
+in its denominator. At the crossing &delta; = 0, the supermodes are closest, the
+beat is slowest, and any change in the structure is a larger fraction of a beat.
+The same width change that is harmless at 300 nm is violent at 156 nm.</p></details>
+
+<details><summary>The linear taper transfers 62% in the two-mode model, but Landau-Zener says 43%. Which is wrong?</summary>
+<p>Neither. Landau-Zener assumes a sweep from far below the crossing to far
+above it. The taper starts only 2.2 gaps below the crossing, so the sweep is
+truncated, and the integrated model, which knows the actual start, gives the
+higher number. Where the assumptions differ, the estimate is the one to
+distrust.</p></details>
+
+<details><summary>A shaped taper of 314 &micro;m transfers 99.1% and one of 2 mm only 93.9%. Should the die use the short one?</summary>
+<p>No. The transfer oscillates with length because the abrupt start at the tip
+launches a few percent into the lower supermode, which then beats against the
+upper one. The short taper happens to land on a crest. A design should not
+depend on landing on a crest; the fix is a gentler start.</p></details>
+
+<details><summary>Why does a length sweep in eigenmode expansion cost almost nothing extra?</summary>
+<p>Because the expensive step is solving the modes of each cell's cross-section,
+and scaling every cell's length by the same factor changes only the phase each
+mode accumulates, not the modes themselves. The cell scattering matrices are
+rebuilt from the same modes and multiplied again.</p></details>
+
+<div class="note">
+Stage 3 is written up to the three-dimensional result, which is pending. Next:
+stage 4, inside the chip, beginning with the test die of this repository as it
+stands in the layout viewer. Sources: <a href="references.html#r14">Yariv 1973</a>,
+<a href="references.html#r17">Sun, Liu and Yariv 2009</a>,
+<a href="references.html#r18">Gallagher and Felici 2003</a>, and
+<a href="references.html#r6">Brusberg et al. 2022</a>.
+</div>
+
+</div>
+</body>
+</html>

@@ -19,6 +19,7 @@ h2{margin-top:2.4em}
   <a href="matter.html">Foundations: matter</a>
   <a href="fiber.html">1. The fiber</a>
   <a href="stage2-glass.html">2. The glass</a>
+  <a href="stage3-handoff.html">3. The hand-off</a>
   <a href="bend-derivation.html">Bend derivation</a>
   <a class="here" href="glossary.html">Glossary</a>
   <a href="references.html">References</a>
@@ -46,6 +47,17 @@ a bug in the page and this is the fallback.
 <tr><td>PDL</td><td><strong>Polarization dependent loss.</strong></td></tr>
 <tr><td>PSR</td><td><strong>Polarization splitter-rotator.</strong> Separates TE and TM and turns one into the other.</td></tr>
 <tr><td>FSR</td><td><strong>Free spectral range.</strong> Spacing between a resonator's successive resonances.</td></tr>
+<tr><td>phase matching</td><td>Two guides carry modes with the same propagation constant, so their fields stay in step and power can move between them. For the glass-to-silicon pair it happens at one silicon width, 156 nm.</td></tr>
+<tr><td>detuning &delta;</td><td>Difference between the effective indices of two isolated guides, in index units. Zero at phase matching.</td></tr>
+<tr><td>supermode</td><td>A mode of two coupled guides taken as one structure, living partly in both. A pair of guides has two; the light in a taper rides one of them from glass into silicon.</td></tr>
+<tr><td>anticrossing</td><td>The refusal of two supermode curves to cross where the isolated modes would. The closest approach is the gap G.</td></tr>
+<tr><td>gap G</td><td>Smallest effective-index separation of the two supermodes, reached at phase matching; 2.8 &times; 10<sup>&minus;3</sup> for the 1 &micro;m bondline. G = 2&kappa;/k<sub>0</sub>.</td></tr>
+<tr><td>coupling coefficient &kappa;</td><td>Rate, in radians per micrometre, at which amplitude leaks from one guide's mode into the other's, set by the overlap of their fields. Thicker bondline, smaller &kappa;.</td></tr>
+<tr><td>beat length</td><td>&lambda;/(n<sub>+</sub> &minus; n<sub>&minus;</sub>): the distance over which power launched into one guide of a coupled pair sloshes fully into the other and back. Longest at phase matching, about 550 &micro;m here.</td></tr>
+<tr><td>evanescent coupling</td><td>Transfer between guides through the overlap of their exponentially decaying outer fields, with no interface crossed.</td></tr>
+<tr><td>adiabatic</td><td>Slow enough that the light stays in the local mode of the structure while the structure changes. In a taper: the mode changes its shape, not its identity.</td></tr>
+<tr><td>adiabaticity parameter &epsilon;</td><td>|d&theta;/dz| divided by the local beat rate, where &theta; is the mixing angle of the supermode. &epsilon; &lt;&lt; 1 means adiabatic. The linear taper reaches 1.4 at the crossing; the shaped taper holds 0.042.</td></tr>
+<tr><td>Landau-Zener</td><td>Closed-form probability, exp(&minus;2&pi;&kappa;&sup2;/|d(k<sub>0</sub>&delta;)/dz|), that a linear sweep through a crossing leaves the light in its original mode. Assumes the sweep runs from far below to far above the crossing.</td></tr>
 </table>
 
 <h2>Geometrical optics</h2>
@@ -68,6 +80,10 @@ a bug in the page and this is the fallback.
 <tr><td>EME</td><td><strong>Eigenmode expansion.</strong> The right tool for long adiabatic transitions such as tapers.</td></tr>
 <tr><td>RCWA</td><td><strong>Rigorous coupled-wave analysis.</strong> For periodic structures: gratings, metasurfaces.</td></tr>
 <tr><td>POP</td><td><strong>Physical optics propagation.</strong> Zemax's mode for propagating a real beam rather than rays.</td></tr>
+<tr><td>coupled-mode theory</td><td>Describes two or more interacting guides by slowly varying amplitudes in each guide's own mode, with coupling terms for the overlap. Yariv 1973 is the standard statement.</td></tr>
+<tr><td>scattering matrix (S-matrix)</td><td>Table of complex amplitudes relating every outgoing mode at every port to every incoming one. |S<sub>21</sub>|&sup2; between the glass mode at port 1 and the silicon mode at port 2 is the transferred power.</td></tr>
+<tr><td>PML</td><td><strong>Perfectly matched layer.</strong> An absorbing region on the boundary of a simulation box that swallows outgoing light without reflecting it, so that radiation loss is counted as loss.</td></tr>
+<tr><td>port (simulation)</td><td>A plane at the end of a simulated structure where the modes are solved and light is launched or collected, one mode at a time.</td></tr>
 </table>
 
 <h2>Materials and platforms</h2>
