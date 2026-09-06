@@ -123,6 +123,7 @@ def fiducial() -> gf.Component:
 def place_coupler(c: gf.Component, ch: int, tip_w: float = TIP_W):
     t = c << edge_coupler(tip_w=tip_w)
     t.move((EDGE_MARGIN, ch_y(ch)))
+    c.add_port(name=f"ch{ch}", port=t.ports["o1"])   # the die's optical ports: one per channel, at the taper tips
     return t
 
 

@@ -95,6 +95,11 @@ anchor: <code>figures.html#name</code> jumps straight to it.</div>
 
 <figure id="eme-setup"><span class="fid">eme-setup</span><img src="img/eme-setup.png?v=1c82eb22" alt=""><figcaption>Rung 2: the eigenmode-expansion setup as rebuilt. Top: the cross-section the mode solver sees at z = 1000 µm, the silicon 204 nm wide there. Bottom: the taper sliced into 120 cells along the light, sixteen modes solved in each, ports at both ends. Regenerate with <code>chain/eme_setup.py</code>.</figcaption></figure>
 
+<h2>Stage 4: inside the chip</h2>
+<figure id="circuit-ringbank"><span class="fid">circuit-ringbank</span><img src="img/circuit-ringbank.png?v=8e8525a6" alt=""><figcaption>Channel 7 to 8 of the die as a chain of scattering matrices: the taper, the bus, four all-pass racetrack rings with radii staggered by 50 nm, the loopback, the taper out. Each box is one component's S-matrix; the circuit solver multiplies them along the layout's connections. Regenerate with <code>chain/circuit_sketch.py</code>.</figcaption></figure>
+
+<figure id="ringbank-spectrum"><span class="fid">ringbank-spectrum</span><img src="img/ringbank-spectrum.png?v=e6af25d6" alt=""><figcaption>The ring bank's transmission from the circuit model: four interleaved resonance combs, one per ring. Waveguide effective and group index from the mode solver, coupling from the two-strip supermode split, 2.5 dB/cm propagation loss and 1 dB per taper as placeholders. Regenerate with <code>chain/circuit_ringbank.py</code>.</figcaption></figure>
+
 <h2>Aside: photonic computing</h2>
 <figure id="photonic-compute"><span class="fid">photonic-compute</span><img src="img/photonic-compute.svg?v=6956644c" alt=""><figcaption>One layer of a photonic neural network. The matrix multiply happens passively in a mesh of interferometers; the nonlinearity has to leave the optical domain or use a weak optical effect.</figcaption></figure>
 
