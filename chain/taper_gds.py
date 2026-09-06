@@ -13,16 +13,12 @@ import pathlib
 import gdstk
 import numpy as np
 
+from branch import BR
 K0 = 2 * np.pi / 1.55
-N_GLASS = 1.50522
-G = 2.8e-3
-TIP, END, L, LEAD = 0.130, 0.500, 2000.0, 20.0     # um
+N_GLASS, G = BR.n_glass, BR.G
+TIP, END, L, LEAD = BR.tip / 1e3, BR.end / 1e3, 2000.0, 20.0     # um
 
-sweep = np.array([[0.500,2.44966],[0.450,2.36236],[0.400,2.24035],[0.350,2.07525],[0.300,1.86147],
-                  [0.260,1.68548],[0.220,1.55841],[0.200,1.53393],[0.190,1.52624],[0.180,1.51917],
-                  [0.170,1.51279],[0.160,1.50724],[0.155,1.50483],[0.150,1.50275],[0.145,1.50101],
-                  [0.140,1.49971],[0.130,1.49908],[0.120,1.49908]])[::-1]
-w_pts, n_pts = sweep[:, 0], sweep[:, 1]
+w_pts, n_pts = BR.w_pts / 1e3, BR.n_pts
 delta = lambda w: np.interp(w, w_pts, n_pts) - N_GLASS
 
 def shaped_w_of_z(n=800):
@@ -44,6 +40,6 @@ for name, (z, w) in (("shaped", shaped_w_of_z()), ("linear", linear_w_of_z())):
     lib = gdstk.Library(unit=1e-6, precision=1e-9)
     cell = lib.new_cell(f"taper_{name}")
     poly = polygon(z, w); cell.add(poly)
-    path = out / f"taper_{name}.gds"; lib.write_gds(str(path))
+    path = out / f"taper_{name}{'' if BR.name == 'ey2d' else '_' + BR.name}.gds"; lib.write_gds(str(path))
     (x0, y0), (x1, y1) = poly.bounding_box()
     print(f"{name:7s}: {len(poly.points)} vertices, x {x0:.0f}..{x1:.0f} um, width {2*y0*-1:.3f}..{2*y1:.3f} um -> {path.name}")

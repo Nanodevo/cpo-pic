@@ -19,23 +19,20 @@ import matplotlib.pyplot as plt
 
 import figstyle
 import numpy as np
+from branch import BR
 
 
-TIP, END, LEN = 120.0, 500.0, 2000.0
+TIP, END, LEN = BR.tip, BR.end, 2000.0
 slope = (END - TIP) / LEN                       # nm per um
 w = lambda z: TIP + slope * z
 zw = lambda wn: (wn - TIP) / slope
-W0, W1 = 140.0, 180.0
+W0, W1 = round(BR.w_cross) - 20.0, round(BR.w_cross) + 20.0
 z0, z1 = zw(W0), zw(W1)
 
 # beat lengths from the two-mode relation, L_b = lambda / sqrt(delta^2 + G^2)
-LAMBDA, N_GLASS, G = 1.55, 1.50522, 2.8e-3
-sweep = np.array([[0.500,2.44966],[0.450,2.36236],[0.400,2.24035],[0.350,2.07525],[0.300,1.86147],
-                  [0.260,1.68548],[0.220,1.55841],[0.200,1.53393],[0.190,1.52624],[0.180,1.51917],
-                  [0.170,1.51279],[0.160,1.50724],[0.155,1.50483],[0.150,1.50275],[0.145,1.50101],
-                  [0.140,1.49971],[0.130,1.49908],[0.120,1.49908]])[::-1]
-delta = lambda wn: np.interp(wn, sweep[:, 0] * 1e3, sweep[:, 1]) - N_GLASS
-widths = np.array([200, 190, 180, 170, 160, 155, 150, 145, 140])
+LAMBDA, N_GLASS, G = 1.55, BR.n_glass, BR.G
+delta = BR.delta
+widths = np.round(BR.w_cross) + np.array([25, 20, 15, 10, 5, 0, -5, -10, -15, -20])
 beat = np.column_stack([widths, LAMBDA / np.sqrt(delta(widths) ** 2 + G ** 2)])
 for wn, L in beat: print(f"   {wn:.0f} nm: beat length {L:.0f} um")
 zb = zw(beat[:, 0])
@@ -48,14 +45,14 @@ a.axhspan(W0, W1, color="#fdf1e0")
 a.axvspan(z0, z1, color="#fdf1e0")
 a.annotate("", xy=(z1, 128), xytext=(z0, 128), arrowprops=dict(arrowstyle="<->", color="#8a5a1b", lw=1.6))
 a.text(z1 + 25, 128, f"the taper spends {z1 - z0:.0f} µm here", ha="left", va="center", color="#8a5a1b")
-a.text(400, 300, "hand-off window:\n140 to 180 nm wide", color="#8a5a1b", va="center")
+a.text(450, 420, f"hand-off window:\n{W0:.0f} to {W1:.0f} nm wide", color="#8a5a1b", va="center")
 a.set_ylabel("silicon width  (nm)")
 a.set_ylim(80, 520); a.grid(alpha=.22)
 a.set_title(f"A linear taper: {TIP:.0f} nm tip at z = 0, {END:.0f} nm at z = {LEN:.0f} µm")
 
 b.semilogy(zb, beat[:, 1], "o-", lw=2.4, ms=6, color="#c0392b")
 b.axvspan(z0, z1, color="#fdf1e0")
-ladder = {155: 1000, 160: 760, 150: 580, 145: 440, 140: 335, 170: 255, 180: 160}   # label heights, spaced on the log axis
+ladder = {int(round(BR.w_cross)) + off: h for off, h in ((0, 1000), (5, 760), (-5, 580), (-10, 440), (-15, 335), (15, 255), (25, 160))}   # label heights, spaced on the log axis
 for zz, (wn, L) in zip(zb, beat):
     if wn in ladder:
         b.annotate(f"{wn:.0f} nm: {L:.0f} µm", xy=(zz, L), xytext=(540, ladder[wn]), color="#c0392b", va="center",

@@ -7,6 +7,13 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent)); import figstyle
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Polygon
 import numpy as np
+import gdstk
+from branch import BR
+gds = pathlib.Path(__file__).parent / "gds" / ("taper_shaped.gds" if BR.name == "ey2d" else f"taper_shaped_{BR.name}.gds")
+pts = np.vstack([p.points for p in gdstk.read_gds(str(gds)).top_level()[0].polygons])
+top = pts[pts[:, 1] > 0]; top = top[np.argsort(top[:, 0])]
+W1000 = 2 * float(np.interp(1020.0, top[:, 0], top[:, 1]))          # width at z = 1000 um into the taper (20 um lead)
+TIPW = BR.tip / 1e3
 
 fig, (ax, bx) = plt.subplots(2, 1, figsize=figstyle.size(7.6, 8.4))
 # --- top: cross-section at z = 1000 um (box 16 x 12 um, silicon 156 nm wide here)
@@ -14,9 +21,9 @@ ax.add_patch(Rectangle((-8, -10), 16, 14, fc="#f4f4f4", ec="none"))             
 ax.add_patch(Rectangle((-8, -10), 16, 10, fc="#a9c4d8", ec="none"))              # glass n = 1.500
 ax.add_patch(Rectangle((-3, -4), 6, 4, fc="#c8698a", ec="none"))                 # IOX guide n = 1.512
 ax.add_patch(Rectangle((-8, 0), 16, 1, fc="#e9d8a6", ec="none"))                 # adhesive n = 1.500
-ax.add_patch(Rectangle((-0.078, 1.0), 0.156, 0.22, fc="#1b6ca8", ec="#1b6ca8"))  # silicon n = 3.4757
+ax.add_patch(Rectangle((-W1000 / 2, 1.0), W1000, 0.22, fc="#1b6ca8", ec="#1b6ca8"))  # silicon n = 3.4757
 ax.set_xlim(-8, 8); ax.set_ylim(-8, 4); ax.set_aspect("equal")
-ax.set_xlabel("x (µm)"); ax.set_ylabel("y (µm)"); ax.set_title("what the mode solver sees at z = 1000 µm (silicon 156 nm wide there)")
+ax.set_xlabel("x (µm)"); ax.set_ylabel("y (µm)"); ax.set_title(f"what the mode solver sees at z = 1000 µm (silicon {W1000*1e3:.0f} nm wide there)")
 ax.text(-7.6, 3.3, "oxide, n = 1.444 (background)", color="#555")
 ax.text(-7.6, -7.4, "glass, n = 1.500", color="#2a4a60")
 ax.text(0, -2, "ion-exchanged guide\n6 × 4 µm, n = 1.512", ha="center", va="center", color="white")
@@ -35,8 +42,8 @@ for x, name in ((0, "port 1"), (L + lead, "port 2")):
     bx.axvline(x, color="#d33", lw=2)
     bx.text(x + (40 if x == 0 else -40), 2.1, name, ha="left" if x == 0 else "right", color="#d33")
 bx.set_xlim(-60, L + lead + 60); bx.set_ylim(-6.6, 2.8); bx.set_xlabel("z (µm), along the light"); bx.set_yticks([])
-bx.set_title("the taper sliced into 120 cells, 8 modes solved in each cell")
+bx.set_title("the taper sliced into 120 cells, 16 modes solved in each cell")
 bx.text(L / 2, -2, "ion-exchanged guide", ha="center", color="white"); bx.text(L / 2, 0.5, "adhesive", ha="center", va="center", color="#5a4a10", fontsize=10)
-bx.text(L / 2, 1.3, "silicon taper, 130 → 500 nm (height not to scale)", ha="center", va="center", color="white", fontsize=10)
+bx.text(L / 2, 1.3, f"silicon taper, {TIPW*1e3:.0f} → 500 nm (height not to scale)", ha="center", va="center", color="white", fontsize=10)
 bx.text(40, -5.4, "light in: glass mode", color="#2a4a60"); bx.text(L - 20, -5.4, "light out: silicon mode", ha="right", color="#2a4a60"); bx.text(L / 2, -5.4, "glass", ha="center", color="#2a4a60")
 fig.tight_layout(); out = pathlib.Path(__file__).parent / "img" / "eme-setup.png"; fig.savefig(out); print("wrote", out)

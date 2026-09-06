@@ -25,16 +25,12 @@ import numpy as np
 import figstyle
 
 K0 = 2 * np.pi / 1.55                    # rad/um
-N_GLASS = 1.50522
-G = 2.8e-3                               # supermode gap at the crossing, index units
+from branch import BR
+N_GLASS, G = BR.n_glass, BR.G            # glass n_eff and supermode gap at the crossing, index units
 KAPPA = K0 * G / 2                       # coupling coefficient, rad/um
-TIP, END, L = 120.0, 500.0, 2000.0       # nm, nm, um
+TIP, END, L = BR.tip, BR.end, 2000.0     # nm, nm, um
 
-sweep = np.array([[0.500,2.44966],[0.450,2.36236],[0.400,2.24035],[0.350,2.07525],[0.300,1.86147],
-                  [0.260,1.68548],[0.220,1.55841],[0.200,1.53393],[0.190,1.52624],[0.180,1.51917],
-                  [0.170,1.51279],[0.160,1.50724],[0.155,1.50483],[0.150,1.50275],[0.145,1.50101],
-                  [0.140,1.49971],[0.130,1.49908],[0.120,1.49908]])[::-1]
-w_pts, n_pts = sweep[:, 0] * 1e3, sweep[:, 1]
+w_pts, n_pts = BR.w_pts, BR.n_pts
 delta = lambda w: np.interp(w, w_pts, n_pts) - N_GLASS
 w_cross = np.interp(0.0, n_pts - N_GLASS, w_pts)
 
@@ -65,14 +61,15 @@ p_stay = np.exp(-2 * np.pi * KAPPA ** 2 / abs(alpha))
 print(f"crossing at {w_cross:.0f} nm; kappa = {KAPPA:.2e} rad/um")
 print(f"linear 2 mm taper: eps at the crossing = {eps_lin[i]:.2f}, Landau-Zener fraction left in the glass = {p_stay:.0%}")
 print(f"shaped 2 mm taper: eps = {EPS_SHAPED:.3f} everywhere; shaped taper at eps = 0.1 would be {span/0.1:.0f} um long")
-in_win = (w_grid >= 140) & (w_grid <= 180)
-print(f"length spent in the 140-180 nm window: linear {40/((END-TIP)/L):.0f} um, shaped {z_shaped[in_win].max()-z_shaped[in_win].min():.0f} um")
+W0, W1 = round(w_cross) - 20, round(w_cross) + 20
+in_win = (w_grid >= W0) & (w_grid <= W1)
+print(f"length spent in the {W0:.0f}-{W1:.0f} nm window: linear {40/((END-TIP)/L):.0f} um, shaped {z_shaped[in_win].max()-z_shaped[in_win].min():.0f} um")
 
 fig, (a, b) = plt.subplots(2, 1, figsize=figstyle.size(7.6, 9.2), sharex=True,
                            gridspec_kw=dict(hspace=0.12, height_ratios=[1, 1.15]))
 a.plot(z_lin, w_lin, lw=2.4, color="#888780", ls="--", label="linear taper, as drawn")
 a.plot(z_shaped, w_grid, lw=2.6, color="#1b6ca8", label="shaped taper, same 2 mm")
-a.axhspan(140, 180, color="#fdf1e0")
+a.axhspan(W0, W1, color="#fdf1e0")
 a.text(1250, 300, "hand-off window", color="#8a5a1b", va="center")
 a.set_ylabel("silicon width  (nm)"); a.set_ylim(100, 520); a.grid(alpha=.22)
 a.legend(loc="upper left")

@@ -23,16 +23,12 @@ from scipy.integrate import solve_ivp
 import figstyle
 
 K0 = 2 * np.pi / 1.55
-N_GLASS = 1.50522
-G = 2.8e-3
-KAPPA = K0 * G / 2                      # 5.68e-3 rad/um
-TIP, END, L_DRAWN = 130.0, 500.0, 2000.0
+from branch import BR
+N_GLASS, G = BR.n_glass, BR.G
+KAPPA = K0 * G / 2                      # rad/um
+TIP, END, L_DRAWN = BR.tip, BR.end, 2000.0
 
-sweep = np.array([[0.500,2.44966],[0.450,2.36236],[0.400,2.24035],[0.350,2.07525],[0.300,1.86147],
-                  [0.260,1.68548],[0.220,1.55841],[0.200,1.53393],[0.190,1.52624],[0.180,1.51917],
-                  [0.170,1.51279],[0.160,1.50724],[0.155,1.50483],[0.150,1.50275],[0.145,1.50101],
-                  [0.140,1.49971],[0.130,1.49908],[0.120,1.49908]])[::-1]
-w_pts, n_pts = sweep[:, 0] * 1e3, sweep[:, 1]
+w_pts, n_pts = BR.w_pts, BR.n_pts
 delta_of_w = lambda w: np.interp(w, w_pts, n_pts) - N_GLASS
 
 # shaped profile w(z) for a taper of length L (constant adiabaticity)
@@ -59,7 +55,7 @@ for name, prof in (("linear", w_linear), ("shaped", w_shaped)):
 T841, _, _ = propagate(w_shaped, 841.0)
 print(f"shaped  841 um taper: transferred = {T841:6.1%}")
 alpha = K0 * abs(np.gradient(delta_of_w(w_linear(np.linspace(0, L_DRAWN, 4000), L_DRAWN)), np.linspace(0, L_DRAWN, 4000)))
-i = np.argmin(abs(w_linear(np.linspace(0, L_DRAWN, 4000), L_DRAWN) - 156))
+i = np.argmin(abs(w_linear(np.linspace(0, L_DRAWN, 4000), L_DRAWN) - BR.w_cross))
 print(f"Landau-Zener for the linear 2 mm taper: transferred = {1 - np.exp(-2*np.pi*KAPPA**2/alpha[i]):.1%}")
 
 # ---- power along z for the two 2 mm profiles -----------------------------
@@ -78,7 +74,7 @@ a.set_title("Light along the two 2 mm tapers, all of it starting in the glass")
 Ls = np.logspace(np.log10(150), np.log10(6000), 26)
 T_lin = np.array([propagate(w_linear, L)[0] for L in Ls])
 T_sh = np.array([propagate(w_shaped, L)[0] for L in Ls])
-lz = np.array([1 - np.exp(-2*np.pi*KAPPA**2 / (K0 * abs(np.gradient(delta_of_w(w_linear(np.linspace(0,L,4000),L)), np.linspace(0,L,4000)))[np.argmin(abs(w_linear(np.linspace(0,L,4000),L)-156))])) for L in Ls])
+lz = np.array([1 - np.exp(-2*np.pi*KAPPA**2 / (K0 * abs(np.gradient(delta_of_w(w_linear(np.linspace(0,L,4000),L)), np.linspace(0,L,4000)))[np.argmin(abs(w_linear(np.linspace(0,L,4000),L)-BR.w_cross))])) for L in Ls])
 b.semilogx(Ls, T_lin, "o-", ms=5, lw=2.2, color="#888780", label="linear taper")
 b.semilogx(Ls, lz, ":", lw=1.6, color="#888780", label="Landau-Zener estimate, linear")
 b.semilogx(Ls, T_sh, "o-", ms=5, lw=2.4, color="#1b6ca8", label="shaped taper")
