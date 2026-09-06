@@ -531,14 +531,21 @@ bondline.
 </p>
 
 <div class="note">
-<strong>Result: pending.</strong> The two rebuilt jobs exist as simulation files
-and have not yet been run; their cost estimate comes first. When they have run,
-this box becomes a table of transferred power against taper length for the
-shaped profile beside the rung-1 column above, the column sums that say whether
-sixteen modes were enough, the linear taper's number against its 77%, and the
-field picture. If the three-dimensional numbers land near the two-mode ones,
-the two-mode picture was adequate on this branch. If they land well below, the
-mechanisms it cannot see are taking their share, and that is a finding too.
+<strong>Result of the rebuilt shaped job (run 2026-09-06, sixteen modes, seven lengths).</strong>
+The first thing the file settles is which mode is which. At the 180 nm tip the
+solver's mode 0 is not the glass mode: it is the silicon strip's own vertically
+polarized mode, still bound at that width and sorting above the glass mode at
+n<sub>eff</sub> = 1.514 against 1.505. Read with that, the matrix says two
+things. The silicon's vertical mode widens into the silicon TM mode at 88% at
+every length from 0.3 to 5 mm, with the missing 11% again numerical. And the
+glass mode's column sums to 1.1%: at every length, 99% of the light launched
+in the glass mode arrives at neither port in any of the fifteen modes. It did
+not reach the silicon, it did not stay in the glass, it was not reflected. That
+is not a transfer figure; it is an accounting failure the shaped job cannot
+diagnose, because it carries no field monitor. The linear job does. The
+S-matrix and the port-mode table are in
+<code>chain/eme/shaped_te3d_smatrix.json</code>; the next entry here is the
+field picture.
 </div>
 
 <h2>What stage 3 establishes</h2>

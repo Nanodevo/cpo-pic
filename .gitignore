@@ -5,3 +5,6 @@ __pycache__/
 build/*.oas
 chain/interview-15.html
 chain/interview-15.pdf
+
+# raw EME results are 100+ MB; the extracted S-matrices live beside them as JSON
+chain/eme/*_result.hdf5
