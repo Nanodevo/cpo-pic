@@ -464,13 +464,19 @@ than a linear taper. Two percent is about what a sudden crossing should give.
 The same run showed a second, purely numerical, problem. The columns of a
 lossless scattering matrix should sum to one. For the launched mode they summed
 to 0.75, and for the vertically polarized glass mode to 0.28. Nothing in the
-model absorbs light, and a glass mode passing 120 cell boundaries untouched
-should lose nothing, so the missing quarter is the eigenmode basis being too
-small: eight modes per cell could not represent the field at each boundary, a
-fraction of a percent leaked into modes outside the basis at every interface,
-and 120 interfaces added up. This is the classic failure of the method, and it
-is why an eigenmode-expansion result is always run at two mode counts before it
-is believed. The rebuilt jobs use sixteen.
+model absorbs light, so the missing power is the solver's. At first this was
+put down to the eight-mode basis being too small at each of the 120 cell
+boundaries. A null test settled it differently: the same stack with the silicon
+a uniform 300 nm strip, ten identical cells, sixteen modes. The two silicon
+modes passed at 100.0%, the glass mode at 98.7%. In identical cells nothing can
+be lost at a boundary, so the 1.3% over 100 &micro;m is the absorbing layer on
+the walls of the 16 &times; 12 &micro;m box eating the tails of a mode
+6.6 &micro;m across; the solver reports it as an imaginary part of the glass
+mode's index, 1.5 &times; 10<sup>&minus;5</sup>, which predicts 22% over 2 mm.
+That is the missing quarter. The lesson is the same one in a different place:
+an eigenmode-expansion result is believed only when its column sums are one,
+and a null test on a uniform structure is how the numerical losses are
+separated from the physical ones before any taper is judged.
 </p>
 
 <p>
@@ -584,7 +590,8 @@ three-dimensional solve found it: 2.2% transferred, the light still in the
 glass. <strong>A model that tracks one mechanism can only say that mechanism is
 fine.</strong></li>
 <li>An eigenmode-expansion result is believed only when its column sums are
-one and it survives a second mode count.</li>
+one; a null test on a uniform structure separates the solver's losses from the
+physics before any taper is judged.</li>
 </ol>
 
 <h2>Check yourself</h2>
