@@ -537,26 +537,48 @@ bondline.
 </p>
 
 <div class="note">
-<strong>Result of the rebuilt shaped job (run 2026-09-06, sixteen modes, seven lengths).</strong>
-The first thing the file settles is which mode is which. At the 180 nm tip the
-solver's mode 0 is not the glass mode: it is the silicon strip's own vertically
-polarized mode, still bound at that width and sorting above the glass mode at
-n<sub>eff</sub> = 1.514 against 1.505. Read with that, the matrix says two
-things. The silicon's vertical mode widens into the silicon TM mode at 88% at
-every length from 0.3 to 5 mm, with the missing 11% again numerical. And the
-glass mode's column sums to 1.1%: at every length, 99% of the light launched
-in the glass mode arrives at neither port in any of the fifteen modes. It did
-not reach the silicon, it did not stay in the glass, it was not reflected. That
-is not a transfer figure; it is an accounting failure the shaped job cannot
-diagnose, because it carries no field monitor. The linear job does. The
-S-matrix and the port-mode table are in
-<code>chain/eme/shaped_te3d_smatrix.json</code>; the next entry here is the
-field picture.
+<strong>Result: the crossing in three dimensions, 2026-09-06.</strong>
+The rebuilt shaped job (sixteen modes, seven lengths) first had to be read
+correctly: at the 180 nm tip the solver's mode 0 is the silicon strip's own
+vertically polarized mode, still bound there and sorting above the glass mode,
+so the glass mode is input mode 1. Read that way, the shaped job lost 99% of
+the glass light to nowhere, and a null test through a uniform strip passed the
+glass mode at 98.7%, so the fault lay in the taper region and had to be seen.
+A short job covering only the crossing, the die's linear taper from 180 to
+240 nm over 375 &micro;m with a coarse field monitor, showed it: the light left
+the glass guide and entered the silicon between 182 and 207 nm exactly as the
+supermode picture says, and then the total field fell thirty-fold at one cell
+boundary at 216 nm, the width where the strip's horizontal and vertical modes
+are degenerate. The mode solver's absorbing layers make its modes complex and
+non-orthogonal, and at that degeneracy the expansion of the incoming field
+leaked. The same job with the absorbing layers removed from the mode solver,
+mirrors instead, gave the answer the whole stage was waiting for:
 </div>
+
+<table>
+<tr><th>light launched in the glass mode, linear taper 180 &rarr; 240 nm at 0.16 nm/&micro;m</th><th>share</th></tr>
+<tr><td>arrives in the silicon TE mode at 240 nm (3D eigenmode expansion, run 2)</td><td><strong>74.5%</strong></td></tr>
+<tr><td>still in the glass mode</td><td>20.7%</td></tr>
+<tr><td>unaccounted for</td><td>4.4%</td></tr>
+<tr><td>two-mode integration, equation (3), same taper</td><td>76.9%</td></tr>
+<tr><td>Landau-Zener, equation (9)</td><td>77.6%</td></tr>
+</table>
+
+<p>
+Three points apart, on a quantity the two models reach by entirely different
+routes. The one-quarter shortfall of the die's own linear taper is therefore the
+adiabaticity the two-mode model predicted, not a mechanism it could not see;
+the other columns of the same matrix pass the silicon's vertical mode at 98%
+and the glass TM mode at 99%. The shaped profile's 98% remains a two-mode
+prediction, unverified in three dimensions, because the shaped job ran with the
+faulty mode solver and rerunning it was not worth the credits once the linear
+result had settled the model. The transcribed matrices of both crossing runs
+are in <code>chain/eme/crossing_runs.json</code>.
+</p>
 
 <h2>What stage 3 establishes</h2>
 
-<p>The stage in eleven statements. If any of them is not obvious, that is the
+<p>The stage in twelve statements. If any of them is not obvious, that is the
 section to reread.</p>
 
 <ol class="steps">
@@ -592,6 +614,9 @@ fine.</strong></li>
 <li>An eigenmode-expansion result is believed only when its column sums are
 one; a null test on a uniform structure separates the solver's losses from the
 physics before any taper is judged.</li>
+<li>The three-dimensional solve of the crossing gives <strong>74.5%</strong>
+for the die's linear taper against 77% from the two-mode model: the model was
+right once its inputs were, and rung 2 is what proved it.</li>
 </ol>
 
 <h2>Check yourself</h2>
@@ -643,8 +668,7 @@ see. The 2 mm version exists because the study started from a 2 mm taper; the
 number to design to is &epsilon;, not the length.</p></details>
 
 <div class="note">
-Stage 3 is written up to the rebuilt three-dimensional result, which is pending.
-Next: stage 4, inside the chip, beginning with the test die of this repository
+Stage 3 is complete to the three-dimensional check of the crossing. Next: stage 4, inside the chip, beginning with the test die of this repository
 as it stands in the layout viewer. Sources: <a href="references.html#r14">Yariv 1973</a>,
 <a href="references.html#r17">Sun, Liu and Yariv 2009</a>,
 <a href="references.html#r18">Gallagher and Felici 2003</a>, and

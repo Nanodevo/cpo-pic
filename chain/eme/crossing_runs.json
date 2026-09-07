@@ -1,0 +1,172 @@
+{
+ "note": "transcribed from the Tidy3D notebook output on 2026-09-06; the raw result files stayed in the hosted notebook",
+ "geometry": "die's linear taper 180 -> 240 nm over 375 um (0.16 nm/um) + 10 um lead, 30 cells, 16 modes, 16 x 12 um box, same stack as taper_eme.py",
+ "run1_pml_in_mode_solver": {
+  "port1": {
+   "m0": [
+    1.5164,
+    0.04,
+    "silicon E_y"
+   ],
+   "m1": [
+    1.5056,
+    0.99,
+    "glass TE"
+   ],
+   "m2": [
+    1.499,
+    1.0,
+    "substrate"
+   ],
+   "m3": [
+    1.4988,
+    0.01,
+    "substrate"
+   ]
+  },
+  "port2": {
+   "m0": [
+    1.594,
+    0.95,
+    "silicon TE"
+   ],
+   "m1": [
+    1.5663,
+    0.05,
+    "silicon E_y"
+   ],
+   "m2": [
+    1.5045,
+    1.0,
+    "glass TE"
+   ],
+   "m3": [
+    1.499,
+    1.0,
+    "substrate"
+   ]
+  },
+  "S21_power_4x4_rows_out_cols_in": [
+   [
+    0,
+    0.001,
+    0,
+    0
+   ],
+   [
+    0.9848,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0.1147,
+    0,
+    0.0014
+   ],
+   [
+    0,
+    0,
+    0.7848,
+    0
+   ]
+  ],
+  "column_sums_in0_to_5": [
+   0.986,
+   0.116,
+   0.785,
+   0.676,
+   0.597,
+   0.108
+  ],
+  "field_along_z_glass_input": "|E|^2 share in the IOX guide fell 0.56 -> 0.03 between z = 15 and 170 um (182 -> 207 nm) while the silicon share rose 0.11 -> 0.34; then the total fell 30x between z = 215 and 231 um (215 -> 217 nm), one cell boundary"
+ },
+ "run2_no_pml_in_mode_solver": {
+  "port1": {
+   "m0": [
+    1.5164,
+    0.04,
+    "silicon E_y"
+   ],
+   "m1": [
+    1.5055,
+    0.99,
+    "glass TE"
+   ],
+   "m2": [
+    1.5038,
+    0.01,
+    "glass TM"
+   ],
+   "m3": [
+    1.4989,
+    1.0,
+    "substrate"
+   ]
+  },
+  "port2": {
+   "m0": [
+    1.594,
+    0.95,
+    "silicon TE"
+   ],
+   "m1": [
+    1.5663,
+    0.05,
+    "silicon E_y"
+   ],
+   "m2": [
+    1.5045,
+    1.0,
+    "glass TE"
+   ],
+   "m3": [
+    1.5045,
+    0.0,
+    "glass TM"
+   ]
+  },
+  "S21_power_4x4_rows_out_cols_in": [
+   [
+    0,
+    0.7453,
+    0,
+    0
+   ],
+   [
+    0.981,
+    0,
+    0.0056,
+    0
+   ],
+   [
+    0,
+    0.2069,
+    0,
+    0
+   ],
+   [
+    0.0057,
+    0,
+    0.9933,
+    0
+   ]
+  ],
+  "column_sums_in0_to_5": [
+   0.993,
+   0.956,
+   0.999,
+   1.0,
+   1.0,
+   0.982
+  ],
+  "glass_TE_to_silicon_TE": 0.7453,
+  "glass_TE_stays_glass": 0.2069,
+  "unaccounted": 0.044
+ },
+ "two_mode_model": {
+  "linear_2mm_integration": 0.769,
+  "landau_zener": 0.776
+ }
+}
