@@ -20,6 +20,7 @@ h2{margin-top:2.4em}
   <a href="fiber.html">1. The fiber</a>
   <a href="stage2-glass.html">2. The glass</a>
   <a href="stage3-handoff.html">3. The hand-off</a>
+  <a href="stage4-chip.html">4. The chip</a>
   <a href="bend-derivation.html">Bend derivation</a>
   <a class="here" href="glossary.html">Glossary</a>
   <a href="references.html">References</a>
@@ -58,6 +59,7 @@ a bug in the page and this is the fallback.
 <tr><td>adiabatic</td><td>Slow enough that the light stays in the local mode of the structure while the structure changes. In a taper: the mode changes its shape, not its identity.</td></tr>
 <tr><td>adiabaticity parameter &epsilon;</td><td>|d&theta;/dz| divided by the local beat rate, where &theta; is the mixing angle of the supermode. &epsilon; &lt;&lt; 1 means adiabatic. The linear 180 nm taper reaches 0.53 at the crossing; the shaped taper holds 0.020.</td></tr>
 <tr><td>Landau-Zener</td><td>Closed-form probability, exp(&minus;2&pi;&kappa;&sup2;/|d(k<sub>0</sub>&delta;)/dz|), that a linear sweep through a crossing leaves the light in its original mode. Assumes the sweep runs from far below to far above the crossing.</td></tr>
+<tr><td>group index n<sub>g</sub></td><td>n<sub>eff</sub> &minus; &lambda;&middot;dn<sub>eff</sub>/d&lambda;: the index that governs how a mode's phase changes with wavelength, and therefore pulse speed and resonance spacing. 4.06 for the 500 &times; 220 nm strip.</td></tr>
 </table>
 
 <h2>Geometrical optics</h2>
@@ -85,6 +87,9 @@ a bug in the page and this is the fallback.
 <tr><td>scattering matrix (S-matrix)</td><td>Table of complex amplitudes relating every outgoing mode at every port to every incoming one. |S<sub>21</sub>|&sup2; between the glass mode at port 1 and the silicon mode at port 2 is the transferred power.</td></tr>
 <tr><td>PML</td><td><strong>Perfectly matched layer.</strong> An absorbing region on the boundary of a simulation box that swallows outgoing light without reflecting it, so that radiation loss is counted as loss.</td></tr>
 <tr><td>port (simulation)</td><td>A plane at the end of a simulated structure where the modes are solved and light is launched or collected, one mode at a time.</td></tr>
+<tr><td>compact model</td><td>A formula or lookup that returns a component's scattering matrix from its parameters, so a circuit solver never has to solve fields.</td></tr>
+<tr><td>netlist</td><td>The list of which component connects to which at which port, extracted from the layout. The input of a circuit solver.</td></tr>
+<tr><td>circuit solver</td><td>Multiplies the scattering matrices of all components along a netlist into the matrix of the whole circuit. SAX here.</td></tr>
 </table>
 
 <h2>Materials and platforms</h2>
@@ -113,6 +118,13 @@ a bug in the page and this is the fallback.
 <tr><td>TIA</td><td><strong>Transimpedance amplifier.</strong> Converts detector current to voltage; usually sets receiver noise.</td></tr>
 <tr><td>AWG</td><td><strong>Arrayed waveguide grating.</strong> An on-chip wavelength multiplexer.</td></tr>
 <tr><td>MPO</td><td><strong>Multi-fiber push-on</strong> connector. MPO-16 carries sixteen fibers at 250 &micro;m pitch.</td></tr>
+<tr><td>ring resonator</td><td>A closed loop of waveguide beside a bus. At wavelengths whose round trip holds a whole number of waves, light builds up in the loop and is removed from the bus.</td></tr>
+<tr><td>free spectral range (FSR)</td><td>Wavelength spacing between neighbouring resonances of one ring, &lambda;&sup2;/(n<sub>g</sub>L). Measured on a chip, it gives the group index.</td></tr>
+<tr><td>critical coupling</td><td>Coupling per pass equal to loss per round trip, t = a: the dip of an all-pass ring is deepest. Set by the gap.</td></tr>
+<tr><td>quality factor Q</td><td>Resonance wavelength over the width of the dip at half depth; also, up to 2&pi;/m, the number of round trips the light makes before it is used up.</td></tr>
+<tr><td>all-pass ring</td><td>Ring with one bus. Removes its resonant wavelengths and dissipates them; a test structure and a phase element, not a sorter.</td></tr>
+<tr><td>add-drop ring</td><td>Ring with a second bus on its far side. The resonant wavelength crosses to the drop port; the others continue through. The element of a ring demultiplexer.</td></tr>
+<tr><td>through port / drop port</td><td>The two outputs of an add-drop ring: what continues along the bus, and what the ring pulled across.</td></tr>
 </table>
 
 <h2>Systems and links</h2>

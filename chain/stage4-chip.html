@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 4: inside the chip</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="index.html">Overview</a>
+  <a href="rays.html">Foundations: rays</a>
+  <a href="matter.html">Foundations: matter</a>
+  <a href="fiber.html">1. The fiber</a>
+  <a href="stage2-glass.html">2. The glass</a>
+  <a href="stage3-handoff.html">3. The hand-off</a>
+  <a class="here" href="stage4-chip.html">4. The chip</a>
+  <a href="bend-derivation.html">Bend derivation</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="references.html">References</a>
+  <a href="figures.html">Figures</a>
+  <a href="fiber-mode.html">Mode explorer</a>
+</nav>
+
+<h1>Stage 4: inside the chip</h1>
+<div class="meta">
+Once the light is in the silicon, the chip is a circuit. How a whole die is
+simulated as a chain of scattering matrices; the ring resonator, the component
+that sorts wavelengths, with every formula its design turns on and the numbers
+of this die's own rings; and the difference between the ring that measures and
+the ring that demultiplexes. This stage is in progress: the switch cell, the
+cutback spirals and the add-drop redesign follow.
+</div>
+
+<h2>From fields to circuits</h2>
+
+<figure>
+<img src="img/circuit-ringbank.png?v=8e8525a6" alt="Channel 7 to 8 of the die as a chain of boxes: taper in, bus, four ring sections, bend, route back, taper out" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Channel 7 to 8 of the die as a chain of scattering matrices. Each
+box is one component; the circuit solver multiplies the matrices along the
+connections the layout defines.</figcaption>
+</figure>
+
+<p>
+Stages 1 to 3 solved Maxwell's equations on a cross-section, or along a few
+hundred micrometres of taper, and that is as far as a field solver goes. A die
+is 5 mm on a side with two centimetres of coiled waveguide on it; at 20 nm
+cells a single layer is sixty billion points, and no computer solves that. The
+industry does not try. It simulates in two levels. Every component, a
+straight, a bend, a coupler, a taper, gets a <strong>scattering
+matrix</strong>: for each wavelength, the complex amplitude that leaves each
+port for a unit amplitude entering each other port.
+</p>
+
+<div class="eqwrap"><div class="eq">b = S &middot; a        (b<sub>j</sub> = &Sigma;<sub>i</sub> S<sub>ji</sub> a<sub>i</sub>)</div><span class="eqno">(1)</span></div>
+<div class="means">
+a is the vector of incoming wave amplitudes, one per port, b the outgoing ones,
+and S the scattering matrix. |S<sub>ji</sub>|&sup2; is the power fraction from
+port i to port j; its phase is the delay. A straight waveguide of length L has a
+single off-diagonal element, e<sup>i&beta;L</sup> times an amplitude loss;
+the taper's S<sub>21</sub> is the 74.5% of stage 3. The matrices of stage 3's
+eigenmode expansion and of a circuit solver are the same object at different
+scales.
+</div>
+
+<p>
+The second level is the <strong>circuit solver</strong>. It reads the layout's
+netlist, which component connects to which at which port, takes each
+component's matrix from a <strong>compact model</strong>, a formula or a
+lookup that returns the matrix for the component's parameters, and multiplies
+them all together along the connections into one matrix for the whole circuit.
+The one used here is SAX,<sup class="cite"><a href="references.html#r22">[22]</a></sup>
+open source, and it solves the ring bank in under a second. The die exports one
+port per channel, so the same machinery scales to all sixteen.
+</p>
+
+<h2>The ring resonator</h2>
+
+<figure>
+<img src="img/ring-explainer.png?v=3fb37c84" alt="Top: a ring beside its bus. Middle: the transmission of one ring with dips at each resonance and the spacing marked. Bottom: the four rings of the die with interleaved dips" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>What a ring does. Top: light of every wavelength runs along the
+bus; at the wavelengths whose round trip in the ring holds a whole number of
+waves, light builds up in the ring and is removed from the bus. Middle: one
+ring's transmission from the circuit model, a dip at every resonance, the
+spacing between dips being the free spectral range. Bottom: the die's four
+rings, each with its own set of dips.</figcaption>
+</figure>
+
+<p>
+A ring is a closed loop of waveguide beside a straight one, the bus, with a gap
+of a few hundred nanometres between them. Light in the bus leaks into the ring
+through the same evanescent tail that did the hand-off of stage 3, only
+sideways. What happens next depends on the wavelength alone:
+</p>
+
+<div class="eqwrap"><div class="eq">n<sub>eff</sub>(&lambda;<sub>m</sub>) &middot; L = m &middot; &lambda;<sub>m</sub>,        m = 1, 2, 3, &hellip;</div><span class="eqno">(2)</span></div>
+<div class="means">
+The <strong>resonance condition</strong>. L is the round-trip length of the
+ring, n<sub>eff</sub> the effective index of its waveguide, and m an integer.
+When the optical path around the loop is a whole number of wavelengths, light
+returning to the gap is in step with light leaking in, and it builds up round
+after round; at every other wavelength the returning light is out of step,
+cancels, and the bus is untouched. The ring of this die is a racetrack: two
+straights of 4 &micro;m, two of 0.6 &micro;m, and four Euler bends of radius
+10 &micro;m, L = 75.75 &micro;m.
+</div>
+
+<p>
+Consecutive resonances differ by one in m, so their spacing follows from
+equation (2), with one subtlety: n<sub>eff</sub> itself changes with
+wavelength, and the derivative brings in the group index.
+</p>
+
+<div class="eqwrap"><div class="eq">FSR = &Delta;&lambda; = &lambda;&sup2; / ( n<sub>g</sub> &middot; L ),        n<sub>g</sub> = n<sub>eff</sub> &minus; &lambda; &middot; dn<sub>eff</sub>/d&lambda;</div><span class="eqno">(3)</span></div>
+<div class="means">
+The <strong>free spectral range</strong>, the wavelength spacing between
+neighbouring dips of one ring, and the <strong>group index</strong>, the index
+that governs how the phase of a mode changes with wavelength; for a 500 &times;
+220 nm silicon strip in oxide the mode solver gives n<sub>eff</sub> = 2.482 and
+n<sub>g</sub> = 4.063 at 1550 nm, and the group index is what appears here
+because it is the rate of change of phase that decides where the next
+resonance falls. With L = 75.75 &micro;m: FSR = 7.81 nm. The circuit solver's
+spectrum shows 7.79 nm between dips of the same ring. Measured on a real chip,
+the same equation is read the other way: the FSR gives n<sub>g</sub>, and
+n<sub>g</sub> is the first number a fabricated waveguide is graded by.
+</div>
+
+<h2>Coupling, loss, and how deep a dip is</h2>
+
+<figure>
+<img src="img/ringbank-spectrum.png?v=72b44f25" alt="Transmission of the four-ring bank against wavelength at a 200 nm gap: ten shallow dips" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The ring bank at the 200 nm gap as drawn: ten dips between 1540 and
+1560 nm, four rings, and every dip only 1.1 dB deep. The depth is decided by two
+numbers, the coupling per pass and the loss per round trip.</figcaption>
+</figure>
+
+<p>
+Two quantities compete inside a ring. Light enters from the bus at each pass;
+light is lost around the loop to sidewall roughness and absorption. Their
+ratio decides everything about the dip.
+</p>
+
+<div class="eqwrap"><div class="eq">a&sup2; = 10<sup>&minus;&alpha;L/10</sup>,        p<sub>loss</sub> = 1 &minus; a&sup2;</div><span class="eqno">(4)</span></div>
+<div class="means">
+a is the <strong>round-trip amplitude</strong>, the fraction of the field that
+survives one loop, and &alpha; the propagation loss in dB per unit length. At
+2.5 dB/cm, a typical value for an etched silicon strip and a placeholder here
+until a cutback measurement replaces it, the 75.75 &micro;m loop loses
+0.0189 dB per round trip: p<sub>loss</sub> = 0.44%.
+</div>
+
+<div class="eqwrap"><div class="eq">K = sin&sup2;( &kappa; &middot; l<sub>eff</sub> ),        &kappa;(g) = &kappa;<sub>0</sub> &middot; e<sup>&minus;&gamma; (g &minus; g<sub>0</sub>)</sup>,        &gamma; = k<sub>0</sub> &radic;( n<sub>eff</sub>&sup2; &minus; n<sub>ox</sub>&sup2; )</div><span class="eqno">(5)</span></div>
+<div class="means">
+K is the <strong>power coupling per pass</strong>, the fraction of the bus light
+that enters the ring each time it passes the gap. &kappa; is the coupling per
+unit length between the two parallel waveguides, from the splitting of their
+symmetric and antisymmetric supermodes exactly as in stage 3, equation (4)
+there: for two 500 nm strips 200 nm apart the mode solver gives
+&kappa;<sub>0</sub> = 0.0385 rad/&micro;m. l<sub>eff</sub> is the length over
+which ring and bus interact, the racetrack's 4 &micro;m straight plus the
+approach of its bends, &radic;(2&pi;R/&gamma;) = 2.77 &micro;m, in all
+6.77 &micro;m. &gamma; is the decay rate of the mode's field outside the
+silicon, 8.18 per &micro;m, and it sets how fast the coupling falls as the gap
+g widens from the solved gap g<sub>0</sub> = 200 nm. At 200 nm: K = 6.6%.
+</div>
+
+<p>
+With t = &radic;(1 &minus; K) the fraction of the field that stays in the bus
+at each pass, the transmission of a single ring on its bus, the
+<strong>all-pass ring</strong>, is<sup class="cite"><a href="references.html#r20">[20]</a></sup>
+</p>
+
+<div class="eqwrap"><div class="eq">T(&phi;) = ( a&sup2; &minus; 2 a t cos&phi; + t&sup2; ) / ( 1 &minus; 2 a t cos&phi; + a&sup2; t&sup2; ),        &phi; = 2&pi; n<sub>eff</sub> L / &lambda;</div><span class="eqno">(6)</span></div>
+<div class="means">
+&phi; is the round-trip phase; cos&phi; = 1 at resonance. There the
+transmission falls to T<sub>min</sub> = ((a &minus; t)/(1 &minus; a t))&sup2;,
+and it is zero, an infinitely deep dip, when a = t: the light leaking back into
+the bus exactly cancels the light still arriving. In power, that is
+</div>
+
+<div class="eqwrap"><div class="eq">critical coupling:        K = p<sub>loss</sub>        (equivalently t = a)</div><span class="eqno">(7)</span></div>
+<div class="means">
+The coupling per pass equals the loss per round trip: light enters exactly as
+fast as the ring can dissipate it. With K &gt; p<sub>loss</sub> the ring is
+<strong>over-coupled</strong>, most of what enters leaks straight back, and the
+dip is shallow; with K &lt; p<sub>loss</sub> it is <strong>under-coupled</strong>
+and the dip is shallow again. The die's rings at 200 nm are over-coupled
+fifteen-fold, 6.6% against 0.44%, which is why their dips are 1.1 dB.
+Solving equations (5) and (7) for the gap: sin&sup2;&theta; = 0.0044 gives
+&theta; = 0.0663 rad, &kappa; = &theta;/l<sub>eff</sub> = 0.0098 per &micro;m,
+and g = g<sub>0</sub> + ln(&kappa;<sub>0</sub>/&kappa;)/&gamma; =
+0.20 + 1.37/8.18 = <strong>0.367 &micro;m</strong>. The circuit model at a
+370 nm gap gives a dip 34 dB deep. The condition first, the solver as
+confirmation.
+</div>
+
+<div class="eqwrap"><div class="eq">&Delta;&lambda;<sub>FWHM</sub> = ( FSR / &pi; ) &middot; ( 1 &minus; a t ) / &radic;( a t ),        Q = &lambda; / &Delta;&lambda;<sub>FWHM</sub></div><span class="eqno">(8)</span></div>
+<div class="means">
+The width of the dip at half its depth, and the <strong>quality factor</strong>
+Q, the resonance wavelength over that width, which is also the number of round
+trips the light makes before it is used up, times 2&pi;/m. This is what the
+deep dip costs: at the 200 nm gap the dip is 0.09 nm wide and Q &asymp; 17,000;
+at critical coupling it is 0.011 nm wide and Q &asymp; 140,000. A narrower dip
+sorts wavelengths more finely, and it also drifts off its channel with a
+smaller temperature change, about 0.08 nm per kelvin in silicon, which is why
+every ring in a product carries a heater and a control loop.
+</div>
+
+<h2>The ring that measures and the ring that sorts</h2>
+
+<figure>
+<img src="img/ring-drop.png?v=02db89ca" alt="Top: all-pass ring with one bus, the resonant wavelength circulates and is used up. Bottom: add-drop ring with a second bus, the resonant wavelength crosses to the drop port" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Top: the all-pass ring of the die. The resonant wavelength
+circulates until the ring's own loss has used it up; what leaks back cancels
+the bus light. A dip, no exit. Bottom: the add-drop ring. A second bus on the
+far side gives the circulating light somewhere to go, and the resonant
+wavelength leaves alone through the drop port while the others
+continue.</figcaption>
+</figure>
+
+<p>
+In the all-pass ring nothing comes out anywhere. The resonant wavelength is
+removed from the bus and turned into heat over a few thousand round trips.
+That makes it a test structure, and it is what channels 7 and 8 are: from its
+dips one reads the free spectral range, the group index, the loss and the
+coupling, everything above. It cannot hand a wavelength to a detector. For
+that the ring needs a second waveguide, the <strong>drop bus</strong>, on its
+far side, and it becomes an <strong>add-drop ring</strong>:
+</p>
+
+<div class="eqwrap"><div class="eq">D<sub>res</sub> = ( 1 &minus; t<sub>1</sub>&sup2; )( 1 &minus; t<sub>2</sub>&sup2; ) a / ( 1 &minus; a t<sub>1</sub> t<sub>2</sub> )&sup2;,        matched when t<sub>1</sub> = a t<sub>2</sub></div><span class="eqno">(9)</span></div>
+<div class="means">
+D<sub>res</sub> is the power reaching the drop port at resonance, with
+t<sub>1</sub> and t<sub>2</sub> the bus-side and drop-side through amplitudes
+of the two couplers. The balance condition of equation (7) becomes: coupling in
+equals coupling out plus the loss. Both gaps are now knobs, and the ring's own
+loss, which was the whole point of the all-pass ring, becomes a waste that
+lowers the dropped power. Eight such rings in a row, each tuned to one channel,
+sort eight wavelengths into eight drop ports, each ending on a photodetector:
+the receive side of a wavelength-division-multiplexed transceiver, the circuit
+the die's ring bank is the skeleton of.
+</div>
+
+<h2>What stage 4 has established so far</h2>
+
+<ol class="steps">
+<li>A chip is simulated in two levels: field solvers for components, a
+<strong>circuit solver</strong> for the whole, joined by each component's
+scattering matrix.</li>
+<li>A ring resonates when its round trip holds a whole number of wavelengths;
+the spacing of its resonances is <strong>&lambda;&sup2;/(n<sub>g</sub>L)</strong>,
+and the group index, not the effective index, is what sets it.</li>
+<li>The depth of a dip is decided by two numbers, the coupling per pass and the
+loss per round trip. They are equal at <strong>critical coupling</strong>, and
+the gap is the knob: 367 nm for this ring at the assumed loss, against the
+200 nm drawn.</li>
+<li>The deep dip costs linewidth: Q rises from 17,000 to 140,000, and with it
+the sensitivity to temperature. Heaters follow.</li>
+<li>The die's rings are <strong>all-pass</strong>: they measure. Sorting
+wavelengths needs <strong>add-drop</strong> rings with a second bus, and that
+redesign is the next step of this stage.</li>
+</ol>
+
+<h2>Check yourself</h2>
+
+<details><summary>A measured ring shows dips 6.2 nm apart, and its round trip is 95 &micro;m. What is the group index of the waveguide?</summary>
+<p>From equation (3), n<sub>g</sub> = &lambda;&sup2;/(FSR &middot; L) =
+(1.55)&sup2;/(0.0062 &times; 95) = 4.08. This is how a fabricated waveguide's
+group index is measured: from a ring, not from a mode solver.</p></details>
+
+<details><summary>The dips of a ring are shallow. Is the ring over- or under-coupled?</summary>
+<p>Either; a shallow dip alone does not say. The width tells them apart: an
+over-coupled ring has a broad dip, an under-coupled one a narrow dip. Both are
+far from t = a.</p></details>
+
+<details><summary>Why do the four rings of the die have radii 50 nm apart?</summary>
+<p>So that their resonances fall at different wavelengths. Each ring's dips
+shift by about &lambda; &middot; &Delta;L/L per radius step, and the four sets
+interleave; in a demultiplexer each ring would sit on its own channel.</p></details>
+
+<details><summary>You need a deep dip and a wide one at the same time. Can the gap give you both?</summary>
+<p>No. The gap sets the coupling, and at fixed loss the coupling sets both the
+depth and the width through the same product a t. A wide, deep dip needs more
+loss, or a different structure such as a coupled pair of rings.</p></details>
+
+<div class="note">
+Stage 4 continues: the thermo-optic switch cell of channels 9 and 10, the
+cutback spirals, and the redesign of the ring bank as an add-drop
+demultiplexer with drop ports at the edge. Sources:
+<a href="references.html#r20">Bogaerts et al. 2012</a>,
+<a href="references.html#r21">Chrostowski and Hochberg 2015</a>.
+</div>
+
+</div>
+</body>
+</html>
