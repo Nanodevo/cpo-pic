@@ -312,6 +312,81 @@ balanced cell, &Delta;L = 0, would be flat in wavelength and would need the
 heater on to be characterised at all.
 </p>
 
+<h3>The interferometer from first principles</h3>
+
+<figure>
+<img src="img/mzi-interference.png?v=fe93281e" alt="Top: two equal waves and their sum for phase differences of zero, a quarter wave and half a wave. Middle: the same as arrows. Bottom: the two output powers against phase difference for perfect and for 40:60 couplers" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>What interference is. Top: two equal waves that have travelled
+different paths meet again; in step they add to double, a quarter wave apart
+to &radic;2, half a wave apart to nothing. Middle: the same as arrows, which is
+how the algebra below thinks. Bottom: the two outputs of the interferometer
+against the phase difference, equation (13), and what an imperfect coupler
+does to them.</figcaption>
+</figure>
+
+<p>
+Everything the switch does follows from one fact: light is a wave, and two
+waves that meet add as waves, not as powers. Two equal waves in step give
+twice the amplitude and four times the power; half a wave apart they give
+nothing, and the power has not vanished, it has gone out of the other port.
+The interferometer is a machine for setting that phase difference and reading
+the result. Its two couplers are described by one matrix each:
+</p>
+
+<div class="eqwrap"><div class="eq">C = [ t     i&kappa; ]
+    [ i&kappa;   t   ],        t = &radic;(1 &minus; K),   &kappa; = &radic;K</div><span class="eqno">(12)</span></div>
+<div class="means">
+The <strong>coupler matrix</strong>. K is the fraction of the power that
+crosses from one waveguide to the other, one half for a 50:50 coupler. The
+crossed wave picks up a quarter-wave phase, the factor i, which is not a
+convention but a consequence of energy conservation: without it the two
+outputs could add up to more than the input. The matrix takes the two
+incoming amplitudes to the two outgoing ones. Between the couplers the arms
+are a diagonal matrix of phases, e<sup>i&phi;<sub>1</sub></sup> and
+e<sup>i&phi;<sub>2</sub></sup>, and the whole interferometer is the product
+C &middot; D &middot; C. Light entering one port, amplitude (1, 0), comes out as
+</div>
+
+<div class="eqwrap"><div class="eq">b<sub>cross</sub> = i &kappa; t ( e<sup>i&phi;<sub>1</sub></sup> + e<sup>i&phi;<sub>2</sub></sup> ),        b<sub>bar</sub> = t&sup2; e<sup>i&phi;<sub>1</sub></sup> &minus; &kappa;&sup2; e<sup>i&phi;<sub>2</sub></sup></div><span class="eqno">(13a)</span></div>
+<div class="eqwrap"><div class="eq">P<sub>cross</sub> = 4 K (1 &minus; K) cos&sup2;( &Delta;&phi;/2 ),        P<sub>bar</sub> = (1 &minus; K)&sup2; + K&sup2; &minus; 2 K (1 &minus; K) cos &Delta;&phi;</div><span class="eqno">(13)</span></div>
+<div class="means">
+&Delta;&phi; = &phi;<sub>1</sub> &minus; &phi;<sub>2</sub>. The cross port is
+the <em>sum</em> of the two arms' waves, the bar port their
+<em>difference</em>, weighted by the couplers. For K = &frac12; these are the
+cos&sup2; and sin&sup2; of equation (10). The two always add to
+(1 &minus; K)&sup2; + K&sup2; + 2K(1 &minus; K) = 1: nothing is lost, only
+steered. And the two ports fail differently when the couplers are imperfect:
+the cross port's maximum drops to 4K(1 &minus; K), 0.96 for a 40:60 coupler,
+but its null at &Delta;&phi; = &pi; stays perfect, because the two arms carry
+equal amplitude whatever K is; the bar port's null does not survive, it
+bottoms at (1 &minus; 2K)&sup2;, 1% for 40:60, a 20 dB extinction ratio. Which
+port a designer trusts for the "off" state follows from this line.
+</div>
+
+<div class="eqwrap"><div class="eq">&Delta;&phi; = ( 2&pi;/&lambda; ) [ n<sub>eff</sub> &Delta;L + &Delta;n &middot; L<sub>h</sub> ]</div><span class="eqno">(14)</span></div>
+<div class="means">
+Where the phase difference comes from. A length difference &Delta;L between
+the arms, fixed by the layout: the 10 &micro;m of this cell, which makes the
+outputs sweep through a full cycle every &lambda;&sup2;/(n<sub>g</sub>&Delta;L)
+of wavelength, the 55 nm of the spectrum above. Or an index difference
+&Delta;n over a length L<sub>h</sub>, imposed from outside: by heat, equation
+(11), slow but strong; by an electric field through carriers in a diode, fast
+but weak, which is how a Mach-Zehnder <strong>modulator</strong> writes data
+onto light at tens of gigabits per second; or by a change in whatever touches
+the waveguide, which is how the same structure becomes a <strong>sensor</strong>.
+The interferometer does not care what caused &Delta;&phi;; it only reads it.
+</div>
+
+<div class="eqwrap"><div class="eq">dP<sub>cross</sub>/d&Delta;&phi; is largest at &Delta;&phi; = &pi;/2:        the quadrature point</div><span class="eqno">(15)</span></div>
+<div class="means">
+For a switch the useful points are &Delta;&phi; = 0 and &pi;, all the light in
+one port or the other. For a modulator or a sensor the useful point is
+halfway, where the output changes fastest and most linearly with the phase:
+the interferometer is biased there, usually with a heater, and the signal
+rides on the slope. The same cell, three different jobs, chosen by where on
+the cos&sup2; curve it is parked.
+</div>
+
 <h2>What stage 4 has established so far</h2>
 
 <ol class="steps">
@@ -334,6 +409,10 @@ redesign is the next step of this stage.</li>
 cos&sup2; and sin&sup2; of half the difference; the heater supplies the phase
 through the thermo-optic effect, 21 K for &pi; over 200 &micro;m, and the
 10 &micro;m imbalance lets a passive sweep grade the cell.</li>
+<li>The two outputs of an interferometer are the <strong>sum and the
+difference</strong> of the arms' waves. The sum port's null survives an
+imperfect coupler, the difference port's does not; parked at &pi;/2 the same
+cell is a modulator or a sensor.</li>
 </ol>
 
 <h2>Check yourself</h2>
