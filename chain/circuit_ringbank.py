@@ -88,36 +88,41 @@ def coupler_ring(wl=1.55, gap=GAP, radius=RADIUS, length_x=LX, **_):
 def edge_coupler(wl=1.55, **_):
     return sax.reciprocal({("o1", "o2"): jnp.full_like(jnp.asarray(wl), 10 ** (-TAPER_LOSS_DB / 20)) + 0j})
 
-# ---- solve ----------------------------------------------------------------------------------
-c = channel()
-net = to_sax(c.get_netlist(recursive=True))
-models = {"straight": straight, "bend_euler": bend_euler, "coupler_ring": coupler_ring}
-top = c.name
-net = {top: net[top], **{k: v for k, v in net.items() if k != top}}   # top-level netlist first
-circuit, info = sax.circuit(netlist=net, models=models)
-wl = np.linspace(1.540, 1.560, 4001)
-S = sax.sdict(circuit(wl=wl))
-T = np.abs(np.asarray(S[("in", "out")])) ** 2 * 10 ** (-2 * TAPER_LOSS_DB / 10)
-TdB = 10 * np.log10(T)
+def main():
+    # ---- solve ----------------------------------------------------------------------------------
+    c = channel()
+    net = to_sax(c.get_netlist(recursive=True))
+    models = {"straight": straight, "bend_euler": bend_euler, "coupler_ring": coupler_ring}
+    top = c.name
+    net = {top: net[top], **{k: v for k, v in net.items() if k != top}}   # top-level netlist first
+    circuit, info = sax.circuit(netlist=net, models=models)
+    wl = np.linspace(1.540, 1.560, 4001)
+    S = sax.sdict(circuit(wl=wl))
+    T = np.abs(np.asarray(S[("in", "out")])) ** 2 * 10 ** (-2 * TAPER_LOSS_DB / 10)
+    TdB = 10 * np.log10(T)
 
-# what the ring is, from the layout itself
-ring_net = c.get_netlist(recursive=True)
-ring_name = next(k for k in ring_net if k.startswith("ring_single"))
-L_ring = 2 * LX + 2 * LY + 4 * BEND_LEN
-theta = KAPPA * (LX + np.sqrt(2 * np.pi * RADIUS / GAMMA))
-print(f"ring: radius {RADIUS} um, racetrack straights {LX} and {LY} um, Euler 90-degree bend length {BEND_LEN:.2f} um")
-print(f"      round-trip length L = {L_ring:.2f} um;  n_eff {NE:.4f}, group index {NG:.3f}")
-print(f"      coupler: theta = {theta:.3f} rad -> power coupling {np.sin(theta)**2:.1%} per pass")
-print(f"      round-trip loss at {LOSS_DB_CM} dB/cm: {LOSS_DB_CM * L_ring * 1e-4:.4f} dB")
-# find the notches
-from scipy.signal import find_peaks
-pk, _ = find_peaks(-TdB, prominence=1.0)
-print(f"resonance notches found between 1540 and 1560 nm: {len(pk)}")
-for i in pk[:12]: print(f"   {wl[i]*1e3:8.3f} nm   depth {TdB[i]:6.1f} dB")
+    # what the ring is, from the layout itself
+    ring_net = c.get_netlist(recursive=True)
+    ring_name = next(k for k in ring_net if k.startswith("ring_single"))
+    L_ring = 2 * LX + 2 * LY + 4 * BEND_LEN
+    theta = KAPPA * (LX + np.sqrt(2 * np.pi * RADIUS / GAMMA))
+    print(f"ring: radius {RADIUS} um, racetrack straights {LX} and {LY} um, Euler 90-degree bend length {BEND_LEN:.2f} um")
+    print(f"      round-trip length L = {L_ring:.2f} um;  n_eff {NE:.4f}, group index {NG:.3f}")
+    print(f"      coupler: theta = {theta:.3f} rad -> power coupling {np.sin(theta)**2:.1%} per pass")
+    print(f"      round-trip loss at {LOSS_DB_CM} dB/cm: {LOSS_DB_CM * L_ring * 1e-4:.4f} dB")
+    # find the notches
+    from scipy.signal import find_peaks
+    pk, _ = find_peaks(-TdB, prominence=1.0)
+    print(f"resonance notches found between 1540 and 1560 nm: {len(pk)}")
+    for i in pk[:12]: print(f"   {wl[i]*1e3:8.3f} nm   depth {TdB[i]:6.1f} dB")
 
-fig, ax = plt.subplots(figsize=figstyle.size(7.6, 4.4))
-ax.plot(wl * 1e3, TdB, lw=1.4, color="#1b6ca8")
-ax.set_xlabel("wavelength  (nm)"); ax.set_ylabel("transmission ch 7 → ch 8  (dB)")
-ax.set_title("Ring bank of the die, circuit model: four rings, radii 10.00 to 10.15 µm")
-ax.grid(alpha=.22); ax.set_xlim(1540, 1560)
-out = HERE / "img" / "ringbank-spectrum.png"; fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)
+    fig, ax = plt.subplots(figsize=figstyle.size(7.6, 4.4))
+    ax.plot(wl * 1e3, TdB, lw=1.4, color="#1b6ca8")
+    ax.set_xlabel("wavelength  (nm)"); ax.set_ylabel("transmission ch 7 → ch 8  (dB)")
+    ax.set_title("Ring bank of the die, circuit model: four rings, radii 10.00 to 10.15 µm")
+    ax.grid(alpha=.22); ax.set_xlim(1540, 1560)
+    out = HERE / "img" / "ringbank-spectrum.png"; fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)
+
+
+if __name__ == "__main__":
+    main()
