@@ -28,7 +28,9 @@ TAPER_LOSS_DB = 1.0                      # placeholder for the glass-to-silicon 
 K0 = 2 * np.pi / 1.55
 GAMMA = K0 * np.sqrt(NE ** 2 - N_OX ** 2)     # transverse decay rate of the mode outside the core, 1/um
 gf.gpdk.PDK.activate()
-RADIUS, GAP, LX, LY = 10.0, 0.2, 4.0, 0.6
+RADIUS, LX, LY = 10.0, 4.0, 0.6
+GAP = float(sys.argv[1]) if len(sys.argv) > 1 else 0.2     # coupling gap, um: python chain/circuit_ringbank.py 0.30
+GAP0 = 0.2                                                  # the gap ring_params.py solved the coupling for
 
 # ---- the channel as a layout, then its netlist -------------------------------------------
 def channel() -> gf.Component:
@@ -76,7 +78,8 @@ def coupler_ring(wl=1.55, gap=GAP, radius=RADIUS, length_x=LX, **_):
     straight section and over the approach of the two bends, whose effective length is sqrt(2 pi R / gamma)."""
     wl = jnp.asarray(wl)
     l_eff = length_x + np.sqrt(2 * np.pi * radius / GAMMA)
-    theta = KAPPA * l_eff
+    kappa = KAPPA * np.exp(-GAMMA * (gap - GAP0))   # the field in the gap decays as exp(-gamma x): wider gap, weaker coupling
+    theta = kappa * l_eff
     t, k = jnp.cos(theta), 1j * jnp.sin(theta)
     beta = 2 * jnp.pi * neff_of(wl) / wl
     ph_bus = jnp.exp(1j * beta * length_x)                        # the bus straight under the coupler
@@ -105,23 +108,24 @@ def main():
     ring_net = c.get_netlist(recursive=True)
     ring_name = next(k for k in ring_net if k.startswith("ring_single"))
     L_ring = 2 * LX + 2 * LY + 4 * BEND_LEN
-    theta = KAPPA * (LX + np.sqrt(2 * np.pi * RADIUS / GAMMA))
+    theta = KAPPA * np.exp(-GAMMA * (GAP - GAP0)) * (LX + np.sqrt(2 * np.pi * RADIUS / GAMMA))
     print(f"ring: radius {RADIUS} um, racetrack straights {LX} and {LY} um, Euler 90-degree bend length {BEND_LEN:.2f} um")
     print(f"      round-trip length L = {L_ring:.2f} um;  n_eff {NE:.4f}, group index {NG:.3f}")
-    print(f"      coupler: theta = {theta:.3f} rad -> power coupling {np.sin(theta)**2:.1%} per pass")
+    print(f"      coupler at gap {GAP*1e3:.0f} nm: theta = {theta:.3f} rad -> power coupling {np.sin(theta)**2:.2%} per pass")
     print(f"      round-trip loss at {LOSS_DB_CM} dB/cm: {LOSS_DB_CM * L_ring * 1e-4:.4f} dB")
     # find the notches
     from scipy.signal import find_peaks
     pk, _ = find_peaks(-TdB, prominence=1.0)
+    base = np.median(TdB); print(f"notch depth below the baseline: {base - TdB[pk].min():.1f} dB (deepest notch)")
     print(f"resonance notches found between 1540 and 1560 nm: {len(pk)}")
     for i in pk[:12]: print(f"   {wl[i]*1e3:8.3f} nm   depth {TdB[i]:6.1f} dB")
 
     fig, ax = plt.subplots(figsize=figstyle.size(7.6, 4.4))
     ax.plot(wl * 1e3, TdB, lw=1.4, color="#1b6ca8")
     ax.set_xlabel("wavelength  (nm)"); ax.set_ylabel("transmission ch 7 → ch 8  (dB)")
-    ax.set_title("Ring bank of the die, circuit model: four rings, radii 10.00 to 10.15 µm")
+    ax.set_title(f"Ring bank of the die, circuit model: four rings, coupling gap {GAP*1e3:.0f} nm")
     ax.grid(alpha=.22); ax.set_xlim(1540, 1560)
-    out = HERE / "img" / "ringbank-spectrum.png"; fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)
+    out = HERE / "img" / ("ringbank-spectrum.png" if abs(GAP - 0.2) < 1e-9 else f"ringbank-spectrum-gap{GAP*1e3:.0f}.png"); fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)
 
 
 if __name__ == "__main__":
