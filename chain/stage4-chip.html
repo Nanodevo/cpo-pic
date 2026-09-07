@@ -243,6 +243,75 @@ the receive side of a wavelength-division-multiplexed transceiver, the circuit
 the die's ring bank is the skeleton of.
 </div>
 
+<h2>The switch cell</h2>
+
+<figure>
+<img src="img/switch-sketch.png?v=be8d4a36" alt="Two 2 by 2 couplers joined by two arms, a heater on the upper arm, the lower arm 10 micrometres longer; ports o1 and o2 on the left, o4 and o3 on the right" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The 2 &times; 2 thermo-optic switch cell of channels 9 and 10, as
+laid out: two 50:50 couplers, two arms, a heater on the upper arm, the lower
+arm 10 &micro;m longer. Input at o1; o4 is the same-side output, the bar port,
+o3 the opposite, the cross port.</figcaption>
+</figure>
+
+<p>
+The other circuit element on the die is a <strong>Mach-Zehnder
+interferometer</strong> made into a switch. The first coupler divides the
+light equally into two arms; the arms give the two halves a phase difference;
+the second coupler recombines them, and where the light comes out depends only
+on that difference. For ideal 50:50 couplers:
+</p>
+
+<div class="eqwrap"><div class="eq">P<sub>cross</sub> = cos&sup2;( &Delta;&phi;/2 ),        P<sub>bar</sub> = sin&sup2;( &Delta;&phi;/2 ),        &Delta;&phi; = &phi;<sub>heater</sub> + 2&pi; n<sub>eff</sub> &Delta;L / &lambda;</div><span class="eqno">(10)</span></div>
+<div class="means">
+&Delta;&phi; is the phase difference between the arms. One part is fixed by the
+layout, the 10 &micro;m length difference &Delta;L times the propagation
+constant; the other is set by the heater. With &Delta;&phi; = 0 everything
+leaves by the cross port, with &Delta;&phi; = &pi; by the bar port, and in
+between the light divides. This is the routing element of an optical engine:
+a bit of current chooses which of two paths a signal takes.
+</div>
+
+<div class="eqwrap"><div class="eq">&phi;<sub>heater</sub> = ( 2&pi;/&lambda; ) &middot; ( dn/dT ) &middot; L<sub>h</sub> &middot; &Delta;T</div><span class="eqno">(11)</span></div>
+<div class="means">
+The <strong>thermo-optic effect</strong>: silicon's index rises with
+temperature at dn/dT = 1.86 &times; 10<sup>&minus;4</sup> per kelvin, so
+warming a length L<sub>h</sub> of the arm by &Delta;T adds phase. For the
+200 &micro;m heater here, a shift of &pi; needs &Delta;T = &lambda; / (2
+L<sub>h</sub> dn/dT) = 21 K. How many milliwatts that takes depends on the
+heater's geometry and the heat path to the substrate, a thermal problem this
+study has not solved; tens of milliwatts is the usual figure for this kind of
+heater, and it is the number that makes large switch fabrics power-hungry.
+</div>
+
+<figure>
+<img src="img/switch-phase.png?v=ed05b5c6" alt="Both outputs of the switch cell against heater phase at 1550 nm: cross full at zero, bar full at pi" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The cell from its layout netlist in the circuit solver, input at
+o1, 1550 nm: the cross port full with the heater off, the bar port full at
+&pi;, a smooth hand-over between. The 14% missing from the peaks is the
+couplers' assumed 0.3 dB each plus the arms' propagation loss, placeholders
+both.</figcaption>
+</figure>
+
+<figure>
+<img src="img/switch-spectrum.png?v=04983ab3" alt="Both outputs of the switch cell against wavelength with the heater off: a slow sinusoid with a period of about 55 nanometres" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The same cell against wavelength with the heater off. The 10
+&micro;m arm imbalance makes the fixed part of &Delta;&phi; change with
+wavelength, so the outputs trade places every &lambda;&sup2;/(n<sub>g</sub>
+&Delta;L) = 59 nm; the model shows 54. On the die this is what channels 9 and
+10 measure without any electrical contact: a passive grading of the cell, and
+the group index a second way.</figcaption>
+</figure>
+
+<p>
+Two things the picture teaches. The bar and cross curves add to a constant:
+a lossless interferometer never destroys light, it only steers it, and the
+missing 14% is the placeholder loss, not the physics. And the wavelength
+dependence with the heater off is not a defect; it is the imbalance chosen on
+purpose so that a passive measurement can find the cell's operating point. A
+balanced cell, &Delta;L = 0, would be flat in wavelength and would need the
+heater on to be characterised at all.
+</p>
+
 <h2>What stage 4 has established so far</h2>
 
 <ol class="steps">
@@ -261,6 +330,10 @@ the sensitivity to temperature. Heaters follow.</li>
 <li>The die's rings are <strong>all-pass</strong>: they measure. Sorting
 wavelengths needs <strong>add-drop</strong> rings with a second bus, and that
 redesign is the next step of this stage.</li>
+<li>A Mach-Zehnder switch steers light by a phase difference between two arms,
+cos&sup2; and sin&sup2; of half the difference; the heater supplies the phase
+through the thermo-optic effect, 21 K for &pi; over 200 &micro;m, and the
+10 &micro;m imbalance lets a passive sweep grade the cell.</li>
 </ol>
 
 <h2>Check yourself</h2>
@@ -280,14 +353,18 @@ far from t = a.</p></details>
 shift by about &lambda; &middot; &Delta;L/L per radius step, and the four sets
 interleave; in a demultiplexer each ring would sit on its own channel.</p></details>
 
+<details><summary>The switch's bar port shows 0.1% with the heater off and the cross port 85.7%. Where is the other 14%?</summary>
+<p>In the model's placeholder losses: 0.3 dB assumed for each coupler and the
+propagation loss of the arms. The interferometer itself steers all the light;
+the two outputs always add up to the same total.</p></details>
+
 <details><summary>You need a deep dip and a wide one at the same time. Can the gap give you both?</summary>
 <p>No. The gap sets the coupling, and at fixed loss the coupling sets both the
 depth and the width through the same product a t. A wide, deep dip needs more
 loss, or a different structure such as a coupled pair of rings.</p></details>
 
 <div class="note">
-Stage 4 continues: the thermo-optic switch cell of channels 9 and 10, the
-cutback spirals, and the redesign of the ring bank as an add-drop
+Stage 4 continues: the cutback spirals, and the redesign of the ring bank as an add-drop
 demultiplexer with drop ports at the edge. Sources:
 <a href="references.html#r20">Bogaerts et al. 2012</a>,
 <a href="references.html#r21">Chrostowski and Hochberg 2015</a>.

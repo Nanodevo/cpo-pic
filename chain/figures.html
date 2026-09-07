@@ -107,6 +107,12 @@ anchor: <code>figures.html#name</code> jumps straight to it.</div>
 
 <figure id="ringbank-spectrum"><span class="fid">ringbank-spectrum</span><img src="img/ringbank-spectrum.png?v=72b44f25" alt=""><figcaption>The ring bank's transmission from the circuit model: four interleaved resonance combs, one per ring. Waveguide effective and group index from the mode solver, coupling from the two-strip supermode split, 2.5 dB/cm propagation loss and 1 dB per taper as placeholders. Regenerate with <code>chain/circuit_ringbank.py</code>.</figcaption></figure>
 
+<figure id="switch-sketch"><span class="fid">switch-sketch</span><img src="img/switch-sketch.png?v=be8d4a36" alt=""><figcaption>The 2 × 2 thermo-optic switch cell of channels 9 and 10: two 50:50 couplers, two arms, a heater on the upper arm, the lower arm 10 µm longer. Regenerate with <code>chain/switch_sketch.py</code>.</figcaption></figure>
+
+<figure id="switch-phase"><span class="fid">switch-phase</span><img src="img/switch-phase.png?v=ed05b5c6" alt=""><figcaption>The switch cell from its layout netlist in the circuit solver, input at o1, 1550 nm: the cross port full with the heater off, the bar port full at a heater phase of π. Regenerate with <code>chain/circuit_switch.py</code>.</figcaption></figure>
+
+<figure id="switch-spectrum"><span class="fid">switch-spectrum</span><img src="img/switch-spectrum.png?v=04983ab3" alt=""><figcaption>The same cell against wavelength with the heater off: the 10 µm arm imbalance makes the outputs trade places every 55 nm or so, which is how channels 9 and 10 grade the cell passively.</figcaption></figure>
+
 <h2>Aside: photonic computing</h2>
 <figure id="photonic-compute"><span class="fid">photonic-compute</span><img src="img/photonic-compute.svg?v=6956644c" alt=""><figcaption>One layer of a photonic neural network. The matrix multiply happens passively in a mesh of interferometers; the nonlinearity has to leave the optical domain or use a weak optical effect.</figcaption></figure>
 
