@@ -80,7 +80,7 @@ add-drop rings with a second bus.
 light into two arms, a 2x2 combiner brings them back together onto two
 outputs; the orange metal on the upper arm is a resistive heater. On this
 die the heater has no pads. The lower arm is 100 um longer, so the two
-outputs trade light every ~5.7 nm of wavelength, about 17 times across a
+outputs trade light every ~5.9 nm of wavelength, about 16 times across a
 100 nm laser sweep: the depth of those fringes reads the combiner's
 balance, their spacing the group index. Both outputs come back to the
 glass, so no port of the cell is a dead end. S-bends spread the outputs
@@ -152,7 +152,7 @@ cross-section swap.
   joins the two edge references, and a dark channel measures crosstalk.
   The MZI is now a 1x2 splitter with a 2x2 combiner whose two outputs
   both reach the glass (channels 16-18), so no port is a dead end, and
-  its arms are 100 um apart instead of 10 um: about 17 fringes per
+  its arms are 100 um apart instead of 10 um: about 16 fringes per
   100 nm sweep instead of fewer than two. gdsfactory's mixed-MMI MZI puts
   the arms on the combiner's wrong ports unless they are named (o3/o4);
   the layout check caught the overlap. The interactive 3D assembly still

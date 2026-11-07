@@ -74,7 +74,7 @@ RING_STEP = 0.024            # radius step between the four rings, um: spaces th
                              # (v0.4 used 50 nm: rings 1/3 and 2/4 landed ~0.5 nm apart)
 RING_GAP_CRIT = 0.367        # gap where the model's coupling equals the ring loss: deepest notch
 RING_GAP = 0.30              # coupling gap, um: 200 nm (v0.4) over-couples, ~1 dB notches
-MZI_DL = 100.0               # arm length difference, um: fringes ~5.7 nm apart, ~17 per 100 nm sweep (v0.6: 10 um, <2)
+MZI_DL = 100.0               # arm length difference, um: fringes ~5.9 nm apart, ~16 per 100 nm sweep (v0.6: 10 um, <2)
 RING_CLEAR = 20.0            # straight after the last ring before the bus turns up, um
 LABEL_X = 3600.0             # x of the group labels
 TERM_LEN = 20.0              # termination taper on unused ports, um

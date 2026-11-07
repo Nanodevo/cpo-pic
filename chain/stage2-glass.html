@@ -396,7 +396,7 @@ through a barrier four core radii wide.
 <h3>The consequence for the package</h3>
 
 <p>
-Sixteen channels leaving an MPO connector and fanning out to a die footprint
+Twenty-four channels leaving an MPO connector and fanning out to a die footprint
 need S-bends, and each costs a centimetre or two of substrate. The coupling
 requirement set &Delta;n, &Delta;n set the bend radius, and the bend radius set
 the physical size of the assembly. <strong>The glass part of a co-packaged
@@ -481,7 +481,7 @@ potassium is, so it produces more index change for less stress, at the cost of
 the colloid problem above.</li>
 </ol>
 
-<h2>Do sixteen channels at 250 &micro;m pitch talk to each other?</h2>
+<h2>Do twenty-four channels at 127 &micro;m pitch talk to each other?</h2>
 
 <p>
 Two parallel guides exchange power through the overlap of one's evanescent tail
@@ -494,16 +494,16 @@ with the other's core, and that tail decays as
 &gamma; = k&#8320;&middot;&radic;(n_eff&sup2; &minus; n_clad&sup2;) = 0.32
 &micro;m&#8315;&sup1;, so the field decay length is
 <strong>1/&gamma; = 3.1 &micro;m</strong>.<br><br>
-At 250 &micro;m separation the field is down by
-<code>exp(&minus;0.32 &times; 250) = exp(&minus;80)</code>, around
-10&#8315;&sup3;&#8309;, and the coupled <em>power</em> goes as the square of
+At 127 &micro;m separation the field is down by
+<code>exp(&minus;0.32 &times; 127) = exp(&minus;41)</code>, around
+10&#8315;&sup1;&#8312;, and the coupled <em>power</em> goes as the square of
 that.
 </div>
 
 <p>
 So no. Not remotely. The number is so far beyond negligible that it stops being
-a design consideration at all. <strong>The 250 &micro;m pitch is inherited from
-the fiber connector, not chosen for isolation.</strong> Guides in this platform
+a design consideration at all. <strong>The die's 127 &micro;m pitch is set by the fiber arrays and
+V-groove blocks it is measured with, not chosen for isolation.</strong> Guides in this platform
 could be packed at thirty to fifty micrometres and still be isolated over
 centimetre-scale parallel runs.
 </p>
@@ -587,10 +587,10 @@ to R, and tunnelling probability falls exponentially with barrier width.</p></de
 waveguides and rises steeply with index contrast. A diffused boundary is smooth
 by construction.</p></details>
 
-<details><summary>Would sixteen channels at 250 &micro;m pitch interfere with each other?</summary>
+<details><summary>Would twenty-four channels at 127 &micro;m pitch interfere with each other?</summary>
 <p>No, by an enormous margin. The field decay length is about 3 &micro;m, so at
-250 &micro;m the overlap is of order exp(&minus;80). The pitch comes from the
-fiber connector, not from isolation.</p></details>
+127 &micro;m the overlap is of order exp(&minus;41). The pitch comes from the
+fiber arrays, not from isolation.</p></details>
 
 <details><summary>You halve &Delta;n to improve fiber coupling. What have you just done to the substrate size?</summary>
 <p>Increased the minimum bend radius by about 2.8&times;, since R scales as

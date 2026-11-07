@@ -24,5 +24,5 @@ arrow(x, 34.5, x + 3, 34.5); box(x + 3, 30, 9, 9, "bend\n180°"); x -= 1;
 # return row
 arrow(x + 8.5, 30, x + 8.5, 18); box(x + 4, 9, 9, 9, "route\nback"); arrow(x + 4, 13.5, 14, 13.5); box(2, 9, 12, 9, "taper\nch 8 out", fc="#fdf1e0", ec="#8a5a1b")
 ax.text(56, 3, "each box is one scattering matrix; the circuit solver multiplies them along the layout's connections", ha="center", fontsize=9, color="#444")
-ax.text(56, 52.5, "channel 7 → 8 of the die: four all-pass rings in series on one bus, then the loopback", ha="center", fontsize=11)
+ax.text(56, 52.5, "channel 9 → 10 of the die: four all-pass rings in series on one bus, then the loopback", ha="center", fontsize=11)
 out = pathlib.Path(__file__).parent / "img" / "circuit-ringbank.png"; fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)

@@ -37,8 +37,8 @@ cutback spirals and the add-drop redesign follow.
 <h2>From fields to circuits</h2>
 
 <figure>
-<img src="img/circuit-ringbank.png?v=879f9d61" alt="Channel 7 to 8 of the die as a chain of boxes: taper in, bus, four ring sections, bend, route back, taper out" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
-<figcaption>Channel 7 to 8 of the die as a chain of scattering matrices. Each
+<img src="img/circuit-ringbank.png?v=7981b3c6" alt="Channel 9 to 10 of the die as a chain of boxes: taper in, bus, four ring sections, bend, route back, taper out" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>Channel 9 to 10 of the die as a chain of scattering matrices. Each
 box is one component; the circuit solver multiplies the matrices along the
 connections the layout defines.</figcaption>
 </figure>
@@ -73,7 +73,7 @@ lookup that returns the matrix for the component's parameters, and multiplies
 them all together along the connections into one matrix for the whole circuit.
 The one used here is SAX,<sup class="cite"><a href="references.html#r22">[22]</a></sup>
 open source, and it solves the ring bank in under a second. The die exports one
-port per channel, so the same machinery scales to all sixteen.
+port per channel, so the same machinery scales to all twenty-four.
 </p>
 
 <h2>The ring resonator</h2>
@@ -130,7 +130,7 @@ n<sub>g</sub> is the first number a fabricated waveguide is graded by.
 <h2>Coupling, loss, and how deep a dip is</h2>
 
 <figure>
-<img src="img/ringbank-spectrum.png?v=d0fbef55" alt="Transmission of the four-ring bank against wavelength at a 300 nm gap: ten dips about 6 dB deep" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<img src="img/ringbank-spectrum.png?v=50d07405" alt="Transmission of the four-ring bank against wavelength at a 300 nm gap: ten dips about 6 dB deep" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
 <figcaption>The ring bank at the 300 nm gap the die now draws: ten dips between
 1540 and 1560 nm, about 2 nm apart, four rings, each dip about 6 dB deep. The
 depth is decided by two numbers, the coupling per pass and the loss per round
@@ -198,7 +198,9 @@ and g = g<sub>0</sub> + ln(&kappa;<sub>0</sub>/&kappa;)/&gamma; =
 confirmation. The die now draws 300 nm, short of that value on purpose:
 K = 1.3%, three times the assumed loss, and a dip 5.9 dB deep. The loss is a
 placeholder until a cutback measures it, and a real loss above 2.5 dB/cm moves
-the ring towards critical coupling, not past it.
+the ring towards critical coupling, not past it. The die hedges the other way
+too: channels 14 and 15 carry the same four rings at 367 nm, so the two banks
+side by side show which gap the real loss favours.
 </div>
 
 <div class="eqwrap"><div class="eq">&Delta;&lambda;<sub>FWHM</sub> = ( FSR / &pi; ) &middot; ( 1 &minus; a t ) / &radic;( a t ),        Q = &lambda; / &Delta;&lambda;<sub>FWHM</sub></div><span class="eqno">(8)</span></div>
@@ -229,7 +231,7 @@ continue.</figcaption>
 <p>
 In the all-pass ring nothing comes out anywhere. The resonant wavelength is
 removed from the bus and turned into heat over a few thousand round trips.
-That makes it a test structure, and it is what channels 7 and 8 are: from its
+That makes it a test structure, and it is what channels 9 and 10 are: from its
 dips one reads the free spectral range, the group index, the loss and the
 coupling, everything above. It cannot hand a wavelength to a detector. For
 that the ring needs a second waveguide, the <strong>drop bus</strong>, on its
@@ -252,29 +254,33 @@ the die's ring bank is the skeleton of.
 <h2>The switch cell</h2>
 
 <figure>
-<img src="img/switch-sketch.png?v=be8d4a36" alt="Two 2 by 2 couplers joined by two arms, a heater on the upper arm, the lower arm 10 micrometres longer; ports o1 and o2 on the left, o4 and o3 on the right" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
-<figcaption>The 2 &times; 2 thermo-optic switch cell of channels 9 and 10, as
-laid out: two 50:50 couplers, two arms, a heater on the upper arm, the lower
-arm 10 &micro;m longer. Input at o1; o4 is the same-side output, the bar port,
-o3 the opposite, the cross port.</figcaption>
+<img src="img/switch-sketch.png?v=7279b52e" alt="A 1 by 2 splitter and a 2 by 2 combiner joined by two arms, a heater on the upper arm, the lower arm 100 micrometres longer; input o1 on the left, outputs o3 and o2 on the right" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The thermo-optic MZI of channels 16 to 18, as laid out: a 1 &times; 2
+splitter, two arms, a heater on the upper arm, the lower arm 100 &micro;m
+longer, a 2 &times; 2 combiner. Input at o1 from channel 16; both outputs come
+back to the glass, o3 on channel 17 and o2 on channel 18.</figcaption>
 </figure>
 
 <p>
 The other circuit element on the die is a <strong>Mach-Zehnder
-interferometer</strong> made into a switch. The first coupler divides the
-light equally into two arms; the arms give the two halves a phase difference;
-the second coupler recombines them, and where the light comes out depends only
-on that difference. For ideal 50:50 couplers:
+interferometer</strong>, the element a switch is made of. The splitter divides
+the light into two equal halves in step; the arms give the two halves a phase
+difference; the combiner recombines them, and where the light comes out
+depends only on that difference. For an ideal splitter and a 50:50 combiner:
 </p>
 
-<div class="eqwrap"><div class="eq">P<sub>cross</sub> = cos&sup2;( &Delta;&phi;/2 ),        P<sub>bar</sub> = sin&sup2;( &Delta;&phi;/2 ),        &Delta;&phi; = &phi;<sub>heater</sub> + 2&pi; n<sub>eff</sub> &Delta;L / &lambda;</div><span class="eqno">(10)</span></div>
+<div class="eqwrap"><div class="eq">P<sub>upper</sub> = &frac12; ( 1 &minus; sin &Delta;&phi; ),        P<sub>lower</sub> = &frac12; ( 1 + sin &Delta;&phi; ),        &Delta;&phi; = &phi;<sub>heater</sub> + 2&pi; n<sub>eff</sub> &Delta;L / &lambda;</div><span class="eqno">(10)</span></div>
 <div class="means">
 &Delta;&phi; is the phase difference between the arms. One part is fixed by the
-layout, the 10 &micro;m length difference &Delta;L times the propagation
-constant; the other is set by the heater. With &Delta;&phi; = 0 everything
-leaves by the cross port, with &Delta;&phi; = &pi; by the bar port, and in
-between the light divides. This is the routing element of an optical engine:
-a bit of current chooses which of two paths a signal takes.
+layout, the 100 &micro;m length difference &Delta;L times the propagation
+constant; the other is set by the heater. With &Delta;&phi; = &minus;&pi;/2
+everything leaves by the upper output, with +&pi;/2 by the lower, and at zero
+the light divides equally. A switch toggles between the two ends, a swing of
+&pi;. This is the routing element of an optical engine: a bit of current
+chooses which of two paths a signal takes. The engine's switches use a
+2 &times; 2 coupler on both sides, so that two signals can be routed; on the
+die the input side is a 1 &times; 2, because only one input is fed, and the
+combiner is the engine's 2 &times; 2.
 </div>
 
 <div class="eqwrap"><div class="eq">&phi;<sub>heater</sub> = ( 2&pi;/&lambda; ) &middot; ( dn/dT ) &middot; L<sub>h</sub> &middot; &Delta;T</div><span class="eqno">(11)</span></div>
@@ -287,46 +293,57 @@ L<sub>h</sub> dn/dT) = 21 K. How many milliwatts that takes depends on the
 heater's geometry and the heat path to the substrate, a thermal problem this
 study has not solved; tens of milliwatts is the usual figure for this kind of
 heater, and it is the number that makes large switch fabrics power-hungry.
+On this die the heater has no pads, so the phase is read, not set: from the
+wavelength, below.
 </div>
 
 <figure>
-<img src="img/switch-phase.png?v=ed05b5c6" alt="Both outputs of the switch cell against heater phase at 1550 nm: cross full at zero, bar full at pi" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<img src="img/switch-phase.png?v=94a27b8a" alt="Both outputs of the MZI cell against heater phase at 1550 nanometres: one output full where the other is empty, half a cycle apart" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
 <figcaption>The cell from its layout netlist in the circuit solver, input at
-o1, 1550 nm: the cross port full with the heater off, the bar port full at
-&pi;, a smooth hand-over between. The 14% missing from the peaks is the
-couplers' assumed 0.3 dB each plus the arms' propagation loss, placeholders
-both.</figcaption>
+o1, 1550 nm. The two outputs trade the light as the heater phase changes, and
+are half a cycle apart. With the heater off the cell does not sit at the
+equal split, because the 100 &micro;m arm difference already adds a fixed
+phase at this wavelength. The 15% missing from the peaks is the MMIs' assumed
+0.3 dB each plus the arms' propagation loss, placeholders both.</figcaption>
 </figure>
 
 <figure>
-<img src="img/switch-spectrum.png?v=04983ab3" alt="Both outputs of the switch cell against wavelength with the heater off: a slow sinusoid with a period of about 55 nanometres" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
-<figcaption>The same cell against wavelength with the heater off. The 10
-&micro;m arm imbalance makes the fixed part of &Delta;&phi; change with
+<img src="img/switch-spectrum.png?v=ad295080" alt="Both outputs of the MZI cell against wavelength with the heater off: fast fringes about 6 nanometres apart under a slow hump" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<figcaption>The same cell against wavelength with the heater off. The
+100 &micro;m arm difference makes the fixed part of &Delta;&phi; change with
 wavelength, so the outputs trade places every &lambda;&sup2;/(n<sub>g</sub>
-&Delta;L) = 59 nm; the model shows 54. On the die this is what channels 9 and
-10 measure without any electrical contact: a passive grading of the cell, and
-the group index a second way.</figcaption>
+&Delta;L) = 5.9 nm, about sixteen times across the 100 nm sweep. The slow hump
+over the fringes is the placeholder MMI models' own bandwidth, a Gaussian
+200 nm wide. On the die this is what channels 16 to 18 measure without any
+electrical contact.</figcaption>
 </figure>
 
 <p>
-Two things the picture teaches. The bar and cross curves add to a constant:
-a lossless interferometer never destroys light, it only steers it, and the
-missing 14% is the placeholder loss, not the physics. And the wavelength
-dependence with the heater off is not a defect; it is the imbalance chosen on
-purpose so that a passive measurement can find the cell's operating point. A
-balanced cell, &Delta;L = 0, would be flat in wavelength and would need the
-heater on to be characterised at all.
+Three things the picture teaches. The two outputs add to a constant at each
+wavelength: a lossless interferometer never destroys light, it only steers
+it. That is why both outputs are brought to the glass: their ratio,
+P<sub>upper</sub> / (P<sub>upper</sub> + P<sub>lower</sub>), divides out
+everything the two paths share, the coupling to the glass, the arms' loss and
+the hump, and leaves the interference alone; in the model it swings from 0 to
+1 at every fringe. Second, the depth of the fringes in that ratio reads how
+evenly the combiner splits, equation (13). And third, the wavelength
+dependence with the heater off is not a defect; the imbalance is chosen so
+that a passive sweep shows sixteen fringes and the cell can be graded with no
+current at all. A balanced cell, &Delta;L = 0, would be flat in wavelength and
+would need the heater on to be characterised. The first version of the die
+drew a 10 &micro;m imbalance, about 55 nm per fringe: fewer than two fringes
+in a sweep, too few to fit.
 </p>
 
 <h3>The interferometer from first principles</h3>
 
 <figure>
-<img src="img/mzi-interference.png?v=fe93281e" alt="Top: two equal waves and their sum for phase differences of zero, a quarter wave and half a wave. Middle: the same as arrows. Bottom: the two output powers against phase difference for perfect and for 40:60 couplers" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
+<img src="img/mzi-interference.png?v=093c0323" alt="Top: two equal waves and their sum for phase differences of zero, a quarter wave and half a wave. Middle: the same as arrows. Bottom: the two output powers against phase difference for perfect and for 40:60 couplers" style="width:100%;border:1px solid var(--rule);border-radius:6px;background:#fff">
 <figcaption>What interference is. Top: two equal waves that have travelled
 different paths meet again; in step they add to double, a quarter wave apart
 to &radic;2, half a wave apart to nothing. Middle: the same as arrows, which is
 how the algebra below thinks. Bottom: the two outputs of the interferometer
-against the phase difference, equation (13), and what an imperfect coupler
+against the phase difference, equation (13), and what an imperfect combiner
 does to them.</figcaption>
 </figure>
 
@@ -349,32 +366,36 @@ convention but a consequence of energy conservation: without it the two
 outputs could add up to more than the input. The matrix takes the two
 incoming amplitudes to the two outgoing ones. Between the couplers the arms
 are a diagonal matrix of phases, e<sup>i&phi;<sub>1</sub></sup> and
-e<sup>i&phi;<sub>2</sub></sup>, and the whole interferometer is the product
-C &middot; D &middot; C. Light entering one port, amplitude (1, 0), comes out as
+e<sup>i&phi;<sub>2</sub></sup>, and an interferometer with a coupler on both
+sides is the product C &middot; D &middot; C. The die's cell has a 1 &times; 2
+splitter in front instead, which hands both arms the amplitude 1/&radic;2 in
+step, so the light comes out as
 </div>
 
-<div class="eqwrap"><div class="eq">b<sub>cross</sub> = i &kappa; t ( e<sup>i&phi;<sub>1</sub></sup> + e<sup>i&phi;<sub>2</sub></sup> ),        b<sub>bar</sub> = t&sup2; e<sup>i&phi;<sub>1</sub></sup> &minus; &kappa;&sup2; e<sup>i&phi;<sub>2</sub></sup></div><span class="eqno">(13a)</span></div>
-<div class="eqwrap"><div class="eq">P<sub>cross</sub> = 4 K (1 &minus; K) cos&sup2;( &Delta;&phi;/2 ),        P<sub>bar</sub> = (1 &minus; K)&sup2; + K&sup2; &minus; 2 K (1 &minus; K) cos &Delta;&phi;</div><span class="eqno">(13)</span></div>
+<div class="eqwrap"><div class="eq">b<sub>upper</sub> = ( t e<sup>i&phi;<sub>1</sub></sup> + i &kappa; e<sup>i&phi;<sub>2</sub></sup> ) / &radic;2,        b<sub>lower</sub> = ( i &kappa; e<sup>i&phi;<sub>1</sub></sup> + t e<sup>i&phi;<sub>2</sub></sup> ) / &radic;2</div><span class="eqno">(13a)</span></div>
+<div class="eqwrap"><div class="eq">P<sub>upper, lower</sub> = &frac12; [ 1 &mp; 2 &radic;( K (1 &minus; K) ) sin &Delta;&phi; ]</div><span class="eqno">(13)</span></div>
 <div class="means">
-&Delta;&phi; = &phi;<sub>1</sub> &minus; &phi;<sub>2</sub>. The cross port is
-the <em>sum</em> of the two arms' waves, the bar port their
-<em>difference</em>, weighted by the couplers. For K = &frac12; these are the
-cos&sup2; and sin&sup2; of equation (10). The two always add to
-(1 &minus; K)&sup2; + K&sup2; + 2K(1 &minus; K) = 1: nothing is lost, only
-steered. And the two ports fail differently when the couplers are imperfect:
-the cross port's maximum drops to 4K(1 &minus; K), 0.96 for a 40:60 coupler,
-but its null at &Delta;&phi; = &pi; stays perfect, because the two arms carry
-equal amplitude whatever K is; the bar port's null does not survive, it
-bottoms at (1 &minus; 2K)&sup2;, 1% for 40:60, a 20 dB extinction ratio. Which
-port a designer trusts for the "off" state follows from this line.
+On the die the first element is a 1 &times; 2 splitter, so the arms start with
+equal amplitudes 1/&radic;2 in step, and only the combiner is the matrix C
+above. &Delta;&phi; = &phi;<sub>1</sub> &minus; &phi;<sub>2</sub>. Each output
+is a mix of both arms, with the crossed one a quarter wave behind; that
+quarter wave is why the equal split sits at &Delta;&phi; = 0 and the full
+ones at &plusmn;&pi;/2. For K = &frac12; these are equation (10). The two
+always add to 1: nothing is lost, only steered. An imperfect combiner shrinks
+both swings alike: the factor 2&radic;(K(1 &minus; K)) is the
+<strong>visibility</strong>, 0.98 for a 40:60 combiner, so each output's null
+bottoms at &frac12;(1 &minus; 0.98) = 1%, a 20 dB extinction ratio. That
+factor is exactly what the fringe depth of the ratio above measures. An
+imbalanced splitter adds a second, similar loss of visibility; one sweep
+cannot tell the two apart, which is the price of a single input.
 </div>
 
 <div class="eqwrap"><div class="eq">&Delta;&phi; = ( 2&pi;/&lambda; ) [ n<sub>eff</sub> &Delta;L + &Delta;n &middot; L<sub>h</sub> ]</div><span class="eqno">(14)</span></div>
 <div class="means">
 Where the phase difference comes from. A length difference &Delta;L between
-the arms, fixed by the layout: the 10 &micro;m of this cell, which makes the
+the arms, fixed by the layout: the 100 &micro;m of this cell, which makes the
 outputs sweep through a full cycle every &lambda;&sup2;/(n<sub>g</sub>&Delta;L)
-of wavelength, the 55 nm of the spectrum above. Or an index difference
+of wavelength, the 5.9 nm of the spectrum above. Or an index difference
 &Delta;n over a length L<sub>h</sub>, imposed from outside: by heat, equation
 (11), slow but strong; by an electric field through carriers in a diode, fast
 but weak, which is how a Mach-Zehnder <strong>modulator</strong> writes data
@@ -383,14 +404,16 @@ the waveguide, which is how the same structure becomes a <strong>sensor</strong>
 The interferometer does not care what caused &Delta;&phi;; it only reads it.
 </div>
 
-<div class="eqwrap"><div class="eq">dP<sub>cross</sub>/d&Delta;&phi; is largest at &Delta;&phi; = &pi;/2:        the quadrature point</div><span class="eqno">(15)</span></div>
+<div class="eqwrap"><div class="eq">dP/d&Delta;&phi; is largest where the outputs are equal:        the quadrature point</div><span class="eqno">(15)</span></div>
 <div class="means">
-For a switch the useful points are &Delta;&phi; = 0 and &pi;, all the light in
-one port or the other. For a modulator or a sensor the useful point is
-halfway, where the output changes fastest and most linearly with the phase:
-the interferometer is biased there, usually with a heater, and the signal
-rides on the slope. The same cell, three different jobs, chosen by where on
-the cos&sup2; curve it is parked.
+For a switch the useful points are the two ends, all the light in one output
+or the other. For a modulator or a sensor the useful point is halfway, where
+the output changes fastest and most linearly with the phase: the
+interferometer is biased there, usually with a heater, and the signal rides on
+the slope. With a 1 &times; 2 splitter in front, the halfway point is
+&Delta;&phi; = 0, the balanced arms; with a coupler on both sides it is
+&Delta;&phi; = &pi;/2. The same cell, three different jobs, chosen by where on
+the curve it is parked.
 </div>
 
 <h2>What stage 4 has established so far</h2>
@@ -405,20 +428,22 @@ and the group index, not the effective index, is what sets it.</li>
 <li>The depth of a dip is decided by two numbers, the coupling per pass and the
 loss per round trip. They are equal at <strong>critical coupling</strong>, and
 the gap is the knob: 367 nm for this ring at the assumed loss. The die draws
-300 nm, short of it, because the loss is only assumed.</li>
+300 nm, short of it, because the loss is only assumed, and a second bank at
+367 nm beside it.</li>
 <li>The deep dip costs linewidth: Q rises from 17,000 to 140,000, and with it
 the sensitivity to temperature. Heaters follow.</li>
 <li>The die's rings are <strong>all-pass</strong>: they measure. Sorting
 wavelengths needs <strong>add-drop</strong> rings with a second bus, and that
 redesign is the next step of this stage.</li>
-<li>A Mach-Zehnder switch steers light by a phase difference between two arms,
-cos&sup2; and sin&sup2; of half the difference; the heater supplies the phase
-through the thermo-optic effect, 21 K for &pi; over 200 &micro;m, and the
-10 &micro;m imbalance lets a passive sweep grade the cell.</li>
-<li>The two outputs of an interferometer are the <strong>sum and the
-difference</strong> of the arms' waves. The sum port's null survives an
-imperfect coupler, the difference port's does not; parked at &pi;/2 the same
-cell is a modulator or a sensor.</li>
+<li>A Mach-Zehnder interferometer steers light by a phase difference between
+two arms; the heater supplies the phase through the thermo-optic effect,
+21 K for &pi; over 200 &micro;m. On the die its 100 &micro;m imbalance gives
+about sixteen fringes per sweep, enough to grade the cell with no current.</li>
+<li>Both outputs reach the glass. They always add up to the same total, so
+their ratio removes the coupling loss and leaves the interference; its fringe
+depth reads the combiner's balance through the visibility
+2&radic;(K(1 &minus; K)). Parked at its equal split the same cell is a
+modulator or a sensor.</li>
 </ol>
 
 <h2>Check yourself</h2>
@@ -442,10 +467,11 @@ stepped 50 nm, a shift of about half the free spectral range: ring 3 then fell
 within 0.5 nm of ring 1, and ring 4 within 0.5 nm of ring 2. In a demultiplexer
 each ring would sit on its own channel.</p></details>
 
-<details><summary>The switch's bar port shows 0.1% with the heater off and the cross port 85.7%. Where is the other 14%?</summary>
-<p>In the model's placeholder losses: 0.3 dB assumed for each coupler and the
+<details><summary>The cell's outputs peak at 85% each in the model, and at every wavelength the two add up to the same 85%. Where is the other 15%?</summary>
+<p>In the model's placeholder losses: 0.3 dB assumed for each MMI and the
 propagation loss of the arms. The interferometer itself steers all the light;
-the two outputs always add up to the same total.</p></details>
+that is why the ratio of the two outputs swings from 0 to 1 while each output
+on its own does not.</p></details>
 
 <details><summary>You need a deep dip and a wide one at the same time. Can the gap give you both?</summary>
 <p>No. The gap sets the coupling, and at fixed loss the coupling sets both the

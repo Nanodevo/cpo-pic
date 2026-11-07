@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 4, rung 1: the ring bank of die channels 7 -> 8 as a circuit of scattering matrices.
+"""Stage 4, rung 1: the ring bank of die channels 9 -> 10 as a circuit of scattering matrices.
 
 Layout -> netlist -> circuit. The channel is rebuilt here exactly as chip.py places it
 (four all-pass racetrack rings on one bus, radii staggered by 24 nm), its netlist is
@@ -46,7 +46,7 @@ def channel() -> gf.Component:
             s = c << gf.components.straight(length=110.0); s.connect("o1", r.ports["o2"]); prev = s.ports["o2"]
         else:
             prev = r.ports["o2"]
-    back = c << gf.components.straight(length=1300.0)          # the loopback route, as a straight of its length
+    back = c << gf.components.straight(length=1030.0)          # the loopback route on the v0.7 die (20 um clearance, 127 um climb, run back to the taper), as a straight of its length
     back.connect("o1", prev)
     c.add_port("in", port=t_in.ports["o1"]); c.add_port("out", port=back.ports["o2"])
     return c

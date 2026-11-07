@@ -26,13 +26,13 @@ die = next(c for c in die_lib.cells if c.name == "cpo_pic")
 tips = [p for p in die.get_polygons(layer=1, datatype=0) if p.bounding_box()[0][0] < 15.0]
 ys = sorted((p.bounding_box()[0][1] + p.bounding_box()[1][1]) / 2 for p in tips)
 x_tip = min(p.bounding_box()[0][0] for p in tips); x_end = max(p.bounding_box()[1][0] for p in tips)
-assert len(ys) == 16, f"expected 16 taper tips on the west edge, found {len(ys)}"
-pitch = np.diff(ys); print(f"16 tapers found: x {x_tip:.1f}..{x_end:.1f} um, y from {ys[0]:.1f} to {ys[-1]:.1f} um, pitch {pitch.min():.1f}..{pitch.max():.1f} um")
+assert len(ys) == 24, f"expected 24 taper tips on the west edge, found {len(ys)}"
+pitch = np.diff(ys); print(f"{len(ys)} tapers found: x {x_tip:.1f}..{x_end:.1f} um, y from {ys[0]:.1f} to {ys[-1]:.1f} um, pitch {pitch.min():.1f}..{pitch.max():.1f} um")
 
 # --- the bridge, in the die's coordinates (x along the light, west edge at x = 0)
 IOX_W = 6.0          # um, guide width (taper_eme.py)
 TONGUE_X = (-400.0, x_end + 100.0)             # glass tongue: overhangs the die edge, covers the tapers
-TONGUE_Y = (ys[0] - 250.0, ys[-1] + 250.0)     # one pitch beyond the outer channels
+TONGUE_Y = (ys[0] - np.median(pitch), ys[-1] + np.median(pitch))     # one pitch beyond the outer channels
 FERRULE_X = (-1400.0, -400.0)                  # thick block holding the fibers, butt-coupled to the tongue
 FIBER_X = (-2400.0, -400.0); FIBER_D = 125.0   # cladding diameter, drawn as a square strip
 
