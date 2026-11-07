@@ -2,7 +2,7 @@
 """Stage 4, rung 1: the ring bank of die channels 7 -> 8 as a circuit of scattering matrices.
 
 Layout -> netlist -> circuit. The channel is rebuilt here exactly as chip.py places it
-(four all-pass racetrack rings on one bus, radii staggered by 50 nm), its netlist is
+(four all-pass racetrack rings on one bus, radii staggered by 24 nm), its netlist is
 extracted from the layout, and each leaf component gets a compact model:
   straight / bend_euler : phase from n_eff(lambda) with first-order dispersion (group index), loss per cm
   coupler_ring          : a directional coupler; its power coupling comes from the two-strip
@@ -29,7 +29,9 @@ K0 = 2 * np.pi / 1.55
 GAMMA = K0 * np.sqrt(NE ** 2 - N_OX ** 2)     # transverse decay rate of the mode outside the core, 1/um
 gf.gpdk.PDK.activate()
 RADIUS, LX, LY = 10.0, 4.0, 0.6
-GAP = float(sys.argv[1]) if len(sys.argv) > 1 else 0.2     # coupling gap, um: python chain/circuit_ringbank.py 0.30
+STEP = 0.024                                               # radius step between the rings, um (die v0.5)
+GAP_DRAWN = 0.30                                           # the gap the die draws (v0.5; v0.4 drew 0.20)
+GAP = float(sys.argv[1]) if len(sys.argv) > 1 else GAP_DRAWN     # coupling gap, um: python chain/circuit_ringbank.py 0.20
 GAP0 = 0.2                                                  # the gap ring_params.py solved the coupling for
 
 # ---- the channel as a layout, then its netlist -------------------------------------------
@@ -38,7 +40,7 @@ def channel() -> gf.Component:
     t_in = c << gf.components.straight(length=400.0)           # bus from the taper to the first ring
     prev = t_in.ports["o2"]
     for k in range(4):
-        r = c << gf.components.ring_single(radius=RADIUS + 0.05 * k, gap=GAP, length_x=LX, length_y=LY)
+        r = c << gf.components.ring_single(radius=RADIUS + STEP * k, gap=GAP, length_x=LX, length_y=LY)
         r.connect("o1", prev)
         if k < 3:
             s = c << gf.components.straight(length=110.0); s.connect("o1", r.ports["o2"]); prev = s.ports["o2"]
@@ -72,7 +74,13 @@ def straight(wl=1.55, length=10.0, **_):
     return sax.reciprocal({("o1", "o2"): amp * jnp.exp(1j * phase)})
 def bend_euler(wl=1.55, length=15.7, **_):
     return straight(wl=wl, length=length)
-BEND_LEN = float(gf.components.bend_euler(radius=RADIUS).info["length"])   # one 90-degree Euler bend of this radius
+BEND_LEN = float(gf.components.bend_euler(radius=RADIUS).info["length"])   # one 90-degree Euler bend of the base radius
+_BEND = {round(RADIUS + STEP * k, 6): float(gf.components.bend_euler(radius=RADIUS + STEP * k).info["length"]) for k in range(4)}
+def bend_len(radius):
+    """Length of a 90-degree Euler bend of this radius. The coupler's two bends belong to the ring and
+    grow with its radius like the two upper bends do (earlier versions held them at the base radius,
+    which halved the shift between the rings and drew the four families evenly spaced)."""
+    return _BEND[round(float(radius), 6)]
 def coupler_ring(wl=1.55, gap=GAP, radius=RADIUS, length_x=LX, **_):
     """Bus ports o1 (left), o4 (right); ring ports o2 (left), o3 (right). Coupling accumulates along the
     straight section and over the approach of the two bends, whose effective length is sqrt(2 pi R / gamma)."""
@@ -83,9 +91,10 @@ def coupler_ring(wl=1.55, gap=GAP, radius=RADIUS, length_x=LX, **_):
     t, k = jnp.cos(theta), 1j * jnp.sin(theta)
     beta = 2 * jnp.pi * neff_of(wl) / wl
     ph_bus = jnp.exp(1j * beta * length_x)                        # the bus straight under the coupler
-    ph_ring = jnp.exp(1j * beta * (length_x + 2 * BEND_LEN))       # the ring path through the coupler: straight + two bends
-    ph_x = jnp.exp(1j * beta * (length_x + BEND_LEN))              # cross terms: half of each
-    amp_ring = 10 ** (-LOSS_DB_CM * (length_x + 2 * BEND_LEN) * 1e-4 / 20)
+    bl = bend_len(radius)
+    ph_ring = jnp.exp(1j * beta * (length_x + 2 * bl))             # the ring path through the coupler: straight + two bends
+    ph_x = jnp.exp(1j * beta * (length_x + bl))                    # cross terms: half of each
+    amp_ring = 10 ** (-LOSS_DB_CM * (length_x + 2 * bl) * 1e-4 / 20)
     return sax.reciprocal({("o1", "o4"): t * ph_bus, ("o2", "o3"): t * ph_ring * amp_ring,
                            ("o1", "o3"): k * ph_x, ("o2", "o4"): k * ph_x})
 def edge_coupler(wl=1.55, **_):
@@ -125,7 +134,7 @@ def main():
     ax.set_xlabel("wavelength  (nm)"); ax.set_ylabel("transmission ch 7 → ch 8  (dB)")
     ax.set_title(f"Ring bank of the die, circuit model: four rings, coupling gap {GAP*1e3:.0f} nm")
     ax.grid(alpha=.22); ax.set_xlim(1540, 1560)
-    out = HERE / "img" / ("ringbank-spectrum.png" if abs(GAP - 0.2) < 1e-9 else f"ringbank-spectrum-gap{GAP*1e3:.0f}.png"); fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)
+    out = HERE / "img" / ("ringbank-spectrum.png" if abs(GAP - GAP_DRAWN) < 1e-9 else f"ringbank-spectrum-gap{GAP*1e3:.0f}.png"); fig.savefig(out, bbox_inches="tight", facecolor="white"); print("wrote", out)
 
 
 if __name__ == "__main__":

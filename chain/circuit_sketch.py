@@ -15,8 +15,8 @@ def arrow(x0, y0, x1, y1, col="#1b6ca8"):
 box(2, 30, 12, 9, "taper\nch 7 in", fc="#fdf1e0", ec="#8a5a1b"); arrow(14, 34.5, 19, 34.5)
 box(17, 30, 9, 9, "straight\n400 µm"); arrow(26, 34.5, 29, 34.5)
 x = 29
-for k, r in enumerate((10.00, 10.05, 10.10, 10.15)):
-    box(x, 30, 12, 9, f"bus+ring\nR {r:.2f}"); ax.add_patch(Circle((x + 6, 45), 3.6, fc="none", ec="#6b4fa0", lw=1.6)); ax.text(x + 6, 45, "ring", ha="center", va="center", fontsize=8, color="#6b4fa0")
+for k, r in enumerate((10.000, 10.024, 10.048, 10.072)):
+    box(x, 30, 12, 9, f"bus+ring\nR {r:.3f}"); ax.add_patch(Circle((x + 6, 45), 3.6, fc="none", ec="#6b4fa0", lw=1.6)); ax.text(x + 6, 45, "ring", ha="center", va="center", fontsize=8, color="#6b4fa0")
     ax.plot([x + 6, x + 6], [39.3, 41.4], color="#6b4fa0", lw=1.2)
     if k < 3: arrow(x + 12, 34.5, x + 15.5, 34.5); ax.text(x + 13.8, 37.2, "110 µm", ha="center", va="bottom", fontsize=7, color="#444")
     x += 15.5

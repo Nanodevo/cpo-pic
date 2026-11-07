@@ -22,6 +22,7 @@ fibers, MPO-16 connector, IOX glass substrate, this PIC, and the switch ASIC.
 |---|---|---|
 | Coupler channels | 16 @ 250 um pitch, west edge | one per fiber of the MPO-16 connector |
 | Coupler type | linear adiabatic taper, 2 mm, 500 nm -> 150 nm tip | the evanescent-transfer half of the glass-to-PIC joint |
+| Cladding | opened over the 16 tapers, die edge to 2.01 mm (own layer 60/0) | the silicon must meet the ~1 um adhesive with no top oxide in between; the generic PDK has no layer for it |
 | Topology | odd-in / even-out loopbacks | a fiber array on the glass grades every interface in transmission |
 | Die | 5 x 5 mm | same class as the SiN test chips in the IMAPS paper |
 | Fiducials | cross + Vernier, 3 corners | read through a split optic at placement; Vernier resolves residual misalignment |
@@ -33,8 +34,8 @@ fibers, MPO-16 connector, IOX glass substrate, this PIC, and the switch ASIC.
 | 1-2 | reference loopback | baseline insertion loss |
 | 3-4 | + 0.5 cm spiral | cutback pair: |
 | 5-6 | + 2.0 cm spiral | propagation loss per cm |
-| 7-8 | 4-ring WDM bank, staggered radii | transceiver demux skeleton; per-ring group index, Q |
-| 9-10 | 2x2 thermo-optic MZI switch cell | the engine's routing element; heater metal drawn, graded passively |
+| 7-8 | 4-ring bank, radii staggered by 24 nm, 300 nm gap | four notch families about a quarter of the FSR apart; per-ring group index, Q, loss |
+| 9-10 | 2x2 thermo-optic MZI cell, arms 10 um apart | the engine's routing element; heater metal drawn without pads, graded passively by a wavelength sweep |
 | 11-12 | taper split, 120 nm tip | coupler DOE: |
 | 13-14 | taper split, 180 nm tip | tip-width sensitivity |
 | 15-16 | duplicate reference | channel uniformity |
@@ -54,29 +55,37 @@ glass substrate.
 The die overview above is at 5 mm scale; the devices are micrometers.
 What each cell actually looks like (`python figures.py` regenerates):
 
-**One WDM ring** - a 10 um racetrack next to a bus waveguide, 200 nm
-apart. Light at the ring's resonant wavelengths couples across the gap,
+**One ring of the bank** - a 10 um racetrack next to a bus waveguide,
+300 nm apart. Light at the ring's resonant wavelengths couples across the gap,
 circulates, and is removed from the bus: a wavelength filter with no
 moving parts.
 
 ![ring](docs/cell_ring.png)
 
-**The 4-ring WDM bank** (channels 7-8) - four such rings in series with
-radii staggered by 50 nm, so each one filters a different wavelength
-comb: the demultiplexer skeleton of a transceiver.
+**The 4-ring bank** (channels 7-8) - four such rings in series with
+radii staggered by 24 nm, so each one notches a different wavelength
+comb, about a quarter of the 7.8 nm free spectral range from the next.
+They are all-pass rings: they measure group index, coupling and loss,
+and they do not hand a wavelength to a detector, which would need
+add-drop rings with a second bus.
 
 ![bank](docs/cell_wdm_bank.png)
 
 **The 2x2 thermo-optic switch** (channels 9-10) - light splits into two
 arms and recombines; the orange metal on the upper arm is a resistive
 heater. Heating one arm shifts its phase and steers the light between
-the two outputs: the routing element of an optical engine.
+the two outputs: the routing element of an optical engine. On this die
+the heater has no pads; the lower arm is 10 um longer, so the outputs
+swing with wavelength and a passive sweep of the looped-back bar port
+grades the cell. The unused input and the cross output end in tapers.
 
 ![switch](docs/cell_switch.png)
 
-**The coupler tip** (first 30 um of the 2 mm taper) - the waveguide
-narrows to 150 nm, forcing the mode to expand out of the silicon so it
-can transfer evanescently to the IOX guide in the glass below.
+**The coupler tip** (first 30 um of the 2 mm taper, drawn true to the
+layout) - the waveguide ends at 150 nm and widens by only 5 nm over
+these 30 um; it reaches 500 nm at 2 mm. That narrow end forces the mode
+out of the silicon so it can transfer evanescently to the IOX guide in
+the glass below.
 
 ![tip](docs/cell_taper_tip.png)
 
@@ -86,7 +95,7 @@ residual misalignment to 0.5 um.
 
 ![fiducial](docs/cell_fiducial.png)
 
-**Cutback spiral** - 0.5 cm of waveguide coiled into 1 mm; together
+**Cutback spiral** - 0.5 cm of waveguide coiled into 263 x 72 um; together
 with the 2 cm version and the references, propagation loss per cm
 falls out of a linear fit.
 
@@ -125,6 +134,17 @@ cross-section swap.
 - Retarget to a SiN platform (closer index match to IOX glass)
 
 ## Revision notes
+
+- **v0.5 (2026-11-07).** Ring bank: radius step 50 nm -> 24 nm and gap
+  200 -> 300 nm. With 50 nm, rings 1 and 3 (and 2 and 4) resonated within
+  about 0.5 nm of each other, so the four families collapsed into two
+  pairs; the course's circuit model had hidden this by holding the
+  coupler bends at the 10 um radius. At 200 nm the rings were
+  over-coupled fifteen-fold and their notches about 1 dB deep. MZI cell:
+  the 10 um arm difference is now set by a named constant (the old
+  `MZI_DL = 100` was never used) and the open ports end in tapers.
+  New cladding-open window over the tapers. Gallery figures redrawn to
+  the layout (the taper tip had been drawn about 37 times too steep).
 
 - **v0.4 (2026-09-04).** The cutback spirals on channels 3-6 are now
   attached port-to-port. In v0.3 the feed waveguide was routed straight
