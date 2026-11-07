@@ -196,6 +196,10 @@ cross-section swap.
 
   ![spiral feed](docs/spiral_feed.png)
 
+  *Channels 3-4 as drawn today: the feed from the channel 3 taper end
+  (left, lower line) runs straight into the spiral's port, and the return
+  leaves from the port beside it up to channel 4 (upper line).*
+
 - **v0.3 (2026-08-21).** First complete die.
 
 ## References

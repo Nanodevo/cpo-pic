@@ -70,6 +70,12 @@ save(fiducial(), "cell_fiducial.png",
 save(spiral_of_length(5000.0, 8), "cell_spiral.png",
      "0.5 cm cutback spiral (path length converged to 5000 um)")
 
+# 7) channels 3-4 on the die: the 0.5 cm spiral attached port-to-port (the v0.4 fix),
+#    feed and return routes from the taper ends, in the die's own coordinates
+from chip import ch_y, cpo_pic  # noqa: E402
+save(cpo_pic(), "spiral_feed.png", box=[1995.0, ch_y(3) - 95.0, 2660.0, ch_y(4) + 30.0],
+     title="channels 3-4: 0.5 cm cutback spiral, fed port-to-port")
+
 # render everything in one KLayout run
 from klayout_images import render  # noqa: E402
 render(JOBS)
