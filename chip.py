@@ -65,6 +65,7 @@ RING_STEP = 0.024            # radius step between the four rings, um: spaces th
                              # (v0.4 used 50 nm: rings 1/3 and 2/4 landed ~0.5 nm apart)
 RING_GAP = 0.30              # coupling gap, um: 200 nm (v0.4) over-couples, ~1 dB notches
 MZI_DL = 10.0                # arm length difference, um: lets a passive sweep grade the cell
+RING_CLEAR = 20.0            # straight after the last ring before the bus turns up, um
 TERM_LEN = 20.0              # termination taper on unused ports, um
 CLAD_OPEN = (60, 0)          # own layer: top-cladding opening over the tapers
                              # (the generic PDK has no such layer)
@@ -137,16 +138,22 @@ def place_coupler(c: gf.Component, ch: int, tip_w: float = TIP_W):
     return t
 
 
-def loop_back(c: gf.Component, from_port, to_taper_port) -> None:
-    """Turn an east-facing output around and bring it to the west edge.
+def loop_back(c: gf.Component, from_port, to_taper_port, clear: float = 0.0) -> None:
+    """Bring an east-facing output back to an east-facing taper end further up.
 
-    A 180-degree Euler bend attaches directly to the output, then the
-    router closes the (now west-facing to east-facing) gap.
+    One route does it: out to the east, a 90-degree bend up, the climb, a
+    90-degree bend west and the run back to the taper. `clear` adds a straight
+    first, so the turn keeps its distance from the device the output leaves.
+    Up to v0.5 a 180-degree bend sat on the output and the router then had to
+    turn the light round a second time: an extra U-turn that reached back into
+    the cladding window behind the tapers and, after the ring bank, ran 346 nm
+    past ring 4, a second coupler nobody designed.
     """
-    b = c << gf.components.bend_euler(angle=180)
-    b.connect("o1", from_port)
-    gf.routing.route_single(c, b.ports["o2"], to_taper_port,
-                            cross_section="strip")
+    if clear > 0:
+        s = c << gf.components.straight(length=clear, cross_section="strip")
+        s.connect("o1", from_port)
+        from_port = s.ports["o2"]
+    gf.routing.route_single(c, from_port, to_taper_port, cross_section="strip")
 
 
 def terminate(c: gf.Component, port) -> None:
@@ -156,10 +163,30 @@ def terminate(c: gf.Component, port) -> None:
     t.connect("o1", port)
 
 
+FAN_PITCH = 10.0             # switch port pitch after the fan-out, um
+FAN_LEN = 30.0               # length of each fan-out S-bend, um
+
+
 @gf.cell
 def switch_cell() -> gf.Component:
-    """The 2x2 thermo-optic MZI as placed on ch9-10, with its arm difference."""
-    return gf.components.mzi2x2_2x2_phase_shifter(delta_length=MZI_DL)
+    """The 2x2 thermo-optic MZI as placed on ch9-10, with its arm difference,
+    and S-bends that spread its ports from the MMI's 1.24 um to FAN_PITCH.
+    Without them a terminator or route attached to one port runs 0.75 um from
+    the next one for its whole length: an accidental coupler (v0.5)."""
+    c = gf.Component()
+    m = c << gf.components.mzi2x2_2x2_phase_shifter(delta_length=MZI_DL)
+    for pair in (("o1", "o2"), ("o4", "o3")):
+        ps = sorted((m.ports[n] for n in pair), key=lambda q: q.dcenter[1])
+        dy = (FAN_PITCH - (ps[1].dcenter[1] - ps[0].dcenter[1])) / 2
+        for q, outward in zip(ps, (-1, 1)):          # lower port down, upper port up
+            west = abs(q.orientation - 180) < 1        # bend_s mirrors its offset on west-facing ports
+            s = c << gf.components.bend_s(size=(FAN_LEN, dy * outward * (-1 if west else 1)),
+                                          cross_section="strip")
+            s.connect("o1", q)
+            assert (s.ports["o2"].dcenter[1] - q.dcenter[1]) * outward > 0
+            c.add_port(name=q.name, port=s.ports["o2"])
+    c.add_ports([p for p in m.ports if p.port_type != "optical"])
+    return c
 
 
 def label(c: gf.Component, text: str, x: float, y: float,
@@ -235,7 +262,7 @@ def cpo_pic() -> gf.Component:
         gf.routing.route_single(c, prev, ring.ports["o1"],
                                 cross_section="strip")
         prev = ring.ports["o2"]
-    loop_back(c, prev, t_out.ports["o2"])
+    loop_back(c, prev, t_out.ports["o2"], clear=RING_CLEAR)
     label(c, "RING BANK 4", 3600, ch_y(7) + 70)
 
     # --- ch9-10: 2x2 thermo-optic MZI cell. Heater metal is drawn but has no
@@ -245,7 +272,8 @@ def cpo_pic() -> gf.Component:
     t_in = place_coupler(c, 9)
     t_out = place_coupler(c, 10)
     sw = c << switch_cell()
-    sw.move((X_DUT + 200, ch_y(9) + 40))
+    sw.move((X_DUT + 200, 0))
+    sw.dmovey(ch_y(9) - sw.ports["o1"].dcenter[1])   # input level with channel 9: a straight feed, no S-jog
     gf.routing.route_single(c, t_in.ports["o2"], sw.ports["o1"],
                             cross_section="strip")
     # the bar port runs straight past the cross port's terminator (the two
@@ -263,7 +291,7 @@ def cpo_pic() -> gf.Component:
         f.move((x, y))
 
     # die labels
-    label(c, "NANODEVO CPO-PIC v0.5", 300, 260, size=110)
+    label(c, "NANODEVO CPO-PIC v0.6", 300, 260, size=110)
     label(c, "WEST EDGE: 16 TAPERS, 250UM PITCH, TO IOX GLASS (MPO-16)",
           300, 120, size=60)
     return c

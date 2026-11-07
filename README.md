@@ -77,7 +77,9 @@ heater. Heating one arm shifts its phase and steers the light between
 the two outputs: the routing element of an optical engine. On this die
 the heater has no pads; the lower arm is 10 um longer, so the outputs
 swing with wavelength and a passive sweep of the looped-back bar port
-grades the cell. The unused input and the cross output end in tapers.
+grades the cell. S-bends spread the four ports from 1.24 um to 10 um
+apart before anything is attached; the unused input and the cross output
+then end in tapers.
 
 ![switch](docs/cell_switch.png)
 
@@ -111,13 +113,16 @@ python -m venv .venv && .venv/bin/pip install gdsfactory
 After every build, run the layout check:
 
 ```bash
-.venv/bin/python check_layout.py   # PASS/FAIL: overlapping shapes, spacings under 150 nm
+.venv/bin/python check_layout.py   # PASS/FAIL: overlaps, gaps under 150 nm, cells closer than 2 um
 ```
 
 It flags any two separate shapes on the silicon layer that share area
 (a waveguide routed across another one) or come closer than 150 nm
 without touching (the smallest intended spacing on the die is the
-200 nm ring-to-bus gap). Port-to-port joins are allowed. It is a sanity
+300 nm ring-to-bus gap). A third rule flags shapes from two different
+placed cells (a ring and a route, two routes) that come closer than 2 um:
+light would couple between them. Designed couplers sit inside one cell
+and are not affected. Port-to-port joins are allowed. It is a sanity
 check, not a foundry DRC.
 
 Layout is generated with [gdsfactory](https://gdsfactory.github.io/gdsfactory/)
@@ -134,6 +139,20 @@ cross-section swap.
 - Retarget to a SiN platform (closer index match to IOX glass)
 
 ## Revision notes
+
+- **v0.6 (2026-11-07).** Loop-backs routed directly. Up to v0.5 each
+  loop-back put a 180-degree bend on the output and the router then
+  turned the light round a second time. On the reference and tip-split
+  channels that extra U-turn reached 10 um back into the cladding window
+  behind the tapers; after the ring bank it ran 346 nm past ring 4, a
+  second coupler on that ring nobody designed. The switch's terminators
+  ran 0.75 um beside the neighbouring port for their whole length; its
+  ports now fan out to 10 um first, and the cell sits with its input
+  level with channel 9, so the feed runs straight (it used to jog 35 um
+  sideways right after the window). `check_layout.py` missed all of this
+  because nothing came under 150 nm; it now also flags shapes from
+  different cells closer than 2 um. Found by reviewing the layout in
+  KLayout.
 
 - **v0.5 (2026-11-07).** Ring bank: radius step 50 nm -> 24 nm and gap
   200 -> 300 nm. With 50 nm, rings 1 and 3 (and 2 and 4) resonated within
