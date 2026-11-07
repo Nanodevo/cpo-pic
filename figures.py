@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """Render per-cell zoom figures so the die is readable by humans.
 
-Outputs to docs/: each cell at its own natural scale.
+Outputs to docs/: each cell at its own natural scale, rendered by KLayout
+(batch mode) with gdsfactory's KLayout layer colours.
 """
 
 import pathlib
-
-import matplotlib.pyplot as plt
 
 import gdsfactory as gf
 
@@ -18,13 +17,13 @@ DOCS = pathlib.Path(__file__).parent / "docs"
 DOCS.mkdir(exist_ok=True)
 
 
-def save(component: gf.Component, name: str, title: str) -> None:
-    plt.figure(figsize=(9, 5))
-    component.plot()
-    plt.title(title, fontsize=11)
-    plt.savefig(DOCS / name, dpi=200, bbox_inches="tight")
-    plt.close("all")
-    print("wrote", DOCS / name)
+JOBS = []
+
+
+def save(component: gf.Component, name: str, title: str, box=None) -> None:
+    """Queue a KLayout rendering of `component`; `title` documents the figure
+    (the README caption carries it), `box` = [x1, y1, x2, y2] um zooms in."""
+    JOBS.append((component, DOCS / name, box))
 
 
 # 1) one ring of the WDM bank
@@ -53,12 +52,12 @@ save(switch_cell(), "cell_switch.png",
      f"MZI cell: 1x2 splitter in, 2x2 combiner out (both outputs used), heater metal "
      f"on the upper arm, lower arm {MZI_DL:.0f} um longer")
 
-# 4) taper tip region, drawn true to the layout: the first 30 um of the real
+# 4) taper tip region, drawn true to the layout: the first 3 um of the real
 #    2 mm linear taper (the full taper widens to the routing width only at 2 mm)
 TIP_SHOW = 30.0
 w_end = TIP_W + (WG_W - TIP_W) * TIP_SHOW / TAPER_LEN
 tip = gf.components.taper(length=TIP_SHOW, width1=TIP_W, width2=w_end)
-save(tip, "cell_taper_tip.png",
+save(tip, "cell_taper_tip.png", box=[-0.5, -0.6, 3.5, 0.6], title=
      f"Coupler tip, first {TIP_SHOW:.0f} um of the {TAPER_LEN/1000:.0f} mm taper: "
      f"{TIP_W*1000:.0f} nm widening to {w_end*1000:.0f} nm "
      f"(it reaches {WG_W*1000:.0f} nm only at {TAPER_LEN/1000:.0f} mm)")
@@ -70,3 +69,7 @@ save(fiducial(), "cell_fiducial.png",
 # 6) spiral
 save(spiral_of_length(5000.0, 8), "cell_spiral.png",
      "0.5 cm cutback spiral (path length converged to 5000 um)")
+
+# render everything in one KLayout run
+from klayout_images import render  # noqa: E402
+render(JOBS)

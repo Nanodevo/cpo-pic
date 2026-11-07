@@ -58,7 +58,9 @@ glass substrate.
 ## Cell gallery
 
 The die overview above is at 5 mm scale; the devices are micrometers.
-What each cell actually looks like (`python figures.py` regenerates):
+What each cell actually looks like, rendered by KLayout with gdsfactory's
+layer colours (`python figures.py` regenerates them; it calls KLayout in
+batch mode through `klayout_images.py`):
 
 **One ring of the bank** - a 10 um racetrack next to a bus waveguide,
 300 nm apart. Light at the ring's resonant wavelengths couples across the gap,
@@ -88,11 +90,11 @@ from 1.25 um to 10 um apart before they are routed.
 
 ![switch](docs/cell_switch.png)
 
-**The coupler tip** (first 30 um of the 2 mm taper, drawn true to the
-layout) - the waveguide ends at 150 nm and widens by only 5 nm over
-these 30 um; it reaches 500 nm at 2 mm. That narrow end forces the mode
-out of the silicon so it can transfer evanescently to the IOX guide in
-the glass below.
+**The coupler tip** (the first 3 um of the 2 mm taper, drawn true to the
+layout) - the waveguide ends at the die edge 150 nm wide and widens by less
+than 1 nm over these 3 um; it reaches 500 nm only at 2 mm. That narrow end
+forces the mode out of the silicon so it can transfer evanescently to the
+IOX guide in the glass below.
 
 ![tip](docs/cell_taper_tip.png)
 
@@ -112,8 +114,11 @@ cm falls out of a linear fit, and four points show whether it is linear.
 
 ```bash
 python -m venv .venv && .venv/bin/pip install gdsfactory
-.venv/bin/python chip.py     # writes build/cpo_pic.gds and build/cpo_pic.png
+.venv/bin/python chip.py     # writes build/cpo_pic.gds and build/cpo_pic.png (image rendered by KLayout)
 ```
+
+The images need the KLayout desktop application (found at its default macOS
+location, on PATH, or through the `KLAYOUT` environment variable).
 
 After every build, run the layout check:
 

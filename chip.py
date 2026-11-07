@@ -312,10 +312,5 @@ if __name__ == "__main__":
     gds = build / "cpo_pic.gds"
     c.write_gds(gds)
     print("wrote", gds)
-    try:
-        c.plot()
-        import matplotlib.pyplot as plt
-        plt.savefig(build / "cpo_pic.png", dpi=220, bbox_inches="tight")
-        print("wrote", build / "cpo_pic.png")
-    except Exception as e:
-        print("png render skipped:", e)
+    from klayout_images import render
+    render([(c, build / "cpo_pic.png", None)], width=1400)
