@@ -6,9 +6,10 @@ study ([nanodevo.github.io/reports/optical-connectivity](https://nanodevo.github
 
 The interface it is built to mate with is the published glass-substrate
 architecture (Brusberg et al., *Glass Substrate for Co-Packaged Optics*,
-IMAPS 2022; OFC 2020/2022/2025/2026): fibers enter an MPO-16 connector
+IMAPS 2022; OFC 2020/2022/2025/2026): fibers enter an MPO connector
 butt-coupled at the polished edge of an ion-exchanged (IOX) glass
-waveguide substrate, and the photonic die sits face-down on that glass,
+waveguide substrate, the glass fans them into a single row at the die's
+pitch, and the photonic die sits face-down on that glass,
 coupling evanescently through a ~1 um adhesive bondline.
 
 **[Rotate the full assembly in interactive 3D](https://nanodevo.github.io/reports/cpo-3d.html)** -
@@ -20,10 +21,10 @@ fibers, MPO-16 connector, IOX glass substrate, this PIC, and the switch ASIC.
 
 | Parameter | Value | Why |
 |---|---|---|
-| Coupler channels | 16 @ 250 um pitch, west edge | one per fiber of the MPO-16 connector |
+| Coupler channels | 24 @ 127 um pitch, west edge | 127 um is the fine pitch of current fiber arrays and V-groove blocks; the glass fans a two-row MPO-24 (250 um) into this one row |
 | Coupler type | linear adiabatic taper, 2 mm, 500 nm -> 150 nm tip | the evanescent-transfer half of the glass-to-PIC joint |
-| Cladding | opened over the 16 tapers, die edge to 2.01 mm (own layer 60/0) | the silicon must meet the ~1 um adhesive with no top oxide in between; the generic PDK has no layer for it |
-| Topology | odd-in / even-out loopbacks | a fiber array on the glass grades every interface in transmission |
+| Cladding | opened over the 24 tapers, die edge to 2.01 mm (own layer 60/0) | the silicon must meet the ~1 um adhesive with no top oxide in between; the generic PDK has no layer for it |
+| Topology | loopbacks (in, out), one three-port cell | a fiber array on the glass grades every interface in transmission |
 | Die | 5 x 5 mm | same class as the SiN test chips in the IMAPS paper |
 | Fiducials | cross + Vernier, 3 corners | read through a split optic at placement; Vernier resolves residual misalignment |
 
@@ -31,14 +32,18 @@ fibers, MPO-16 connector, IOX glass substrate, this PIC, and the switch ASIC.
 
 | Channels | Structure | Extracts |
 |---|---|---|
-| 1-2 | reference loopback | baseline insertion loss |
-| 3-4 | + 0.5 cm spiral | cutback pair: |
-| 5-6 | + 2.0 cm spiral | propagation loss per cm |
-| 7-8 | 4-ring bank, radii staggered by 24 nm, 300 nm gap | four notch families about a quarter of the FSR apart; per-ring group index, Q, loss |
-| 9-10 | 2x2 thermo-optic MZI cell, arms 10 um apart | the engine's routing element; heater metal drawn without pads, graded passively by a wavelength sweep |
-| 11-12 | taper split, 120 nm tip | coupler DOE: |
-| 13-14 | taper split, 180 nm tip | tip-width sensitivity |
-| 15-16 | duplicate reference | channel uniformity |
+| 1-2 | REF-A, reference loopback, south edge of the array | baseline insertion loss |
+| 3-4 | + 0.5 cm spiral | four-point cutback with REF-A: |
+| 5-6 | + 1.0 cm spiral | propagation loss per cm, and whether |
+| 7-8 | + 2.0 cm spiral | it grows linearly with length |
+| 9-10 | 4-ring bank, radii staggered by 24 nm, 300 nm gap | four notch families about a quarter of the FSR apart; per-ring group index, Q, loss |
+| 11 | DARK, a taper with no loop | launch into a neighbour, read what leaks across: the crosstalk floor of the glass interface |
+| 12-13 | REF-M, reference loopback, centre of the array | with REF-A and REF-B: coupling across the array (a roll shows as loss at the edges) |
+| 14-15 | 4-ring bank at the model's critical gap, 367 nm | deepest notches; compared directly with the 300 nm bank |
+| 16-18 | MZI: 1x2 splitter in, 2x2 combiner out, arms 100 um apart | input 16, both outputs to 17 and 18; the two outputs are complementary, so their ratio reads the interference independently of coupling loss; heater metal drawn without pads |
+| 19-20 | taper split, 120 nm tip | coupler DOE: |
+| 21-22 | taper split, 180 nm tip | tip-width sensitivity |
+| 23-24 | REF-B, reference loopback, north edge | uniformity statistic |
 
 The die is deliberately half interface-qualification vehicle, half
 optical-engine skeleton: the loopbacks, cutbacks and taper splits grade
@@ -62,7 +67,7 @@ moving parts.
 
 ![ring](docs/cell_ring.png)
 
-**The 4-ring bank** (channels 7-8) - four such rings in series with
+**The 4-ring banks** (channels 9-10 at a 300 nm gap, 14-15 at 367 nm) - four such rings in series with
 radii staggered by 24 nm, so each one notches a different wavelength
 comb, about a quarter of the 7.8 nm free spectral range from the next.
 They are all-pass rings: they measure group index, coupling and loss,
@@ -71,15 +76,15 @@ add-drop rings with a second bus.
 
 ![bank](docs/cell_wdm_bank.png)
 
-**The 2x2 thermo-optic switch** (channels 9-10) - light splits into two
-arms and recombines; the orange metal on the upper arm is a resistive
-heater. Heating one arm shifts its phase and steers the light between
-the two outputs: the routing element of an optical engine. On this die
-the heater has no pads; the lower arm is 10 um longer, so the outputs
-swing with wavelength and a passive sweep of the looped-back bar port
-grades the cell. S-bends spread the four ports from 1.24 um to 10 um
-apart before anything is attached; the unused input and the cross output
-then end in tapers.
+**The thermo-optic MZI** (channels 16-18) - a 1x2 splitter divides the
+light into two arms, a 2x2 combiner brings them back together onto two
+outputs; the orange metal on the upper arm is a resistive heater. On this
+die the heater has no pads. The lower arm is 100 um longer, so the two
+outputs trade light every ~5.7 nm of wavelength, about 17 times across a
+100 nm laser sweep: the depth of those fringes reads the combiner's
+balance, their spacing the group index. Both outputs come back to the
+glass, so no port of the cell is a dead end. S-bends spread the outputs
+from 1.25 um to 10 um apart before they are routed.
 
 ![switch](docs/cell_switch.png)
 
@@ -98,8 +103,8 @@ residual misalignment to 0.5 um.
 ![fiducial](docs/cell_fiducial.png)
 
 **Cutback spiral** - 0.5 cm of waveguide coiled into 263 x 72 um; together
-with the 2 cm version and the references, propagation loss per cm
-falls out of a linear fit.
+with the 1 cm and 2 cm versions and the references, propagation loss per
+cm falls out of a linear fit, and four points show whether it is linear.
 
 ![spiral](docs/cell_spiral.png)
 
@@ -139,6 +144,19 @@ cross-section swap.
 - Retarget to a SiN platform (closer index match to IOX glass)
 
 ## Revision notes
+
+- **v0.7 (2026-11-07).** 24 channels at 127 um pitch instead of 16 at
+  250 um, on the same 5 x 5 mm die. With eight more channels nothing had
+  to be dropped: a 1.0 cm spiral makes the cutback four-point, a second
+  ring bank sits at the model's critical gap, a centre reference (REF-M)
+  joins the two edge references, and a dark channel measures crosstalk.
+  The MZI is now a 1x2 splitter with a 2x2 combiner whose two outputs
+  both reach the glass (channels 16-18), so no port is a dead end, and
+  its arms are 100 um apart instead of 10 um: about 17 fringes per
+  100 nm sweep instead of fewer than two. gdsfactory's mixed-MMI MZI puts
+  the arms on the combiner's wrong ports unless they are named (o3/o4);
+  the layout check caught the overlap. The interactive 3D assembly still
+  shows the 16-channel version.
 
 - **v0.6 (2026-11-07).** Loop-backs routed directly. Up to v0.5 each
   loop-back put a 180-degree bend on the output and the router then

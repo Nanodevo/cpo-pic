@@ -48,10 +48,10 @@ save(bank, "cell_wdm_bank.png",
      "Ring bank: four rings in series, radii "
      + "/".join(f"{RING_RADIUS + RING_STEP * k:.3f}" for k in range(4)) + " um")
 
-# 3) the 2x2 thermo-optic switch
+# 3) the thermo-optic MZI
 save(switch_cell(), "cell_switch.png",
-     f"2x2 MZI cell: two 2x2 splitters, heater metal on the upper arm, "
-     f"lower arm {MZI_DL:.0f} um longer")
+     f"MZI cell: 1x2 splitter in, 2x2 combiner out (both outputs used), heater metal "
+     f"on the upper arm, lower arm {MZI_DL:.0f} um longer")
 
 # 4) taper tip region, drawn true to the layout: the first 30 um of the real
 #    2 mm linear taper (the full taper widens to the routing width only at 2 mm)
